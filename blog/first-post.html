@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="alyhenr — first post" />
+
+  <title>alyhenr ~ first-post.md</title>
+
+  <link rel="stylesheet" href="../css/tokens.css" />
+  <link rel="stylesheet" href="../css/terminal.css" />
+  <link rel="stylesheet" href="../css/effects.css" />
+</head>
+<body class="terminal-window">
+
+  <div id="terminal-header"></div>
+
+  <main class="terminal-content" id="terminal-output-wrapper">
+    <div id="terminal-output">
+
+      <!-- cat blog/first-post.md -->
+      <div class="cmd-block">
+        <div class="prompt">
+          <span class="prompt__user">alyhenr</span><span class="prompt__at">@</span><span
+            class="prompt__host">alyhenr.dev</span><span class="prompt__sep">:</span><span
+            class="prompt__path">~/blog</span><span class="prompt__sigil">$</span>&nbsp;<span
+            class="prompt__command">cat first-post.md</span>
+        </div>
+
+        <!-- Post header meta -->
+        <div class="kv-row">
+          <span class="kv-row__key">TITLE</span>
+          <span class="kv-row__value kv-row__value--highlight">Your First Blog Post</span>
+        </div>
+        <div class="kv-row">
+          <span class="kv-row__key">DATE</span>
+          <span class="kv-row__value">2025-06-18</span>
+        </div>
+        <div class="kv-row">
+          <span class="kv-row__key">TAGS</span>
+          <span class="kv-row__value">
+            <span class="tag tag--green">general</span>
+            <span class="tag tag--white">meta</span>
+          </span>
+        </div>
+
+        <div class="output output--blank"></div>
+        <hr class="divider" />
+
+        <!-- Post body — write your content here -->
+        <div class="cat-block">
+          <div class="divider--comment">intro</div>
+
+          <p class="cat-block__body">
+            Welcome to your terminal blog. This is a template post — replace it with your own
+            writing. The structure is intentionally minimal: a prompt line, some metadata, and
+            then your content rendered as if it were piped through <code
+              style="color: var(--color-amber)">cat</code>.
+          </p>
+
+          <div class="divider--comment">section heading</div>
+
+          <p class="cat-block__body">
+            Use <span class="output--bright" style="display: inline;">.divider--comment</span>
+            elements as section headings. They render as a commented-out label, consistent with
+            the terminal aesthetic.
+          </p>
+
+          <p class="cat-block__body">
+            Code samples go in <code style="color: var(--color-amber);">&lt;code&gt;</code>
+            tags or inside a <code style="color: var(--color-amber);">.cat-block</code> with
+            the <code style="color: var(--color-amber);">output--dim</code> modifier.
+          </p>
+
+          <div class="divider--comment">example code block</div>
+
+          <pre class="output output--dim" style="
+            background: var(--color-bg-surface);
+            border-left: 2px solid var(--color-border);
+            padding: var(--space-3) var(--space-4);
+            overflow-x: auto;
+            border-radius: 2px;
+          "><code>// A simple example
+function greet(name) {
+  return `Hello, ${name}!`;
+}
+
+console.log(greet('world'));</code></pre>
+
+          <div class="output output--blank"></div>
+          <p class="cat-block__body output--dim">
+            That's the basics. Happy writing.
+          </p>
+        </div>
+
+        <div class="output output--blank"></div>
+        <p class="output output--dim">
+          &larr; <a href="../blog.html">back to /blog</a>
+        </p>
+        <div class="output output--blank"></div>
+      </div>
+
+    </div><!-- /#terminal-output -->
+
+    <!-- Interactive input row -->
+    <form id="terminal-form" class="terminal-input-row" autocomplete="off" spellcheck="false">
+      <div class="terminal-input-row__prompt prompt" aria-hidden="true">
+        <span class="prompt__user">alyhenr</span><span class="prompt__at">@</span><span
+          class="prompt__host">alyhenr.dev</span><span class="prompt__sep">:</span><span
+          class="prompt__path">~/blog</span><span class="prompt__sigil">$</span>&nbsp;
+      </div>
+      <label for="terminal-input" class="sr-only">Terminal input</label>
+      <input id="terminal-input" class="terminal-input" type="text"
+             placeholder="type a command…" aria-label="Terminal command input" />
+    </form>
+
+  </main>
+
+  <div id="terminal-nav"></div>
+
+  <script>
+    window.CHROME_CONFIG = { user: 'alyhenr', host: 'alyhenr.dev', activePage: 'blog' };
+  </script>
+  <script src="../js/chrome.js"></script>
+  <script src="../js/terminal.js"></script>
+  <script>
+    Terminal.init({ user: 'alyhenr', host: 'alyhenr.dev', cwd: '~/blog' });
+    if (window.chrome) window.chrome.setCwd('~/blog');
+  </script>
+
+</body>
+</html>

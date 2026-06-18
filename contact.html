@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="alyhenr — contact" />
+
+  <title>alyhenr ~ contact</title>
+
+  <link rel="stylesheet" href="css/tokens.css" />
+  <link rel="stylesheet" href="css/terminal.css" />
+  <link rel="stylesheet" href="css/effects.css" />
+</head>
+<body class="terminal-window">
+
+  <div id="terminal-header"></div>
+
+  <!-- ── Main content ──────────────────────────────────────── -->
+  <main class="terminal-content" id="terminal-output-wrapper">
+    <div id="terminal-output">
+
+      <!-- cat contact.txt -->
+      <div class="cmd-block">
+        <div class="prompt">
+          <span class="prompt__user">alyhenr</span><span class="prompt__at">@</span><span
+            class="prompt__host">alyhenr.dev</span><span class="prompt__sep">:</span><span
+            class="prompt__path">~</span><span class="prompt__sigil">$</span>&nbsp;<span
+            class="prompt__command">cat contact.txt</span>
+        </div>
+
+        <div class="kv-row">
+          <span class="kv-row__key">EMAIL</span>
+          <span class="kv-row__value">
+            <a href="mailto:you@example.com">you@example.com</a>
+          </span>
+        </div>
+        <div class="kv-row">
+          <span class="kv-row__key">GITHUB</span>
+          <span class="kv-row__value">
+            <a href="https://github.com/alyhenr" target="_blank" rel="noopener">github.com/alyhenr</a>
+          </span>
+        </div>
+        <div class="kv-row">
+          <span class="kv-row__key">LINKEDIN</span>
+          <span class="kv-row__value">
+            <a href="#" target="_blank" rel="noopener">linkedin.com/in/yourname</a>
+          </span>
+        </div>
+
+        <div class="output output--blank"></div>
+      </div>
+
+      <!-- cat pgp.txt -->
+      <div class="cmd-block">
+        <div class="prompt">
+          <span class="prompt__user">alyhenr</span><span class="prompt__at">@</span><span
+            class="prompt__host">alyhenr.dev</span><span class="prompt__sep">:</span><span
+            class="prompt__path">~</span><span class="prompt__sigil">$</span>&nbsp;<span
+            class="prompt__command">cat availability.txt</span>
+        </div>
+
+        <p class="output output--white">
+          I'm generally open to conversations about interesting problems,
+          collaborations, and contract work.
+        </p>
+        <div class="output output--blank"></div>
+        <p class="output output--dim">
+          Best way to reach me: email. I'll get back within a few days.
+        </p>
+        <div class="output output--blank"></div>
+      </div>
+
+      <!-- Form styled as terminal output -->
+      <div class="cmd-block">
+        <div class="prompt">
+          <span class="prompt__user">alyhenr</span><span class="prompt__at">@</span><span
+            class="prompt__host">alyhenr.dev</span><span class="prompt__sep">:</span><span
+            class="prompt__path">~</span><span class="prompt__sigil">$</span>&nbsp;<span
+            class="prompt__command">./send-message.sh</span>
+        </div>
+
+        <p class="output output--dim">Initializing message composer...</p>
+        <div class="output output--blank"></div>
+
+        <!--
+          Static contact form.
+          Hook this up to a service like Formspree, Netlify Forms,
+          or your own backend. Update the action attribute below.
+        -->
+        <form
+          id="contact-form"
+          action="https://formspree.io/f/YOUR_FORM_ID"
+          method="POST"
+          style="display: flex; flex-direction: column; gap: var(--space-4);"
+        >
+          <div class="terminal-input-row" style="gap: var(--space-3);">
+            <label for="contact-name" class="output output--dim" style="width: 80px; flex-shrink: 0;">
+              NAME &gt;
+            </label>
+            <input
+              id="contact-name"
+              name="name"
+              type="text"
+              class="terminal-input"
+              placeholder="Your name"
+              required
+              style="border-bottom: 1px solid var(--color-border); padding-bottom: 2px;"
+            />
+          </div>
+
+          <div class="terminal-input-row" style="gap: var(--space-3);">
+            <label for="contact-email" class="output output--dim" style="width: 80px; flex-shrink: 0;">
+              EMAIL &gt;
+            </label>
+            <input
+              id="contact-email"
+              name="email"
+              type="email"
+              class="terminal-input"
+              placeholder="your@email.com"
+              required
+              style="border-bottom: 1px solid var(--color-border); padding-bottom: 2px;"
+            />
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: var(--space-2);">
+            <label for="contact-message" class="output output--dim">
+              MESSAGE &gt;
+            </label>
+            <textarea
+              id="contact-message"
+              name="message"
+              class="terminal-input"
+              rows="5"
+              placeholder="What's on your mind?"
+              required
+              style="
+                resize: vertical;
+                border: 1px solid var(--color-border);
+                padding: var(--space-2);
+                border-radius: 2px;
+                background: var(--color-bg-surface);
+                font-family: var(--font-mono);
+                font-size: var(--font-size-base);
+                line-height: var(--line-height-base);
+              "
+            ></textarea>
+          </div>
+
+          <div>
+            <button
+              type="submit"
+              style="
+                font-family: var(--font-mono);
+                font-size: var(--font-size-base);
+                color: var(--color-fg);
+                background: transparent;
+                border: 1px solid var(--color-border);
+                padding: var(--space-2) var(--space-4);
+                cursor: pointer;
+                border-radius: 2px;
+                transition: all var(--speed-fast);
+              "
+              onmouseover="this.style.borderColor='var(--color-fg)';this.style.backgroundColor='var(--color-bg-highlight)';"
+              onmouseout="this.style.borderColor='var(--color-border)';this.style.backgroundColor='transparent';"
+            >
+              [  send message  ]
+            </button>
+          </div>
+        </form>
+
+        <div class="output output--blank"></div>
+      </div>
+
+    </div><!-- /#terminal-output -->
+
+    <!-- Interactive input row -->
+    <form id="terminal-form" class="terminal-input-row" autocomplete="off" spellcheck="false">
+      <div class="terminal-input-row__prompt prompt" aria-hidden="true">
+        <span class="prompt__user">alyhenr</span><span class="prompt__at">@</span><span
+          class="prompt__host">alyhenr.dev</span><span class="prompt__sep">:</span><span
+          class="prompt__path">~</span><span class="prompt__sigil">$</span>&nbsp;
+      </div>
+      <label for="terminal-input" class="sr-only">Terminal input</label>
+      <input id="terminal-input" class="terminal-input" type="text"
+             placeholder="type a command…" aria-label="Terminal command input" />
+    </form>
+
+  </main>
+
+  <div id="terminal-nav"></div>
+
+  <script>
+    window.CHROME_CONFIG = { user: 'alyhenr', host: 'alyhenr.dev', activePage: 'contact' };
+  </script>
+  <script src="js/chrome.js"></script>
+  <script src="js/terminal.js"></script>
+  <script>
+    Terminal.init({ user: 'alyhenr', host: 'alyhenr.dev', cwd: '~' });
+
+    // Intercept the contact form to show terminal-style feedback
+    const contactForm = document.getElementById('contact-form');
+    if (contactForm) {
+      contactForm.addEventListener('submit', async (e) => {
+        // Only intercept if Formspree is configured (i.e. not the placeholder)
+        if (contactForm.action.includes('YOUR_FORM_ID')) {
+          e.preventDefault();
+          Terminal.warn('form action not configured — update the action attribute in contact.html');
+          return;
+        }
+        // Otherwise let Formspree handle it; you can also use fetch() for AJAX submission
+      });
+    }
+  </script>
+
+</body>
+</html>

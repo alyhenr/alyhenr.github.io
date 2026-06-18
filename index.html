@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="alyhenr — personal site, blog & portfolio" />
+
+  <title>alyhenr ~ home</title>
+
+  <!-- Design system -->
+  <link rel="stylesheet" href="css/tokens.css" />
+  <link rel="stylesheet" href="css/terminal.css" />
+  <link rel="stylesheet" href="css/effects.css" />
+</head>
+<body class="terminal-window crt-flicker screen-on">
+
+  <!-- Boot screen (shown on first visit only) -->
+  <div id="boot-screen" class="boot-screen" aria-hidden="true"></div>
+
+  <!-- Terminal header — injected by chrome.js -->
+  <div id="terminal-header"></div>
+
+  <!-- ── Main content ──────────────────────────────────────── -->
+  <main class="terminal-content" id="terminal-output-wrapper">
+
+    <!-- Static decorative output that's already "typed" -->
+    <div id="terminal-output">
+
+      <!-- whoami block -->
+      <div class="cmd-block">
+        <div class="prompt">
+          <span class="prompt__user">alyhenr</span><span class="prompt__at">@</span><span
+            class="prompt__host">alyhenr.dev</span><span class="prompt__sep">:</span><span
+            class="prompt__path">~</span><span class="prompt__sigil">$</span>&nbsp;<span
+            class="prompt__command">whoami</span>
+        </div>
+
+        <p class="output output--white">
+          Software developer &amp; tinkerer. I build things that interest me and write about what I
+          learn. This is my corner of the internet — part portfolio, part notebook, part playground.
+        </p>
+        <p class="output output--dim">
+          &nbsp;
+        </p>
+      </div>
+
+      <!-- cat status.txt -->
+      <div class="cmd-block">
+        <div class="prompt">
+          <span class="prompt__user">alyhenr</span><span class="prompt__at">@</span><span
+            class="prompt__host">alyhenr.dev</span><span class="prompt__sep">:</span><span
+            class="prompt__path">~</span><span class="prompt__sigil">$</span>&nbsp;<span
+            class="prompt__command">cat status.txt</span>
+        </div>
+
+        <div class="kv-row">
+          <span class="kv-row__key">LOCATION</span>
+          <span class="kv-row__value">Brazil</span>
+        </div>
+        <div class="kv-row">
+          <span class="kv-row__key">FOCUS</span>
+          <span class="kv-row__value kv-row__value--highlight">Software Engineering · Systems · Open Source</span>
+        </div>
+        <div class="kv-row">
+          <span class="kv-row__key">CONTACT</span>
+          <span class="kv-row__value">
+            <a href="mailto:you@example.com">you@example.com</a>
+          </span>
+        </div>
+        <div class="kv-row">
+          <span class="kv-row__key">STATUS</span>
+          <span class="kv-row__value kv-row__value--amber">Open to interesting projects</span>
+        </div>
+
+        <div class="output output--blank"></div>
+      </div>
+
+      <!-- ls -la /projects/ -->
+      <div class="cmd-block">
+        <div class="prompt">
+          <span class="prompt__user">alyhenr</span><span class="prompt__at">@</span><span
+            class="prompt__host">alyhenr.dev</span><span class="prompt__sep">:</span><span
+            class="prompt__path">~</span><span class="prompt__sigil">$</span>&nbsp;<span
+            class="prompt__command">ls -la /projects/</span>
+        </div>
+
+        <p class="output output--dim">2 entries — <a href="projects.html">view all</a></p>
+        <div class="output output--blank"></div>
+
+        <div class="ls-table">
+          <div class="ls-entry ls-entry--clickable" role="link" tabindex="0"
+               onclick="location.href='projects.html'">
+            <span class="ls-entry__perms">-rw-r--r--</span>
+            <span class="ls-entry__size">12.4kb</span>
+            <span class="ls-entry__date">2024-11</span>
+            <span class="ls-entry__name ls-entry__name--exec">project-alpha.exe</span>
+            <span class="ls-entry__desc">A short description of this project</span>
+          </div>
+          <div class="ls-entry ls-entry--clickable" role="link" tabindex="0"
+               onclick="location.href='projects.html'">
+            <span class="ls-entry__perms">-rw-r--r--</span>
+            <span class="ls-entry__size">8.1kb</span>
+            <span class="ls-entry__date">2025-03</span>
+            <span class="ls-entry__name ls-entry__name--exec">project-beta.app</span>
+            <span class="ls-entry__desc">Another project — what it does in one line</span>
+          </div>
+        </div>
+
+        <div class="output output--blank"></div>
+      </div>
+
+      <!-- ls -la /blog/ -->
+      <div class="cmd-block">
+        <div class="prompt">
+          <span class="prompt__user">alyhenr</span><span class="prompt__at">@</span><span
+            class="prompt__host">alyhenr.dev</span><span class="prompt__sep">:</span><span
+            class="prompt__path">~</span><span class="prompt__sigil">$</span>&nbsp;<span
+            class="prompt__command">ls -la /blog/</span>
+        </div>
+
+        <p class="output output--dim">Recent posts — <a href="blog.html">view all</a></p>
+        <div class="output output--blank"></div>
+
+        <div class="ls-table">
+          <div class="ls-entry ls-entry--clickable" role="link" tabindex="0"
+               onclick="location.href='blog.html'">
+            <span class="ls-entry__perms">-r--r--r--</span>
+            <span class="ls-entry__size">4.2kb</span>
+            <span class="ls-entry__date">2025-06</span>
+            <span class="ls-entry__name">first-post.md</span>
+            <span class="ls-entry__desc">Your first post title here</span>
+          </div>
+        </div>
+
+        <div class="output output--blank"></div>
+      </div>
+
+    </div><!-- /#terminal-output -->
+
+    <!-- ── Interactive input row ─────────────────────────── -->
+    <form id="terminal-form" class="terminal-input-row" autocomplete="off" spellcheck="false">
+      <div class="terminal-input-row__prompt prompt" aria-hidden="true">
+        <span class="prompt__user">alyhenr</span><span class="prompt__at">@</span><span
+          class="prompt__host">alyhenr.dev</span><span class="prompt__sep">:</span><span
+          class="prompt__path" id="input-cwd">~</span><span class="prompt__sigil">$</span>&nbsp;
+      </div>
+      <label for="terminal-input" class="sr-only">Terminal input</label>
+      <input
+        id="terminal-input"
+        class="terminal-input"
+        type="text"
+        placeholder="type a command…"
+        aria-label="Terminal command input"
+        autofocus
+      />
+    </form>
+
+  </main><!-- /terminal-content -->
+
+  <!-- Status bar / nav — injected by chrome.js -->
+  <div id="terminal-nav"></div>
+
+  <!-- ── Scripts ───────────────────────────────────────────── -->
+  <script>
+    window.CHROME_CONFIG = { user: 'alyhenr', host: 'alyhenr.dev', activePage: 'home' };
+    window.BOOT_CONFIG   = { hostname: 'alyhenr.dev', version: 'v1.0.0', username: 'alyhenr' };
+  </script>
+  <script src="js/chrome.js"></script>
+  <script src="js/boot.js"></script>
+  <script src="js/terminal.js"></script>
+  <script>
+    // Remove screen-on animation class after it finishes
+    document.body.addEventListener('animationend', function onScreenOn(e) {
+      if (e.animationName === 'screen-on-flash') {
+        document.body.classList.remove('screen-on');
+        document.body.removeEventListener('animationend', onScreenOn);
+      }
+    });
+
+    // Run boot, then initialize the interactive terminal
+    document.addEventListener('DOMContentLoaded', async () => {
+      await Boot.init();
+      Terminal.init({ user: 'alyhenr', host: 'alyhenr.dev', cwd: '~' });
+    });
+
+    // Example: register a custom command on the home page
+    // Terminal.register('secret', {
+    //   description: 'A hidden easter egg.',
+    //   run(_args, term) {
+    //     term.print('You found it.', { cls: 'output--amber' });
+    //   }
+    // });
+  </script>
+
+</body>
+</html>

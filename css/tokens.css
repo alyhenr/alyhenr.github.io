@@ -1,0 +1,122 @@
+/* ============================================================
+   tokens.css — Design tokens for the terminal design system
+   All visual decisions live here. Change this file to retheme
+   the entire site.
+   ============================================================ */
+
+/* JetBrains Mono via Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
+
+:root {
+  /* ── Palette ──────────────────────────────────────────── */
+  --color-bg:           #0a0a0a;   /* near-black background */
+  --color-bg-surface:   #0f0f0f;   /* slightly lighter surface (panels) */
+  --color-bg-highlight: #141414;   /* hover / selection bg */
+
+  --color-fg:           #33ff66;   /* primary phosphor green */
+  --color-fg-dim:       #1a6633;   /* dimmed green — comments, secondary output */
+  --color-fg-bright:    #88ffaa;   /* bright highlight green */
+  --color-fg-muted:     #2a4a33;   /* very dim — borders, separators */
+
+  --color-amber:        #ffb347;   /* amber accent — warnings, emphasis */
+  --color-amber-dim:    #7a4f1a;   /* dim amber */
+
+  --color-white:        #d4d4d4;   /* off-white — filenames, prompts, input */
+  --color-white-dim:    #7a7a7a;   /* dim white — timestamps, metadata */
+
+  --color-error:        #ff4444;   /* errors */
+  --color-error-dim:    #5c1a1a;   /* dim error */
+  --color-success:      #33ff66;   /* same as fg — success is green */
+  --color-warning:      #ffb347;   /* same as amber */
+
+  --color-cursor:       #33ff66;   /* blinking block cursor */
+  --color-selection-bg: rgba(51, 255, 102, 0.15);
+  --color-border:       #1a3d26;   /* subtle green border */
+
+  /* ── Typography ───────────────────────────────────────── */
+  --font-mono: "JetBrains Mono", "Fira Code", "Cascadia Code",
+               ui-monospace, "SF Mono", "Consolas", "Liberation Mono",
+               "Menlo", monospace;
+
+  --font-size-xs:   11px;
+  --font-size-sm:   12px;
+  --font-size-base: 14px;
+  --font-size-md:   15px;
+  --font-size-lg:   16px;
+  --font-size-xl:   18px;
+  --font-size-2xl:  20px;
+
+  --font-weight-thin:    100;
+  --font-weight-light:   300;
+  --font-weight-regular: 400;
+  --font-weight-medium:  500;
+  --font-weight-bold:    700;
+
+  --line-height-tight:  1.3;
+  --line-height-base:   1.6;
+  --line-height-loose:  2.0;
+
+  /* ── Spacing ──────────────────────────────────────────── */
+  /* Base unit: 4px. All spacing is multiples of this. */
+  --space-1:   4px;
+  --space-2:   8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* ── Layout ───────────────────────────────────────────── */
+  --header-height:     40px;
+  --status-bar-height: 36px;
+  --content-max-width: 900px;
+  --content-padding:   var(--space-6);
+
+  /* ── Animation & Timing ───────────────────────────────── */
+  --speed-instant:  0ms;
+  --speed-fast:     80ms;
+  --speed-normal:  150ms;
+  --speed-slow:    300ms;
+  --speed-sluggish: 500ms;
+
+  /* Typing effect: ms per character */
+  --speed-type-fast:   20ms;
+  --speed-type-normal: 40ms;
+  --speed-type-slow:   80ms;
+
+  /* Boot sequence: ms between boot lines */
+  --speed-boot-line:  120ms;
+  --speed-boot-pause: 400ms;
+
+  /* Cursor blink period */
+  --speed-blink: 1000ms;
+
+  /* CRT flicker period */
+  --speed-flicker: 8000ms;
+
+  /* ── Effects ──────────────────────────────────────────── */
+  /* Phosphor glow intensity */
+  --glow-sm:  0 0 4px var(--color-fg);
+  --glow-md:  0 0 8px var(--color-fg), 0 0 16px rgba(51, 255, 102, 0.3);
+  --glow-lg:  0 0 12px var(--color-fg), 0 0 24px rgba(51, 255, 102, 0.4),
+              0 0 40px rgba(51, 255, 102, 0.15);
+
+  /* Scanline density */
+  --scanline-size:    2px;
+  --scanline-opacity: 0.04;
+
+  /* CRT screen curvature (border-radius on outer container) */
+  --crt-radius: 0px; /* set to e.g. 8px for curve effect */
+
+  /* ── Z-indices ────────────────────────────────────────── */
+  --z-content:    1;
+  --z-overlay:   10;
+  --z-header:    20;
+  --z-status:    20;
+  --z-scanlines: 30;
+  --z-modal:     50;
+  --z-tooltip:   60;
+}

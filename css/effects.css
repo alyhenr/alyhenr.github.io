@@ -1,0 +1,304 @@
+/* ============================================================
+   effects.css — CRT & retro visual effects
+   Depends on tokens.css. All effects respect a .no-effects
+   class on <html> or <body> for accessibility / perf opt-out.
+   ============================================================ */
+
+/* ── CRT Scanlines ────────────────────────────────────────── */
+/*
+   A fixed ::after pseudo-element on .terminal-window creates
+   a repeating horizontal scanline pattern over all content.
+   Pointer-events: none ensures it does not block interaction.
+*/
+.terminal-window::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-scanlines);
+  pointer-events: none;
+
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent calc(var(--scanline-size) * 1),
+    rgba(0, 0, 0, var(--scanline-opacity)) calc(var(--scanline-size) * 1),
+    rgba(0, 0, 0, var(--scanline-opacity)) calc(var(--scanline-size) * 2)
+  );
+}
+
+/* Opt-out */
+.no-effects .terminal-window::after,
+.no-effects.terminal-window::after {
+  display: none;
+}
+
+/* ── Phosphor Glow ────────────────────────────────────────── */
+/*
+   Apply .glow, .glow-md, or .glow-lg to any element to add
+   phosphor bloom. The base color glows via text-shadow.
+*/
+.glow {
+  text-shadow: var(--glow-sm);
+}
+
+.glow-md {
+  text-shadow: var(--glow-md);
+}
+
+.glow-lg {
+  text-shadow: var(--glow-lg);
+}
+
+/* Automatic glow on primary-colored text */
+.terminal-header__user,
+.terminal-header__status--ok,
+.prompt__user,
+.output--bright,
+.ascii-art--bright {
+  text-shadow: var(--glow-sm);
+}
+
+/* Opt-out */
+.no-effects .glow,
+.no-effects .glow-md,
+.no-effects .glow-lg,
+.no-effects .terminal-header__user,
+.no-effects .terminal-header__status--ok,
+.no-effects .prompt__user,
+.no-effects .output--bright,
+.no-effects .ascii-art--bright {
+  text-shadow: none;
+}
+
+/* ── CRT Vignette ─────────────────────────────────────────── */
+/*
+   Radial gradient overlay darkens the screen edges,
+   simulating a CRT tube.
+*/
+.terminal-window::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-scanlines);
+  pointer-events: none;
+
+  background: radial-gradient(
+    ellipse at center,
+    transparent 60%,
+    rgba(0, 0, 0, 0.45) 100%
+  );
+}
+
+.no-effects .terminal-window::before,
+.no-effects.terminal-window::before {
+  display: none;
+}
+
+/* ── CRT Screen Flicker ───────────────────────────────────── */
+/*
+   Very subtle brightness oscillation on the whole window.
+   Kept intentionally mild — not seizure-triggering.
+   Use .crt-flicker class on .terminal-window to enable.
+*/
+@keyframes crt-flicker {
+   0%  { filter: brightness(1.00); }
+  15%  { filter: brightness(1.01); }
+  25%  { filter: brightness(0.99); }
+  45%  { filter: brightness(1.00); }
+  60%  { filter: brightness(1.02); }
+  75%  { filter: brightness(0.99); }
+ 100%  { filter: brightness(1.00); }
+}
+
+.crt-flicker {
+  animation: crt-flicker var(--speed-flicker) ease-in-out infinite;
+}
+
+.no-effects .crt-flicker {
+  animation: none;
+}
+
+/* ── Screen Power-On Animation ────────────────────────────── */
+/*
+   Brief white flash + expand-from-line that plays when
+   .screen-on class is added to .terminal-window.
+   Removed by JS after it finishes (or skip during boot).
+*/
+@keyframes screen-on-flash {
+  0%   { opacity: 0; transform: scaleY(0.002); filter: brightness(4); }
+  8%   { opacity: 1; transform: scaleY(0.002); filter: brightness(3); }
+  15%  { opacity: 1; transform: scaleY(1.0);   filter: brightness(1.5); }
+  25%  { opacity: 1; transform: scaleY(1.0);   filter: brightness(1.0); }
+  100% { opacity: 1; transform: scaleY(1.0);   filter: brightness(1.0); }
+}
+
+.screen-on {
+  animation: screen-on-flash 0.6s ease-out forwards;
+  transform-origin: center center;
+}
+
+.no-effects .screen-on {
+  animation: none;
+}
+
+/* ── Screen Power-Off Animation ───────────────────────────── */
+/*
+   Triggered when navigating away or calling terminal.shutdown().
+   Add .screen-off class to .terminal-window to trigger.
+*/
+@keyframes screen-off {
+  0%   { opacity: 1; transform: scaleY(1.0);   filter: brightness(1.0); }
+  60%  { opacity: 1; transform: scaleY(0.002); filter: brightness(2.0); }
+  100% { opacity: 0; transform: scaleY(0.002); filter: brightness(0.0); }
+}
+
+.screen-off {
+  animation: screen-off 0.4s ease-in forwards;
+  transform-origin: center center;
+  pointer-events: none;
+}
+
+/* ── Typing Animation ─────────────────────────────────────── */
+/*
+   Apply .typing to an element that should appear character
+   by character. Requires width to be animated — easiest
+   when used on single-line block elements with white-space: nowrap.
+   JS in boot.js handles multi-line typing instead.
+*/
+@keyframes typing-reveal {
+  from { width: 0; }
+  to   { width: 100%; }
+}
+
+.typing {
+  overflow: hidden;
+  white-space: nowrap;
+  display: inline-block;
+  animation: typing-reveal 1.5s steps(40, end) forwards;
+}
+
+/* ── Blink Cursor (standalone) ────────────────────────────── */
+/*
+   Can be placed on any element. Usually a <span> or ::after.
+*/
+@keyframes cursor-blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+.cursor-blink {
+  animation: cursor-blink var(--speed-blink) step-end infinite;
+}
+
+/* The block cursor element (already in terminal.css, duplicated
+   here for discoverability when working only with effects) */
+.cursor-block {
+  display: inline-block;
+  width: 0.6em;
+  height: 1em;
+  background-color: var(--color-cursor);
+  vertical-align: text-bottom;
+  animation: cursor-blink var(--speed-blink) step-end infinite;
+  text-shadow: var(--glow-sm);
+  margin-left: 1px;
+}
+
+.no-effects .cursor-block {
+  text-shadow: none;
+}
+
+/* ── Fade-In Lines ────────────────────────────────────────── */
+/*
+   Add .line-reveal to any output element to animate it in.
+   JS staggers these with a delay on each child.
+*/
+@keyframes line-reveal {
+  from {
+    opacity: 0;
+    transform: translateX(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.line-reveal {
+  opacity: 0;
+  animation: line-reveal var(--speed-slow) ease-out forwards;
+}
+
+/* ── Glitch Effect (optional, use sparingly) ──────────────── */
+/*
+   Add .glitch to text elements for an occasional digital
+   corruption effect. Use very sparingly (error states, etc.).
+*/
+@keyframes glitch-clip-1 {
+  0%   { clip-path: inset(40% 0 50% 0); transform: translate(-2px,  1px); }
+  20%  { clip-path: inset(80% 0 10% 0); transform: translate( 2px, -1px); }
+  40%  { clip-path: inset(20% 0 70% 0); transform: translate(-1px,  2px); }
+  60%  { clip-path: inset(60% 0 30% 0); transform: translate( 1px, -2px); }
+  80%  { clip-path: inset(10% 0 80% 0); transform: translate(-2px,  1px); }
+  100% { clip-path: inset(40% 0 50% 0); transform: translate( 0px,  0px); }
+}
+
+@keyframes glitch-clip-2 {
+  0%   { clip-path: inset(10% 0 80% 0); transform: translate( 2px, -1px); }
+  25%  { clip-path: inset(55% 0 30% 0); transform: translate(-2px,  1px); }
+  50%  { clip-path: inset(30% 0 55% 0); transform: translate( 1px, -2px); }
+  75%  { clip-path: inset(70% 0 15% 0); transform: translate(-1px,  2px); }
+  100% { clip-path: inset(10% 0 80% 0); transform: translate( 0px,  0px); }
+}
+
+.glitch {
+  position: relative;
+}
+
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.glitch::before {
+  color: var(--color-error);
+  opacity: 0.6;
+  animation: glitch-clip-1 0.4s steps(1) infinite;
+}
+
+.glitch::after {
+  color: var(--color-fg-bright);
+  opacity: 0.6;
+  animation: glitch-clip-2 0.4s steps(1) infinite;
+  animation-delay: 0.1s;
+}
+
+.no-effects .glitch::before,
+.no-effects .glitch::after {
+  display: none;
+}
+
+/* ── Reduced Motion ───────────────────────────────────────── */
+/*
+   Respects the OS-level "reduce motion" preference.
+   All animations are disabled or simplified.
+*/
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .terminal-window::after {
+    display: none;
+  }
+
+  .terminal-window::before {
+    display: none;
+  }
+}

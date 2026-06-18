@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>alyhenr ~ 404</title>
+
+  <link rel="stylesheet" href="/css/tokens.css" />
+  <link rel="stylesheet" href="/css/terminal.css" />
+  <link rel="stylesheet" href="/css/effects.css" />
+</head>
+<body class="terminal-window">
+
+  <div id="terminal-header"></div>
+
+  <main class="terminal-content">
+    <div class="cmd-block">
+      <div class="prompt">
+        <span class="prompt__user">alyhenr</span><span class="prompt__at">@</span><span
+          class="prompt__host">alyhenr.dev</span><span class="prompt__sep">:</span><span
+          class="prompt__path">~</span><span class="prompt__sigil">$</span>&nbsp;<span
+          class="prompt__command" id="not-found-path"></span>
+      </div>
+
+      <p class="output output--error">bash: <span id="not-found-cmd"></span>: No such file or directory</p>
+      <div class="output output--blank"></div>
+      <p class="output output--dim">
+        The path you requested does not exist.
+        Try  <a href="/">cd ~</a>  to go home.
+      </p>
+      <div class="output output--blank"></div>
+
+      <pre class="ascii-art ascii-art--dim">
+  _  _    ___  _  _
+ | || |  / _ \| || |
+ | || |_| | | | || |_
+ |__   _| |_| |__   _|
+    |_|  \___/   |_|
+      </pre>
+
+      <p class="output output--dim">→ <a href="/">return home</a></p>
+    </div>
+  </main>
+
+  <div id="terminal-nav"></div>
+
+  <script>
+    window.CHROME_CONFIG = { activePage: '' };
+
+    // Show the attempted path in the error output
+    const path = window.location.pathname;
+    const cmdEl = document.getElementById('not-found-path');
+    const errEl = document.getElementById('not-found-cmd');
+    if (cmdEl) cmdEl.textContent = `cat ${path}`;
+    if (errEl) errEl.textContent = path;
+  </script>
+  <script src="/js/chrome.js"></script>
+
+</body>
+</html>
