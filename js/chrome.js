@@ -42,10 +42,11 @@
   /* ── Navigation definition ──────────────────────────────── */
   // Add new pages here. 'id' must match the CHROME_CONFIG.activePage value.
   const NAV_ITEMS = [
-    { id: 'home',     label: '~',        href: '/'             },
-    { id: 'projects', label: 'projects', href: '/projects.html' },
-    { id: 'blog',     label: 'blog',     href: '/blog.html'    },
-    { id: 'contact',  label: 'contact',  href: '/contact.html' },
+    { id: 'home',     label: '~',        href: 'index.html'    },
+    { id: 'projects', label: 'projects', href: 'projects.html' },
+    { id: 'blog',     label: 'blog',     href: 'blog.html'     },
+    { id: 'games',    label: 'games',    href: 'games.html'    },
+    { id: 'contact',  label: 'contact',  href: 'contact.html'  },
   ];
 
   /* ── Helpers ────────────────────────────────────────────── */

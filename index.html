@@ -167,6 +167,7 @@
   </script>
   <script src="js/chrome.js"></script>
   <script src="js/boot.js"></script>
+  <script src="js/filesystem.js"></script>
   <script src="js/terminal.js"></script>
   <script>
     // Remove screen-on animation class after it finishes
@@ -180,16 +181,14 @@
     // Run boot, then initialize the interactive terminal
     document.addEventListener('DOMContentLoaded', async () => {
       await Boot.init();
-      Terminal.init({ user: 'alyhenr', host: 'alyhenr.dev', cwd: '~' });
-    });
+      Terminal.init({ user: 'alyhenr', host: 'alyhenr.dev', cwd: '/' });
 
-    // Example: register a custom command on the home page
-    // Terminal.register('secret', {
-    //   description: 'A hidden easter egg.',
-    //   run(_args, term) {
-    //     term.print('You found it.', { cls: 'output--amber' });
-    //   }
-    // });
+      // Example: register a custom command specific to this page
+      // Terminal.register('secret', {
+      //   description: 'A hidden easter egg.',
+      //   run(_args, term) { term.print('You found it.', { cls: 'output--amber' }); }
+      // });
+    });
   </script>
 
 </body>

@@ -15,6 +15,9 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  /* Lock html to viewport height so flex children can scroll */
+  height: 100%;
+  overflow: hidden;
 }
 
 body {
@@ -24,8 +27,9 @@ body {
   line-height: var(--line-height-base);
   color: var(--color-fg);
   background-color: var(--color-bg);
-  min-height: 100vh;
-  overflow-x: hidden;
+  /* Fixed height (not min-height) so the flex column is bounded */
+  height: 100%;
+  overflow: hidden;
 }
 
 ::selection {
@@ -49,7 +53,8 @@ a:hover {
 .terminal-window {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  /* Exact viewport height — makes flex scrolling work correctly */
+  height: 100vh;
   background-color: var(--color-bg);
   border-radius: var(--crt-radius);
   position: relative;
@@ -131,12 +136,17 @@ a:hover {
 .terminal-content {
   flex: 1;
   overflow-y: auto;
+  /* min-height: 0 is critical — without it a flex child defaults to
+     min-height: auto and overflows the parent instead of scrolling */
+  min-height: 0;
   padding: var(--space-6) var(--content-padding);
   max-width: var(--content-max-width);
   width: 100%;
   margin: 0 auto;
   position: relative;
   z-index: var(--z-content);
+  /* Smooth scrolling for programmatic scrollTop changes */
+  scroll-behavior: auto;
 }
 
 /* Full-width variant — no max-width constraint */

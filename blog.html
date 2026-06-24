@@ -80,7 +80,7 @@
       <div class="terminal-input-row__prompt prompt" aria-hidden="true">
         <span class="prompt__user">alyhenr</span><span class="prompt__at">@</span><span
           class="prompt__host">alyhenr.dev</span><span class="prompt__sep">:</span><span
-          class="prompt__path">~/blog</span><span class="prompt__sigil">$</span>&nbsp;
+          class="prompt__path" id="input-cwd">/blog</span><span class="prompt__sigil">$</span>&nbsp;
       </div>
       <label for="terminal-input" class="sr-only">Terminal input</label>
       <input id="terminal-input" class="terminal-input" type="text"
@@ -95,24 +95,10 @@
     window.CHROME_CONFIG = { user: 'alyhenr', host: 'alyhenr.dev', activePage: 'blog' };
   </script>
   <script src="js/chrome.js"></script>
+  <script src="js/filesystem.js"></script>
   <script src="js/terminal.js"></script>
   <script>
-    Terminal.init({ user: 'alyhenr', host: 'alyhenr.dev', cwd: '~/blog' });
-    if (window.chrome) window.chrome.setCwd('~/blog');
-
-    // Register a blog-specific command: `cat <post>` opens the post
-    Terminal.register('cat', {
-      description: 'Open a blog post by filename.',
-      usage: 'cat <filename>',
-      run(args, term) {
-        const name = args[1];
-        if (!name) { term.error('cat: missing filename'); return; }
-        // Strip .md / .html extension, then navigate
-        const slug = name.replace(/\.(md|html)$/, '');
-        term.dim(`Opening ${slug}...`);
-        setTimeout(() => { window.location.href = `blog/${slug}.html`; }, 400);
-      },
-    });
+    Terminal.init({ user: 'alyhenr', host: 'alyhenr.dev', cwd: '/blog' });
   </script>
 
 </body>

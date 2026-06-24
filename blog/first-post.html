@@ -107,7 +107,7 @@ console.log(greet('world'));</code></pre>
       <div class="terminal-input-row__prompt prompt" aria-hidden="true">
         <span class="prompt__user">alyhenr</span><span class="prompt__at">@</span><span
           class="prompt__host">alyhenr.dev</span><span class="prompt__sep">:</span><span
-          class="prompt__path">~/blog</span><span class="prompt__sigil">$</span>&nbsp;
+          class="prompt__path" id="input-cwd">/blog</span><span class="prompt__sigil">$</span>&nbsp;
       </div>
       <label for="terminal-input" class="sr-only">Terminal input</label>
       <input id="terminal-input" class="terminal-input" type="text"
@@ -122,10 +122,10 @@ console.log(greet('world'));</code></pre>
     window.CHROME_CONFIG = { user: 'alyhenr', host: 'alyhenr.dev', activePage: 'blog' };
   </script>
   <script src="../js/chrome.js"></script>
+  <script src="../js/filesystem.js"></script>
   <script src="../js/terminal.js"></script>
   <script>
-    Terminal.init({ user: 'alyhenr', host: 'alyhenr.dev', cwd: '~/blog' });
-    if (window.chrome) window.chrome.setCwd('~/blog');
+    Terminal.init({ user: 'alyhenr', host: 'alyhenr.dev', cwd: '/blog' });
   </script>
 
 </body>

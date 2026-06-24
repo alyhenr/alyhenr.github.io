@@ -179,7 +179,7 @@
       <div class="terminal-input-row__prompt prompt" aria-hidden="true">
         <span class="prompt__user">alyhenr</span><span class="prompt__at">@</span><span
           class="prompt__host">alyhenr.dev</span><span class="prompt__sep">:</span><span
-          class="prompt__path">~</span><span class="prompt__sigil">$</span>&nbsp;
+          class="prompt__path" id="input-cwd">/contact</span><span class="prompt__sigil">$</span>&nbsp;
       </div>
       <label for="terminal-input" class="sr-only">Terminal input</label>
       <input id="terminal-input" class="terminal-input" type="text"
@@ -194,9 +194,10 @@
     window.CHROME_CONFIG = { user: 'alyhenr', host: 'alyhenr.dev', activePage: 'contact' };
   </script>
   <script src="js/chrome.js"></script>
+  <script src="js/filesystem.js"></script>
   <script src="js/terminal.js"></script>
   <script>
-    Terminal.init({ user: 'alyhenr', host: 'alyhenr.dev', cwd: '~' });
+    Terminal.init({ user: 'alyhenr', host: 'alyhenr.dev', cwd: '/contact' });
 
     // Intercept the contact form to show terminal-style feedback
     const contactForm = document.getElementById('contact-form');

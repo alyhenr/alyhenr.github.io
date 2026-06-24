@@ -137,7 +137,7 @@
       <div class="terminal-input-row__prompt prompt" aria-hidden="true">
         <span class="prompt__user">alyhenr</span><span class="prompt__at">@</span><span
           class="prompt__host">alyhenr.dev</span><span class="prompt__sep">:</span><span
-          class="prompt__path">~/projects</span><span class="prompt__sigil">$</span>&nbsp;
+          class="prompt__path" id="input-cwd">/projects</span><span class="prompt__sigil">$</span>&nbsp;
       </div>
       <label for="terminal-input" class="sr-only">Terminal input</label>
       <input id="terminal-input" class="terminal-input" type="text"
@@ -153,10 +153,10 @@
     window.CHROME_CONFIG = { user: 'alyhenr', host: 'alyhenr.dev', activePage: 'projects' };
   </script>
   <script src="js/chrome.js"></script>
+  <script src="js/filesystem.js"></script>
   <script src="js/terminal.js"></script>
   <script>
-    Terminal.init({ user: 'alyhenr', host: 'alyhenr.dev', cwd: '~/projects' });
-    if (window.chrome) window.chrome.setCwd('~/projects');
+    Terminal.init({ user: 'alyhenr', host: 'alyhenr.dev', cwd: '/projects' });
 
     /**
      * Toggle a project's detail block open/closed.
