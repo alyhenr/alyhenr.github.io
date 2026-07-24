@@ -121,7 +121,7 @@
     '/status.txt': [
       'LOCATION   Brazil',
       'FOCUS      Software Engineering · Systems · Open Source',
-      'CONTACT    you@example.com',
+      'CONTACT    alyssonhra99@gmail.com',
       'STATUS     Open to interesting projects',
     ].join('\n'),
 
