@@ -73,6 +73,28 @@
       perms: '-rwxr-xr-x',
     },
 
+    /* Plugins — browser extensions.
+       Metadata for these pages lives in js/plugins.js; the entries here
+       exist so the terminal's ls/cd/cat can reach them. */
+    '/plugins': {
+      type: 'dir',
+      href: 'plugins/index.html',
+      date: '2026-07',
+      desc: 'Browser extensions & their privacy policies',
+    },
+    '/plugins/alvaras': {
+      type: 'dir',
+      href: 'plugins/alvaras/index.html',
+      date: '2026-07',
+      desc: 'Alvarás — controle de vencimento (Chrome, Firefox)',
+    },
+    '/plugins/alvaras/privacidade': {
+      type: 'dir',
+      href: 'plugins/alvaras/privacidade/index.html',
+      date: '2026-07',
+      desc: 'Política de privacidade — URL estável, não mover',
+    },
+
     /* Blog */
     '/blog': {
       type: 'dir',
@@ -121,7 +143,7 @@
     '/status.txt': [
       'LOCATION   Brazil',
       'FOCUS      Software Engineering · Systems · Open Source',
-      'CONTACT    alyssonhra99@gmail.com',
+      'CONTACT    alyssonhenr99@gmail.com',
       'STATUS     Open to interesting projects',
     ].join('\n'),
 

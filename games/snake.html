@@ -246,7 +246,7 @@
 
   <!-- ── Scripts ───────────────────────────────────────────── -->
   <script>
-    window.CHROME_CONFIG = { user: 'alyhenr', host: 'alyhenr.dev', activePage: 'games' };
+    window.CHROME_CONFIG = { user: 'alyhenr', host: 'alyhenr.dev', activePage: 'games', basePath: '../' };
   </script>
   <script src="../js/chrome.js"></script>
   <script src="../js/filesystem.js"></script>
@@ -272,7 +272,7 @@
     }
 
     // Initialise terminal for commands (pause/restart/quit)
-    Terminal.init({ user: 'alyhenr', host: 'alyhenr.dev', cwd: '/games' });
+    Terminal.init({ user: 'alyhenr', host: 'alyhenr.dev', cwd: '/games', basePath: '../' });
 
     // Game-specific terminal commands
     Terminal.register('pause', {

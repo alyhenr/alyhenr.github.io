@@ -5,9 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>alyhenr ~ 404</title>
 
-  <link rel="stylesheet" href="/css/tokens.css" />
-  <link rel="stylesheet" href="/css/terminal.css" />
-  <link rel="stylesheet" href="/css/effects.css" />
+  <!--
+    SITE ROOT — the only file that hardcodes it.
+
+    GitHub Pages serves this page for a missing path at ANY depth (e.g.
+    /personal-website/plugins/nope/) while leaving that path in the URL bar,
+    so relative asset paths ('css/…', '../css/…') would resolve against the
+    wrong directory and silently fail. Root-absolute paths that include the
+    repo prefix are the only form that works at every depth.
+
+    Moving to a custom domain (alyhenr.dev): change every
+    /personal-website/ below — and CHROME_CONFIG.basePath at the bottom —
+    to just /
+  -->
+  <link rel="stylesheet" href="/personal-website/css/tokens.css" />
+  <link rel="stylesheet" href="/personal-website/css/terminal.css" />
+  <link rel="stylesheet" href="/personal-website/css/effects.css" />
 </head>
 <body class="terminal-window">
 
@@ -26,7 +39,7 @@
       <div class="output output--blank"></div>
       <p class="output output--dim">
         The path you requested does not exist.
-        Try  <a href="/">cd ~</a>  to go home.
+        Try  <a href="/personal-website/">cd ~</a>  to go home.
       </p>
       <div class="output output--blank"></div>
 
@@ -38,14 +51,14 @@
     |_|  \___/   |_|
       </pre>
 
-      <p class="output output--dim">→ <a href="/">return home</a></p>
+      <p class="output output--dim">→ <a href="/personal-website/">return home</a></p>
     </div>
   </main>
 
   <div id="terminal-nav"></div>
 
   <script>
-    window.CHROME_CONFIG = { activePage: '' };
+    window.CHROME_CONFIG = { activePage: '', basePath: '/personal-website/' };
 
     // Show the attempted path in the error output
     const path = window.location.pathname;
@@ -54,8 +67,8 @@
     if (cmdEl) cmdEl.textContent = `cat ${path}`;
     if (errEl) errEl.textContent = path;
   </script>
-  <script src="/js/chrome.js"></script>
-  <script src="/js/filesystem.js"></script>
+  <script src="/personal-website/js/chrome.js"></script>
+  <script src="/personal-website/js/filesystem.js"></script>
 
 </body>
 </html>

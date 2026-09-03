@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="alyhenr — browser extensions" />
+
+  <title>alyhenr ~ plugins</title>
+
+  <link rel="stylesheet" href="../css/tokens.css" />
+  <link rel="stylesheet" href="../css/terminal.css" />
+  <link rel="stylesheet" href="../css/effects.css" />
+</head>
+<body class="terminal-window">
+
+  <!-- Terminal header — injected by chrome.js -->
+  <div id="terminal-header"></div>
+
+  <!-- ── Main content ──────────────────────────────────────── -->
+  <main class="terminal-content" id="terminal-output-wrapper">
+    <div id="terminal-output">
+
+      <!-- ls -la /plugins/ -->
+      <div class="cmd-block">
+        <div class="prompt">
+          <span class="prompt__user">alyhenr</span><span class="prompt__at">@</span><span
+            class="prompt__host">alyhenr.dev</span><span class="prompt__sep">:</span><span
+            class="prompt__path">~/plugins</span><span class="prompt__sigil">$</span>&nbsp;<span
+            class="prompt__command">ls -la</span>
+        </div>
+
+        <p class="output output--dim">
+          Browser extensions I build and maintain — click one for details and its privacy policy
+        </p>
+        <div class="output output--blank"></div>
+
+        <!-- Listing is rendered from js/plugins.js — do not hardcode rows here.
+             To add an extension, append an entry to PLUGINS in that file. -->
+        <div class="ls-table" id="plugins-table"></div>
+
+        <noscript>
+          <p class="output output--amber">
+            JavaScript is off, so the listing below is the static fallback.
+          </p>
+          <ul class="output output--white" style="padding-left: var(--space-5);">
+            <li><a href="alvaras/index.html">Alvarás — controle de vencimento</a>
+              &mdash; <a href="alvaras/privacidade/index.html">política de privacidade</a></li>
+          </ul>
+        </noscript>
+
+        <div class="output output--blank"></div>
+      </div>
+
+      <!-- Note on privacy policy URLs -->
+      <div class="cmd-block">
+        <div class="prompt">
+          <span class="prompt__user">alyhenr</span><span class="prompt__at">@</span><span
+            class="prompt__host">alyhenr.dev</span><span class="prompt__sep">:</span><span
+            class="prompt__path">~/plugins</span><span class="prompt__sigil">$</span>&nbsp;<span
+            class="prompt__command">cat README</span>
+        </div>
+
+        <div class="cat-block">
+          <p class="cat-block__body">
+            Every extension here ships its own privacy policy at a fixed URL under
+            <span class="output--amber" style="display:inline;">/plugins/&lt;name&gt;/privacidade/</span>.
+            Those URLs are submitted to the Chrome Web Store and Firefox Add-ons and are
+            not moved or removed once published.
+          </p>
+        </div>
+        <div class="output output--blank"></div>
+      </div>
+
+    </div><!-- /#terminal-output -->
+
+    <!-- Interactive input row -->
+    <form id="terminal-form" class="terminal-input-row" autocomplete="off" spellcheck="false">
+      <div class="terminal-input-row__prompt prompt" aria-hidden="true">
+        <span class="prompt__user">alyhenr</span><span class="prompt__at">@</span><span
+          class="prompt__host">alyhenr.dev</span><span class="prompt__sep">:</span><span
+          class="prompt__path" id="input-cwd">/plugins</span><span class="prompt__sigil">$</span>&nbsp;
+      </div>
+      <label for="terminal-input" class="sr-only">Terminal input</label>
+      <input id="terminal-input" class="terminal-input" type="text"
+             placeholder="type a command…" aria-label="Terminal command input" />
+    </form>
+
+  </main>
+
+  <!-- Status bar / nav -->
+  <div id="terminal-nav"></div>
+
+  <script>
+    window.CHROME_CONFIG = { user: 'alyhenr', host: 'alyhenr.dev', activePage: 'plugins', basePath: '../' };
+  </script>
+  <script src="../js/chrome.js"></script>
+  <script src="../js/plugins.js"></script>
+  <script src="../js/filesystem.js"></script>
+  <script src="../js/terminal.js"></script>
+  <script>
+    Terminal.init({ user: 'alyhenr', host: 'alyhenr.dev', cwd: '/plugins', basePath: '../' });
+
+    /**
+     * Render the extension listing from window.PLUGINS into #plugins-table,
+     * in the same ls -la row shape used on /projects.
+     */
+    (function renderPlugins() {
+      const table = document.getElementById('plugins-table');
+      if (!table || !window.PLUGINS) return;
+
+      const esc = (s) => String(s)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+
+      for (const p of window.PLUGINS.all) {
+        const status = window.PLUGINS.STATUS_LABELS[p.status] || { label: p.status, cls: '' };
+
+        const row = document.createElement('div');
+        row.className = 'ls-entry ls-entry--clickable';
+        row.setAttribute('role', 'link');
+        row.setAttribute('tabindex', '0');
+        row.innerHTML =
+          '<span class="ls-entry__perms">-rwxr-xr-x</span>' +
+          '<span class="ls-entry__size">' + esc(p.size) + '</span>' +
+          '<span class="ls-entry__date">' + esc(p.date) + '</span>' +
+          '<span class="ls-entry__name ls-entry__name--exec">' + esc(p.slug) + '</span>' +
+          '<span class="ls-entry__desc">' + esc(p.name) + '</span>';
+
+        const go = () => { window.location.href = p.href; };
+        row.addEventListener('click', go);
+        row.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); }
+        });
+        table.appendChild(row);
+
+        // Detail block: tagline, browsers, status, and the two stable links
+        const detail = document.createElement('div');
+        detail.className = 'cat-block';
+        detail.innerHTML =
+          '<p class="cat-block__body">' + esc(p.tagline) + '</p>' +
+          '<div class="cat-block__section">' +
+            '<div class="cat-block__label">BROWSERS</div>' +
+            '<div class="cat-block__value">' +
+              p.browsers.map(b => '<span class="tag tag--white">' + esc(b) + '</span>').join('&nbsp;') +
+            '</div>' +
+          '</div>' +
+          '<div class="cat-block__section">' +
+            '<div class="cat-block__label">STATUS</div>' +
+            '<div class="cat-block__value">' +
+              '<span class="tag ' + status.cls + '">' + esc(status.label) + '</span>' +
+            '</div>' +
+          '</div>' +
+          '<div class="cat-block__value">' +
+            '<a href="' + esc(p.href) + '">[DETAILS]</a>&nbsp;&nbsp;' +
+            '<a href="' + esc(p.privacy) + '">[PRIVACY POLICY]</a>' +
+          '</div>';
+        table.appendChild(detail);
+      }
+    })();
+  </script>
+
+</body>
+</html>

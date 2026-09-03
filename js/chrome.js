@@ -18,6 +18,7 @@
  *       user: 'alyhenr',      // username shown in prompt
  *       host: 'alyhenr.dev',  // hostname
  *       activePage: 'blog',   // highlights the active nav link
+ *       basePath: '../',      // prefix for nav hrefs on nested pages
  *     };
  *   </script>
  */
@@ -31,6 +32,7 @@
     user: 'alyhenr',
     host: 'alyhenr.dev',
     activePage: 'home',
+    basePath: '',      // '../' etc. for pages served from a subdirectory
     uptimeStart: null, // Date — if null, uses page load time
   };
 
@@ -45,6 +47,7 @@
     { id: 'home',     label: '~',        href: 'index.html'    },
     { id: 'projects', label: 'projects', href: 'projects.html' },
     { id: 'blog',     label: 'blog',     href: 'blog.html'     },
+    { id: 'plugins',  label: 'plugins',  href: 'plugins/index.html' },
     { id: 'games',    label: 'games',    href: 'games.html'    },
     { id: 'contact',  label: 'contact',  href: 'contact.html'  },
   ];
@@ -121,7 +124,7 @@
       const cls = 'status-bar__nav-link' + (isActive ? ' status-bar__nav-link--active' : '');
       const ariaCurrent = isActive ? ' aria-current="page"' : '';
       return `<li class="status-bar__nav-item">
-        <a class="${cls}" href="${item.href}"${ariaCurrent}>[${escHtml(item.label)}]</a>
+        <a class="${cls}" href="${cfg.basePath}${item.href}"${ariaCurrent}>[${escHtml(item.label)}]</a>
       </li>`;
     }).join('');
 

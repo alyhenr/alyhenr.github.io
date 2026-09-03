@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Alvarás — controle de vencimento: extensão de navegador que escaneia a página do processo e acompanha o vencimento dos seus alvarás de construção em um só lugar." />
+
+  <title>alyhenr ~ alvaras</title>
+
+  <link rel="stylesheet" href="../../css/tokens.css" />
+  <link rel="stylesheet" href="../../css/terminal.css" />
+  <link rel="stylesheet" href="../../css/effects.css" />
+</head>
+<body class="terminal-window">
+
+  <div id="terminal-header"></div>
+
+  <main class="terminal-content" id="terminal-output-wrapper">
+    <div id="terminal-output">
+
+      <!-- cat plugins/alvaras -->
+      <div class="cmd-block">
+        <div class="prompt">
+          <span class="prompt__user">alyhenr</span><span class="prompt__at">@</span><span
+            class="prompt__host">alyhenr.dev</span><span class="prompt__sep">:</span><span
+            class="prompt__path">~/plugins</span><span class="prompt__sigil">$</span>&nbsp;<span
+            class="prompt__command">cat alvaras/README.md</span>
+        </div>
+
+        <div class="kv-row">
+          <span class="kv-row__key">NOME</span>
+          <span class="kv-row__value kv-row__value--highlight">Alvarás — controle de vencimento</span>
+        </div>
+        <div class="kv-row">
+          <span class="kv-row__key">NAVEGADORES</span>
+          <span class="kv-row__value">
+            <span class="tag tag--white">Chrome</span>
+            <span class="tag tag--white">Brave</span>
+            <span class="tag tag--white">Edge</span>
+            <span class="tag tag--white">Opera</span>
+            <span class="tag tag--white">Firefox</span>
+          </span>
+        </div>
+        <div class="kv-row">
+          <span class="kv-row__key">SITUAÇÃO</span>
+          <span class="kv-row__value">
+            <span class="tag tag--amber">AINDA NÃO PUBLICADA</span>
+          </span>
+        </div>
+        <div class="kv-row">
+          <span class="kv-row__key">PRIVACIDADE</span>
+          <span class="kv-row__value"><a href="privacidade/index.html">Política de privacidade</a></span>
+        </div>
+
+        <div class="output output--blank"></div>
+        <hr class="divider" />
+
+        <p class="output output--bright">
+          Escaneie a página do processo e acompanhe o vencimento dos seus alvarás de
+          construção em um só lugar.
+        </p>
+
+        <div class="output output--blank"></div>
+      </div>
+
+      <!-- O problema -->
+      <div class="cmd-block">
+        <div class="cat-block">
+          <div class="divider--comment">o problema</div>
+
+          <p class="cat-block__body">
+            Engenheiros civis no Brasil acompanham alvarás de construção pelos portais
+            WGeo das prefeituras. O alvará vale por dois anos contados da data em que foi
+            deferido — mas descobrir essa data significa abrir cada processo e procurar na
+            aba <span class="output--amber" style="display:inline;">Histórico</span>.
+          </p>
+
+          <p class="cat-block__body">
+            Com vários processos em andamento, conferir os vencimentos vira uma tarefa
+            manual e repetitiva, feita um processo de cada vez.
+          </p>
+
+          <div class="divider--comment">o que a extensão faz</div>
+
+          <p class="cat-block__body">
+            Na página do processo, um clique em <span class="output--amber" style="display:inline;">Escanear
+            esta página</span> lê a data de deferimento e calcula o vencimento. Cada alvará
+            escaneado entra em uma lista única, ordenada por quem vence primeiro.
+          </p>
+
+          <p class="cat-block__body">
+            A lista também pode ser exportada em CSV, através do download normal do
+            navegador.
+          </p>
+        </div>
+      </div>
+
+      <!-- Screenshots -->
+      <div class="cmd-block">
+        <div class="prompt">
+          <span class="prompt__user">alyhenr</span><span class="prompt__at">@</span><span
+            class="prompt__host">alyhenr.dev</span><span class="prompt__sep">:</span><span
+            class="prompt__path">~/plugins/alvaras</span><span class="prompt__sigil">$</span>&nbsp;<span
+            class="prompt__command">open screenshots/</span>
+        </div>
+
+        <div class="shot">
+          <div class="shot__frame">
+            <img class="shot__img" src="img/shot-01.png" width="1280" height="800"
+                 alt="Lista de alvarás da extensão, ordenada por data de vencimento." />
+          </div>
+          <p class="shot__caption">A lista de alvarás, ordenada por quem vence primeiro.</p>
+        </div>
+
+        <div class="shot">
+          <div class="shot__frame">
+            <img class="shot__img" src="img/shot-02.png" width="1280" height="800"
+                 alt="Botão Escanear esta página, usado sobre a página de um processo." />
+          </div>
+          <p class="shot__caption">Um clique sobre a página do processo — nada é lido antes disso.</p>
+        </div>
+      </div>
+
+      <!-- Privacidade -->
+      <div class="cmd-block">
+        <div class="cat-block">
+          <div class="divider--comment">privacidade</div>
+
+          <p class="cat-block__body">
+            Sem conta, sem servidor, sem nada transmitido. Tudo o que a extensão lê fica
+            gravado apenas no seu próprio navegador, no seu computador.
+          </p>
+
+          <p class="cat-block__body">
+            A extensão não pede permissão de host: ela só consegue ler uma página no
+            instante em que você clica no botão. Não há acesso permanente a nenhum site,
+            nem a outras abas, nem em segundo plano.
+          </p>
+
+          <p class="cat-block__body">
+            Nenhum analytics, nenhuma telemetria, nenhuma requisição de rede.
+          </p>
+
+          <div class="output output--blank"></div>
+          <p class="cat-block__body">
+            &rarr; <a href="privacidade/index.html">Leia a política de privacidade completa</a>
+          </p>
+        </div>
+      </div>
+
+      <!-- Instalação -->
+      <div class="cmd-block">
+        <div class="prompt">
+          <span class="prompt__user">alyhenr</span><span class="prompt__at">@</span><span
+            class="prompt__host">alyhenr.dev</span><span class="prompt__sep">:</span><span
+            class="prompt__path">~/plugins/alvaras</span><span class="prompt__sigil">$</span>&nbsp;<span
+            class="prompt__command">cat INSTALL</span>
+        </div>
+
+        <div class="cat-block">
+          <p class="cat-block__body output--amber">
+            A extensão ainda não foi publicada. Os links abaixo são marcadores — troque o
+            <span class="output--amber" style="display:inline;">href="#"</span> pela URL real
+            assim que cada loja aprovar a listagem.
+          </p>
+
+          <div class="cat-block__section">
+            <div class="cat-block__label">CHROME WEB STORE</div>
+            <div class="cat-block__value">
+              <!-- TODO: substituir href="#" pela URL da Chrome Web Store -->
+              <a href="#" aria-disabled="true">[LINK PENDENTE — Chrome / Brave / Edge / Opera]</a>
+            </div>
+          </div>
+
+          <div class="cat-block__section">
+            <div class="cat-block__label">FIREFOX ADD-ONS</div>
+            <div class="cat-block__value">
+              <!-- TODO: substituir href="#" pela URL do addons.mozilla.org -->
+              <a href="#" aria-disabled="true">[LINK PENDENTE — Firefox]</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="output output--blank"></div>
+        <p class="output output--dim">
+          &larr; <a href="../index.html">voltar para /plugins</a>
+        </p>
+        <div class="output output--blank"></div>
+      </div>
+
+    </div><!-- /#terminal-output -->
+
+    <!-- Interactive input row -->
+    <form id="terminal-form" class="terminal-input-row" autocomplete="off" spellcheck="false">
+      <div class="terminal-input-row__prompt prompt" aria-hidden="true">
+        <span class="prompt__user">alyhenr</span><span class="prompt__at">@</span><span
+          class="prompt__host">alyhenr.dev</span><span class="prompt__sep">:</span><span
+          class="prompt__path" id="input-cwd">/plugins/alvaras</span><span class="prompt__sigil">$</span>&nbsp;
+      </div>
+      <label for="terminal-input" class="sr-only">Terminal input</label>
+      <input id="terminal-input" class="terminal-input" type="text"
+             placeholder="type a command…" aria-label="Terminal command input" />
+    </form>
+
+  </main>
+
+  <div id="terminal-nav"></div>
+
+  <script>
+    window.CHROME_CONFIG = { user: 'alyhenr', host: 'alyhenr.dev', activePage: 'plugins', basePath: '../../' };
+  </script>
+  <script src="../../js/chrome.js"></script>
+  <script src="../../js/filesystem.js"></script>
+  <script src="../../js/terminal.js"></script>
+  <script>
+    Terminal.init({ user: 'alyhenr', host: 'alyhenr.dev', cwd: '/plugins/alvaras', basePath: '../../' });
+  </script>
+
+</body>
+</html>

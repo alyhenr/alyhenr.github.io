@@ -12,6 +12,10 @@
  * Usage:
  *   Terminal.init({ user: 'alyhenr', host: 'alyhenr.dev', cwd: '~' });
  *
+ *   Pages served from a subdirectory must pass basePath so that the
+ *   document-relative hrefs in filesystem.js still resolve:
+ *   Terminal.init({ cwd: '/plugins/alvaras', basePath: '../../' });
+ *
  * Adding commands:
  *   Terminal.register('mycommand', {
  *     description: 'Does something cool',
@@ -32,12 +36,27 @@
     cwd:          '/',
     user:         'alyhenr',
     host:         'alyhenr.dev',
+    basePath:     '',
     outputEl:     null,
     inputEl:      null,
   };
 
   /* ── FS accessor (safe — works even if filesystem.js not loaded) */
   const FS = () => window.FS || null;
+
+  /**
+   * Resolve an FS href against state.basePath and navigate to it.
+   * FS hrefs are document-relative ('blog.html'), so a page served from
+   * a subdirectory needs the basePath prefix to reach them.
+   */
+  function hrefFor(href) {
+    if (/^([a-z]+:)?\/\//i.test(href) || href.startsWith('/')) return href;
+    return state.basePath + href;
+  }
+
+  function navTo(href) {
+    window.location.href = hrefFor(href);
+  }
 
   /* ── Command registry ───────────────────────────────────── */
   const commands = {};
@@ -207,7 +226,7 @@
       // If the directory maps to a page, navigate there
       if (node.href) {
         term.dim(`Navigating to ${absPath}...`);
-        setTimeout(() => { window.location.href = node.href; }, 350);
+        setTimeout(() => { navTo(node.href); }, 350);
       }
     },
   };
@@ -300,7 +319,7 @@
         term.blank();
         const el = appendLine('', {});
         el.innerHTML = `<span class="output--dim">→ </span>` +
-          `<a href="${escHtml(node.href)}" class="output--bright">[OPEN in browser]</a>`;
+          `<a href="${escHtml(hrefFor(node.href))}" class="output--bright">[OPEN in browser]</a>`;
         scrollBottom();
       }
     },
@@ -343,7 +362,7 @@
   /* ── open / go ──────────────────────────────────────────── */
   const goCmd = {
     description: 'Navigate to a site page by name.',
-    usage: 'go <home|projects|blog|contact|games>',
+    usage: 'go <home|projects|blog|plugins|contact|games>',
     run(args, term) {
       const target = args[1] ? args[1].toLowerCase() : null;
       if (!target) { term.error(`go: missing destination`); return; }
@@ -354,6 +373,7 @@
         '~':      '/',
         projects: '/projects',
         blog:     '/blog',
+        plugins:  '/plugins',
         contact:  '/contact',
         games:    '/games',
       };
@@ -363,7 +383,7 @@
       const node    = fs ? fs.get(absPath) : null;
 
       if (!node) {
-        term.error(`go: unknown destination '${target}'. Try: home, projects, blog, contact, games`);
+        term.error(`go: unknown destination '${target}'. Try: home, projects, blog, plugins, contact, games`);
         return;
       }
       if (!node.href) {
@@ -372,7 +392,7 @@
       }
 
       term.dim(`Navigating to ${absPath}...`);
-      setTimeout(() => { window.location.href = node.href; }, 350);
+      setTimeout(() => { navTo(node.href); }, 350);
     },
   };
   commands['go']   = goCmd;
@@ -938,11 +958,11 @@
         const row = document.createElement('div');
         row.className = 'ls-entry' + (entry.href ? ' ls-entry--clickable' : '');
         if (entry.href) {
-          row.addEventListener('click', () => { window.location.href = entry.href; });
+          row.addEventListener('click', () => { navTo(entry.href); });
           row.setAttribute('role', 'link');
           row.setAttribute('tabindex', '0');
           row.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') window.location.href = entry.href;
+            if (e.key === 'Enter' || e.key === ' ') navTo(entry.href);
           });
         }
         row.innerHTML =

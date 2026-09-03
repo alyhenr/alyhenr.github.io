@@ -531,6 +531,113 @@ a:hover {
   animation: pulse-border 2s ease-in-out infinite;
 }
 
+/* ── Screenshot ───────────────────────────────────────────── */
+/* Framed product screenshot, e.g. on an extension landing page */
+.shot {
+  margin: var(--space-4) 0 var(--space-6);
+}
+
+.shot__frame {
+  border: 1px solid var(--color-border);
+  border-radius: 2px;
+  background: var(--color-bg-surface);
+  padding: var(--space-2);
+  overflow: hidden;
+}
+
+.shot__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 2px;
+}
+
+.shot__caption {
+  color: var(--color-fg-dim);
+  font-size: var(--font-size-sm);
+  margin-top: var(--space-2);
+}
+
+.shot__caption::before {
+  content: '// ';
+  color: var(--color-fg-muted);
+}
+
+/* ── Document Table ───────────────────────────────────────── */
+/* Plain data table for long-form documents (e.g. a permissions table
+   in a privacy policy). Scrolls horizontally on narrow screens rather
+   than forcing the page to. */
+.doc-table-wrap {
+  overflow-x: auto;
+  margin: var(--space-3) 0 var(--space-5);
+}
+
+.doc-table {
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 480px;
+  font-size: var(--font-size-sm);
+}
+
+.doc-table th,
+.doc-table td {
+  border: 1px solid var(--color-border);
+  padding: var(--space-2) var(--space-3);
+  text-align: left;
+  vertical-align: top;
+  line-height: var(--line-height-base);
+}
+
+.doc-table th {
+  color: var(--color-fg-dim);
+  font-weight: var(--font-weight-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background-color: var(--color-bg-surface);
+}
+
+.doc-table td {
+  color: var(--color-fg);
+}
+
+.doc-table td:first-child {
+  color: var(--color-amber);
+  white-space: nowrap;
+}
+
+/* ── Long-form document ───────────────────────────────────── */
+/* Headings inside prose keep the terminal type scale rather than the
+   browser's default heading sizes. */
+.doc h1 {
+  color: var(--color-fg-bright);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-medium);
+  margin-bottom: var(--space-2);
+}
+
+.doc h2.divider--comment {
+  font-weight: var(--font-weight-regular);
+}
+
+.doc strong {
+  color: var(--color-fg-bright);
+  font-weight: var(--font-weight-medium);
+}
+
+.doc ul {
+  padding-left: var(--space-5);
+  margin-bottom: var(--space-4);
+}
+
+.doc li {
+  color: var(--color-fg);
+  line-height: var(--line-height-loose);
+}
+
+.doc code {
+  color: var(--color-amber);
+}
+
 /* ── Section Divider ──────────────────────────────────────── */
 .divider {
   border: none;
