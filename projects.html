@@ -3,151 +3,139 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="alyhenr — projects" />
+  <meta name="description" content="Projects designed and built by Alysson Almeida." />
 
-  <title>alyhenr ~ projects</title>
+  <title>alyhenr — work</title>
 
   <link rel="stylesheet" href="css/tokens.css" />
-  <link rel="stylesheet" href="css/terminal.css" />
-  <link rel="stylesheet" href="css/effects.css" />
+  <link rel="stylesheet" href="css/components.css" />
 </head>
-<body class="terminal-window">
+<body>
 
-  <!-- Terminal header — injected by chrome.js -->
-  <div id="terminal-header"></div>
+  <main class="page">
 
-  <!-- ── Main content ──────────────────────────────────────── -->
-  <main class="terminal-content" id="terminal-output-wrapper">
-    <div id="terminal-output">
+    <section class="window">
+      <div class="window__bar">
+        <span class="window__title">work</span>
+        <span class="window__controls" aria-hidden="true">
+          <span class="window__control"></span>
+          <span class="window__control"></span>
+          <span class="window__control"></span>
+        </span>
+      </div>
+      <div class="window__body">
+        <p class="subtitle">Portfolio</p>
+        <h1 class="title">Projects</h1>
+        <p class="lede">
+          Things I've designed and built, and what I learned doing it.
+        </p>
+        <p class="small muted">
+          Looking for the browser extensions? They have
+          <a href="plugins/index.html">their own section</a>.
+        </p>
+      </div>
+    </section>
 
-      <!-- ls -la /projects/ -->
-      <div class="cmd-block">
-        <div class="prompt">
-          <span class="prompt__user">alyhenr</span><span class="prompt__at">@</span><span
-            class="prompt__host">alyhenr.dev</span><span class="prompt__sep">:</span><span
-            class="prompt__path">~/projects</span><span class="prompt__sigil">$</span>&nbsp;<span
-            class="prompt__command">ls -la</span>
+    <!--
+      Project entries.
+      To add one: copy a <fieldset class="group"> block below and fill it in,
+      then register it in js/filesystem.js so the terminal can find it too.
+    -->
+
+    <section class="window">
+      <div class="window__bar">
+        <span class="window__title">project-alpha</span>
+        <span class="window__controls" aria-hidden="true">
+          <span class="window__control"></span>
+          <span class="window__control"></span>
+          <span class="window__control"></span>
+        </span>
+      </div>
+      <div class="window__body">
+        <h2 class="card__title">project-alpha</h2>
+        <p class="small muted">A short description of this project</p>
+
+        <div>
+          <div class="kv-row">
+            <span class="kv-row__key">Role</span>
+            <span class="kv-row__value">Solo — design, engineering</span>
+          </div>
+          <div class="kv-row">
+            <span class="kv-row__key">Year</span>
+            <span class="kv-row__value">2024</span>
+          </div>
+          <div class="kv-row">
+            <span class="kv-row__key">Stack</span>
+            <span class="kv-row__value">
+              <span class="tag tag--white">Rust</span>
+              <span class="tag tag--white">WebAssembly</span>
+              <span class="tag tag--white">HTML/CSS</span>
+            </span>
+          </div>
+          <div class="kv-row">
+            <span class="kv-row__key">Status</span>
+            <span class="kv-row__value"><span class="tag tag--live">Live</span></span>
+          </div>
         </div>
 
-        <p class="output output--dim">All projects — click a filename to expand</p>
-        <div class="output output--blank"></div>
+        <p class="prose">
+          Replace this with your actual project description. Explain what it does, why
+          you built it, and what makes it interesting. Keep it honest and concise.
+        </p>
 
-        <div class="ls-table">
-
-          <!-- ── Project entry (repeat this block for each project) ── -->
-          <div class="ls-entry ls-entry--clickable" role="button" tabindex="0"
-               aria-expanded="false"
-               onclick="toggleProject(this, 'project-alpha-detail')">
-            <span class="ls-entry__perms">-rwxr-xr-x</span>
-            <span class="ls-entry__size">12.4kb</span>
-            <span class="ls-entry__date">2024-11</span>
-            <span class="ls-entry__name ls-entry__name--exec">project-alpha</span>
-            <span class="ls-entry__desc">A short description of this project</span>
-          </div>
-
-          <!-- Project detail (hidden by default) -->
-          <div id="project-alpha-detail" class="cat-block hidden" aria-hidden="true">
-            <div class="cat-block__section">
-              <div class="cat-block__label">ROLE</div>
-              <div class="cat-block__value">Solo — design, engineering</div>
-            </div>
-            <div class="cat-block__section">
-              <div class="cat-block__label">YEAR</div>
-              <div class="cat-block__value">2024</div>
-            </div>
-            <div class="cat-block__section">
-              <div class="cat-block__label">STACK</div>
-              <div class="cat-block__value">
-                <span class="tag tag--green">Rust</span>
-                <span class="tag tag--green">WebAssembly</span>
-                <span class="tag tag--white">HTML/CSS</span>
-              </div>
-            </div>
-            <div class="cat-block__section">
-              <div class="cat-block__label">STATUS</div>
-              <div class="cat-block__value">
-                <span class="tag tag--live">LIVE</span>
-              </div>
-            </div>
-            <div class="divider--comment">description</div>
-            <p class="cat-block__body">
-              Replace this with your actual project description. Explain what it does,
-              why you built it, and what makes it interesting. Keep it honest and
-              concise — this is a terminal, not a marketing page.
-            </p>
-            <div class="divider--comment">links</div>
-            <div class="cat-block__value">
-              <a href="#">[REPO]</a>&nbsp;&nbsp;<a href="#">[LIVE]</a>
-            </div>
-          </div>
-          <!-- /project-alpha-detail -->
-
-          <!-- ── Add more project entries here ── -->
-          <div class="ls-entry ls-entry--clickable" role="button" tabindex="0"
-               aria-expanded="false"
-               onclick="toggleProject(this, 'project-beta-detail')">
-            <span class="ls-entry__perms">-rwxr-xr-x</span>
-            <span class="ls-entry__size">8.1kb</span>
-            <span class="ls-entry__date">2025-03</span>
-            <span class="ls-entry__name ls-entry__name--exec">project-beta</span>
-            <span class="ls-entry__desc">Another project — one-line description</span>
-          </div>
-
-          <div id="project-beta-detail" class="cat-block hidden" aria-hidden="true">
-            <div class="cat-block__section">
-              <div class="cat-block__label">ROLE</div>
-              <div class="cat-block__value">Contributor</div>
-            </div>
-            <div class="cat-block__section">
-              <div class="cat-block__label">YEAR</div>
-              <div class="cat-block__value">2025</div>
-            </div>
-            <div class="cat-block__section">
-              <div class="cat-block__label">STACK</div>
-              <div class="cat-block__value">
-                <span class="tag tag--green">Python</span>
-                <span class="tag tag--white">PostgreSQL</span>
-              </div>
-            </div>
-            <div class="cat-block__section">
-              <div class="cat-block__label">STATUS</div>
-              <div class="cat-block__value">
-                <span class="tag tag--amber">WIP</span>
-              </div>
-            </div>
-            <div class="divider--comment">description</div>
-            <p class="cat-block__body">
-              Replace with your project description.
-            </p>
-            <div class="divider--comment">links</div>
-            <div class="cat-block__value">
-              <a href="#">[REPO]</a>
-            </div>
-          </div>
-          <!-- /project-beta-detail -->
-
-        </div><!-- /.ls-table -->
-        <div class="output output--blank"></div>
+        <div class="btn-row">
+          <a class="btn" href="#">Repository</a>
+          <a class="btn" href="#">Live site</a>
+        </div>
       </div>
+    </section>
 
-    </div><!-- /#terminal-output -->
-
-    <!-- Interactive input row -->
-    <form id="terminal-form" class="terminal-input-row" autocomplete="off" spellcheck="false">
-      <div class="terminal-input-row__prompt prompt" aria-hidden="true">
-        <span class="prompt__user">alyhenr</span><span class="prompt__at">@</span><span
-          class="prompt__host">alyhenr.dev</span><span class="prompt__sep">:</span><span
-          class="prompt__path" id="input-cwd">/projects</span><span class="prompt__sigil">$</span>&nbsp;
+    <section class="window">
+      <div class="window__bar">
+        <span class="window__title">project-beta</span>
+        <span class="window__controls" aria-hidden="true">
+          <span class="window__control"></span>
+          <span class="window__control"></span>
+          <span class="window__control"></span>
+        </span>
       </div>
-      <label for="terminal-input" class="sr-only">Terminal input</label>
-      <input id="terminal-input" class="terminal-input" type="text"
-             placeholder="type a command…" aria-label="Terminal command input" />
-    </form>
+      <div class="window__body">
+        <h2 class="card__title">project-beta</h2>
+        <p class="small muted">Another project — one-line description</p>
+
+        <div>
+          <div class="kv-row">
+            <span class="kv-row__key">Role</span>
+            <span class="kv-row__value">Contributor</span>
+          </div>
+          <div class="kv-row">
+            <span class="kv-row__key">Year</span>
+            <span class="kv-row__value">2025</span>
+          </div>
+          <div class="kv-row">
+            <span class="kv-row__key">Stack</span>
+            <span class="kv-row__value">
+              <span class="tag tag--white">Python</span>
+              <span class="tag tag--white">PostgreSQL</span>
+            </span>
+          </div>
+          <div class="kv-row">
+            <span class="kv-row__key">Status</span>
+            <span class="kv-row__value"><span class="tag tag--amber">Work in progress</span></span>
+          </div>
+        </div>
+
+        <p class="prose">
+          Replace with your project description.
+        </p>
+
+        <div class="btn-row">
+          <a class="btn" href="#">Repository</a>
+        </div>
+      </div>
+    </section>
 
   </main>
-
-  <!-- Status bar / nav -->
-  <div id="terminal-nav"></div>
 
   <script>
     window.CHROME_CONFIG = { user: 'alyhenr', host: 'alyhenr.dev', activePage: 'projects' };
@@ -157,39 +145,6 @@
   <script src="js/terminal.js"></script>
   <script>
     Terminal.init({ user: 'alyhenr', host: 'alyhenr.dev', cwd: '/projects' });
-
-    /**
-     * Toggle a project's detail block open/closed.
-     * Called from inline onclick on each .ls-entry row.
-     */
-    function toggleProject(row, detailId) {
-      const detail = document.getElementById(detailId);
-      if (!detail) return;
-
-      const isOpen = !detail.classList.contains('hidden');
-
-      if (isOpen) {
-        detail.classList.add('hidden');
-        detail.setAttribute('aria-hidden', 'true');
-        row.setAttribute('aria-expanded', 'false');
-      } else {
-        detail.classList.remove('hidden');
-        detail.setAttribute('aria-hidden', 'false');
-        row.setAttribute('aria-expanded', 'true');
-        // Scroll to show the detail
-        setTimeout(() => detail.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50);
-      }
-    }
-
-    // Keyboard accessibility: open/close on Enter or Space
-    document.querySelectorAll('.ls-entry--clickable[data-toggle]').forEach(row => {
-      row.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          row.click();
-        }
-      });
-    });
   </script>
 
 </body>

@@ -3,93 +3,54 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="alyhenr — blog" />
+  <meta name="description" content="Writing and notes by Alysson Almeida — engineering, side projects, and what I learn along the way." />
 
-  <title>alyhenr ~ blog</title>
+  <title>alyhenr — writing</title>
 
   <link rel="stylesheet" href="css/tokens.css" />
-  <link rel="stylesheet" href="css/terminal.css" />
-  <link rel="stylesheet" href="css/effects.css" />
+  <link rel="stylesheet" href="css/components.css" />
 </head>
-<body class="terminal-window">
+<body>
 
-  <div id="terminal-header"></div>
+  <main class="page">
 
-  <!-- ── Main content ──────────────────────────────────────── -->
-  <main class="terminal-content" id="terminal-output-wrapper">
-    <div id="terminal-output">
-
-      <!-- ls -la /blog/ -->
-      <div class="cmd-block">
-        <div class="prompt">
-          <span class="prompt__user">alyhenr</span><span class="prompt__at">@</span><span
-            class="prompt__host">alyhenr.dev</span><span class="prompt__sep">:</span><span
-            class="prompt__path">~/blog</span><span class="prompt__sigil">$</span>&nbsp;<span
-            class="prompt__command">ls -la --sort=date</span>
-        </div>
-
-        <p class="output output--dim">All posts — type  cat &lt;filename&gt;  to read</p>
-        <div class="output output--blank"></div>
+    <section class="window">
+      <div class="window__bar">
+        <span class="window__title">writing</span>
+        <span class="window__controls" aria-hidden="true">
+          <span class="window__control"></span>
+          <span class="window__control"></span>
+          <span class="window__control"></span>
+        </span>
+      </div>
+      <div class="window__body">
+        <p class="subtitle">Notes &amp; posts</p>
+        <h1 class="title">Writing</h1>
+        <p class="lede">
+          Occasional writing about engineering, the things I build, and what I learn
+          doing it.
+        </p>
 
         <!--
-          Blog post index.
+          Post index.
           To add a post:
-            1. Create a new .html file in /blog/ (copy blog-post-template.html)
-            2. Add an entry here in the ls-table
+            1. Create a new .html file in /blog/ (copy blog/first-post.html)
+            2. Add a .card below
+            3. Register it in js/filesystem.js so the terminal can find it
         -->
-        <div class="ls-table">
+        <div class="card-grid">
 
-          <div class="ls-entry ls-entry--clickable" role="link" tabindex="0"
-               onclick="location.href='blog/first-post.html'"
-               onkeydown="if(event.key==='Enter')location.href='blog/first-post.html'">
-            <span class="ls-entry__perms">-r--r--r--</span>
-            <span class="ls-entry__size">4.2kb</span>
-            <span class="ls-entry__date">2025-06</span>
-            <span class="ls-entry__name">first-post.md</span>
-            <span class="ls-entry__desc">Your first blog post — add a short teaser here</span>
-          </div>
+          <a class="card" href="blog/first-post.html">
+            <span class="card__eyebrow">2025-06</span>
+            <span class="card__title">Your First Blog Post</span>
+            <span class="card__desc">Your first blog post — add a short teaser here.</span>
+          </a>
 
-          <!--
-            Template for future posts — copy and fill in:
-
-            <div class="ls-entry ls-entry--clickable" role="link" tabindex="0"
-                 onclick="location.href='blog/post-slug.html'"
-                 onkeydown="if(event.key==='Enter')location.href='blog/post-slug.html'">
-              <span class="ls-entry__perms">-r--r--r--</span>
-              <span class="ls-entry__size">??kb</span>
-              <span class="ls-entry__date">YYYY-MM</span>
-              <span class="ls-entry__name">post-slug.md</span>
-              <span class="ls-entry__desc">One-line teaser</span>
-            </div>
-          -->
-
-        </div><!-- /.ls-table -->
-
-        <div class="output output--blank"></div>
-        <p class="output output--dim">
-          <span class="output--amber">TIP:</span>
-          Use  ↑↓  arrows to navigate history — type  help  for commands
-        </p>
-        <div class="output output--blank"></div>
+        </div>
       </div>
-
-    </div><!-- /#terminal-output -->
-
-    <!-- Interactive input row -->
-    <form id="terminal-form" class="terminal-input-row" autocomplete="off" spellcheck="false">
-      <div class="terminal-input-row__prompt prompt" aria-hidden="true">
-        <span class="prompt__user">alyhenr</span><span class="prompt__at">@</span><span
-          class="prompt__host">alyhenr.dev</span><span class="prompt__sep">:</span><span
-          class="prompt__path" id="input-cwd">/blog</span><span class="prompt__sigil">$</span>&nbsp;
-      </div>
-      <label for="terminal-input" class="sr-only">Terminal input</label>
-      <input id="terminal-input" class="terminal-input" type="text"
-             placeholder="type a command…" aria-label="Terminal command input" />
-    </form>
+    </section>
 
   </main>
-
-  <div id="terminal-nav"></div>
 
   <script>
     window.CHROME_CONFIG = { user: 'alyhenr', host: 'alyhenr.dev', activePage: 'blog' };

@@ -5,204 +5,188 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Política de Privacidade da extensão Alvarás — controle de vencimento. A extensão não coleta, não transmite e não vende nenhum dado." />
   <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="https://alyhenr.github.io/personal-website/plugins/alvaras/privacidade/" />
+  <link rel="canonical" href="https://alyhenr.github.io/plugins/alvaras/privacidade/" />
 
-  <title>alyhenr ~ alvaras/privacidade</title>
+  <title>Política de Privacidade — Alvarás</title>
 
   <link rel="stylesheet" href="../../../css/tokens.css" />
-  <link rel="stylesheet" href="../../../css/terminal.css" />
-  <link rel="stylesheet" href="../../../css/effects.css" />
+  <link rel="stylesheet" href="../../../css/components.css" />
 </head>
-<body class="terminal-window">
+<body>
 
-  <div id="terminal-header"></div>
+  <!--
+    POLÍTICA DE PRIVACIDADE — URL ESTÁVEL, NÃO MOVER.
 
-  <main class="terminal-content" id="terminal-output-wrapper">
-    <div id="terminal-output">
+    Esta URL foi enviada à Chrome Web Store e ao Firefox Add-ons. Movê-la ou
+    removê-la quebra a listagem em revisões futuras.
 
-      <!--
-        POLÍTICA DE PRIVACIDADE — URL ESTÁVEL, NÃO MOVER.
+    O texto abaixo é a transcrição fiel de PRIVACY.md do repositório da
+    extensão (alvaras-pg). Ao alterar a política, altere os dois juntos e
+    atualize a data de "Última atualização" nos dois. Apenas a apresentação
+    pode mudar aqui — nunca as palavras.
 
-        Esta URL é enviada à Chrome Web Store e ao Firefox Add-ons. Movê-la
-        ou removê-la quebra a listagem em revisões futuras.
+    A página é HTML estático de propósito: revisores e rastreadores podem não
+    executar JavaScript, então nada do conteúdo pode depender de script.
+  -->
+  <main class="page">
 
-        O texto abaixo é a transcrição fiel de PRIVACY.md do repositório da
-        extensão (alvaras-pg). Ao alterar a política, altere os dois juntos e
-        atualize a data de "Última atualização" nos dois.
+    <section class="window">
+      <div class="window__bar">
+        <span class="window__title">privacidade.txt</span>
+        <span class="window__controls" aria-hidden="true">
+          <span class="window__control"></span>
+          <span class="window__control"></span>
+          <span class="window__control"></span>
+        </span>
+      </div>
+      <div class="window__body">
 
-        A página é HTML estático de propósito: revisores e rastreadores podem
-        não executar JavaScript, então nada do conteúdo pode depender de script.
-      -->
-      <div class="cmd-block">
-        <div class="prompt">
-          <span class="prompt__user">alyhenr</span><span class="prompt__at">@</span><span
-            class="prompt__host">alyhenr.dev</span><span class="prompt__sep">:</span><span
-            class="prompt__path">~/plugins/alvaras</span><span class="prompt__sigil">$</span>&nbsp;<span
-            class="prompt__command">cat PRIVACY.md</span>
+<div class="doc">
+
+        <h1>Política de Privacidade — Alvarás (controle de vencimento)</h1>
+
+        <p>
+          <strong>Última atualização:</strong>
+          <time datetime="2026-07-28">28 de julho de 2026</time>
+        </p>
+
+        <hr class="divider" />
+
+        <h2>Resumo</h2>
+
+        <p>
+          Esta extensão <strong>não coleta, não transmite e não vende nenhum dado</strong>.
+          Não existe servidor: tudo o que a extensão lê fica gravado apenas no seu próprio
+          navegador.
+        </p>
+
+        <h2>Que dados a extensão acessa</h2>
+
+        <p>
+          Quando você clica em <strong>Escanear esta página</strong>, e somente nesse
+          momento, a extensão lê o conteúdo da página de processo que está aberta e extrai:
+        </p>
+
+        <ul>
+          <li>número do protocolo e tipo do processo;</li>
+          <li>situação do processo (por exemplo, "Deferido");</li>
+          <li>data do deferimento e data de validade do alvará;</li>
+          <li>nome do(s) proprietário(s) do imóvel;</li>
+          <li>endereço do imóvel;</li>
+          <li>o endereço (URL) da página do processo.</li>
+        </ul>
+
+        <p>
+          <strong>O CPF/CNPJ do proprietário não é lido</strong>, mesmo estando na mesma
+          tabela que o nome.
+        </p>
+
+        <h2>Onde esses dados ficam</h2>
+
+        <p>
+          Exclusivamente no armazenamento local do seu navegador
+          (<code>storage.local</code>), no seu computador. Eles não são enviados para
+          nenhum servidor, nosso ou de terceiros, e não são compartilhados com ninguém.
+        </p>
+
+        <h2>Permissões e por que são necessárias</h2>
+
+        <div class="doc-table-wrap">
+          <table class="doc-table">
+            <thead>
+              <tr>
+                <th scope="col">Permissão</th>
+                <th scope="col">Para que serve</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>activeTab</code></td>
+                <td>Permite ler a página <strong>apenas no instante em que você clica no
+                    botão</strong> da extensão. Não dá acesso permanente a nenhum site, nem
+                    a outras abas.</td>
+              </tr>
+              <tr>
+                <td><code>scripting</code></td>
+                <td>Executa a leitura do conteúdo da aba ativa nesse mesmo instante.</td>
+              </tr>
+              <tr>
+                <td><code>storage</code></td>
+                <td>Grava a sua lista de alvarás localmente, para que ela continue lá
+                    quando você fechar o navegador.</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
 
-        <div class="cat-block doc">
+        <p>
+          A extensão <strong>não</strong> pede permissão de host
+          (<code>host_permissions</code>). Ela não consegue ler nenhuma página sem que
+          você clique no botão.
+        </p>
 
-          <h1>Política de Privacidade — Alvarás (controle de vencimento)</h1>
+        <h2>Exportação</h2>
 
-          <p class="cat-block__body">
-            <strong>Última atualização:</strong>
-            <time datetime="2026-07-28">28 de julho de 2026</time>
-          </p>
+        <p>
+          O botão <strong>Exportar CSV</strong> gera um arquivo no seu computador, através
+          do download normal do navegador. Esse arquivo não é enviado a lugar nenhum.
+        </p>
 
-          <hr class="divider" />
+        <h2>Como apagar seus dados</h2>
 
-          <h2 class="divider--comment">Resumo</h2>
+        <ul>
+          <li>Remova alvarás individualmente pelo <strong>×</strong> ao lado de cada
+              linha; ou</li>
+          <li>desinstale a extensão — o navegador apaga todo o armazenamento local
+              junto.</li>
+        </ul>
 
-          <p class="cat-block__body">
-            Esta extensão <strong>não coleta, não transmite e não vende nenhum dado</strong>.
-            Não existe servidor: tudo o que a extensão lê fica gravado apenas no seu próprio
-            navegador.
-          </p>
+        <h2>Serviços de terceiros</h2>
 
-          <h2 class="divider--comment">Que dados a extensão acessa</h2>
+        <p>
+          Nenhum. A extensão não usa analytics, telemetria, publicidade, cookies ou
+          qualquer biblioteca que faça requisições de rede.
+        </p>
 
-          <p class="cat-block__body">
-            Quando você clica em <strong>Escanear esta página</strong>, e somente nesse
-            momento, a extensão lê o conteúdo da página de processo que está aberta e extrai:
-          </p>
+        <h2>Segurança</h2>
 
-          <ul>
-            <li>número do protocolo e tipo do processo;</li>
-            <li>situação do processo (por exemplo, "Deferido");</li>
-            <li>data do deferimento e data de validade do alvará;</li>
-            <li>nome do(s) proprietário(s) do imóvel;</li>
-            <li>endereço do imóvel;</li>
-            <li>o endereço (URL) da página do processo.</li>
-          </ul>
+        <p>
+          Como nenhum dado sai do dispositivo, não há transmissão para interceptar nem
+          servidor para invadir. Os dados ficam sujeitos à proteção do próprio perfil do
+          navegador: quem tem acesso ao seu perfil tem acesso à lista, do mesmo modo que
+          teria ao seu histórico.
+        </p>
 
-          <p class="cat-block__body">
-            <strong>O CPF/CNPJ do proprietário não é lido</strong>, mesmo estando na mesma
-            tabela que o nome.
-          </p>
+        <h2>Alterações</h2>
 
-          <h2 class="divider--comment">Onde esses dados ficam</h2>
+        <p>
+          Se esta política mudar, a data no topo será atualizada. Caso uma versão futura
+          passe a transmitir qualquer dado, isso será informado de forma destacada
+          <strong>antes</strong> da mudança entrar em vigor, e dependerá do seu
+          consentimento explícito.
+        </p>
 
-          <p class="cat-block__body">
-            Exclusivamente no armazenamento local do seu navegador
-            (<code>storage.local</code>), no seu computador. Eles não são enviados para
-            nenhum servidor, nosso ou de terceiros, e não são compartilhados com ninguém.
-          </p>
+        <h2>Contato</h2>
 
-          <h2 class="divider--comment">Permissões e por que são necessárias</h2>
+        <p>
+          Dúvidas, correções ou pedidos relacionados aos seus dados:
+          <strong><a href="mailto:alyhenr.io@gmail.com">alyhenr.io@gmail.com</a></strong>
+        </p>
 
-          <div class="doc-table-wrap">
-            <table class="doc-table">
-              <thead>
-                <tr>
-                  <th scope="col">Permissão</th>
-                  <th scope="col">Para que serve</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><code>activeTab</code></td>
-                  <td>Permite ler a página <strong>apenas no instante em que você clica no
-                      botão</strong> da extensão. Não dá acesso permanente a nenhum site, nem
-                      a outras abas.</td>
-                </tr>
-                <tr>
-                  <td><code>scripting</code></td>
-                  <td>Executa a leitura do conteúdo da aba ativa nesse mesmo instante.</td>
-                </tr>
-                <tr>
-                  <td><code>storage</code></td>
-                  <td>Grava a sua lista de alvarás localmente, para que ela continue lá
-                      quando você fechar o navegador.</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <p class="cat-block__body">
-            A extensão <strong>não</strong> pede permissão de host
-            (<code>host_permissions</code>). Ela não consegue ler nenhuma página sem que
-            você clique no botão.
-          </p>
-
-          <h2 class="divider--comment">Exportação</h2>
-
-          <p class="cat-block__body">
-            O botão <strong>Exportar CSV</strong> gera um arquivo no seu computador, através
-            do download normal do navegador. Esse arquivo não é enviado a lugar nenhum.
-          </p>
-
-          <h2 class="divider--comment">Como apagar seus dados</h2>
-
-          <ul>
-            <li>Remova alvarás individualmente pelo <strong>×</strong> ao lado de cada
-                linha; ou</li>
-            <li>desinstale a extensão — o navegador apaga todo o armazenamento local
-                junto.</li>
-          </ul>
-
-          <h2 class="divider--comment">Serviços de terceiros</h2>
-
-          <p class="cat-block__body">
-            Nenhum. A extensão não usa analytics, telemetria, publicidade, cookies ou
-            qualquer biblioteca que faça requisições de rede.
-          </p>
-
-          <h2 class="divider--comment">Segurança</h2>
-
-          <p class="cat-block__body">
-            Como nenhum dado sai do dispositivo, não há transmissão para interceptar nem
-            servidor para invadir. Os dados ficam sujeitos à proteção do próprio perfil do
-            navegador: quem tem acesso ao seu perfil tem acesso à lista, do mesmo modo que
-            teria ao seu histórico.
-          </p>
-
-          <h2 class="divider--comment">Alterações</h2>
-
-          <p class="cat-block__body">
-            Se esta política mudar, a data no topo será atualizada. Caso uma versão futura
-            passe a transmitir qualquer dado, isso será informado de forma destacada
-            <strong>antes</strong> da mudança entrar em vigor, e dependerá do seu
-            consentimento explícito.
-          </p>
-
-          <h2 class="divider--comment">Contato</h2>
-
-          <p class="cat-block__body">
-            Dúvidas, correções ou pedidos relacionados aos seus dados:
-            <strong><a href="mailto:alyhenr.io@gmail.com">alyhenr.io@gmail.com</a></strong>
-          </p>
-
-          <p class="cat-block__body">
-            Respondemos também a pedidos de titulares de dados previstos na LGPD.
-          </p>
+        <p>
+          Respondemos também a pedidos de titulares de dados previstos na LGPD.
+        </p>
 
         </div><!-- /.doc -->
 
-        <div class="output output--blank"></div>
-        <p class="output output--dim">
-          &larr; <a href="../index.html">voltar para /plugins/alvaras</a>
-        </p>
-        <div class="output output--blank"></div>
       </div>
+    </section>
 
-    </div><!-- /#terminal-output -->
-
-    <!-- Interactive input row -->
-    <form id="terminal-form" class="terminal-input-row" autocomplete="off" spellcheck="false">
-      <div class="terminal-input-row__prompt prompt" aria-hidden="true">
-        <span class="prompt__user">alyhenr</span><span class="prompt__at">@</span><span
-          class="prompt__host">alyhenr.dev</span><span class="prompt__sep">:</span><span
-          class="prompt__path" id="input-cwd">/plugins/alvaras/privacidade</span><span class="prompt__sigil">$</span>&nbsp;
-      </div>
-      <label for="terminal-input" class="sr-only">Terminal input</label>
-      <input id="terminal-input" class="terminal-input" type="text"
-             placeholder="type a command…" aria-label="Terminal command input" />
-    </form>
+    <p class="small muted">
+      &larr; <a href="../index.html">voltar para Alvarás</a>
+    </p>
 
   </main>
-
-  <div id="terminal-nav"></div>
 
   <script>
     window.CHROME_CONFIG = { user: 'alyhenr', host: 'alyhenr.dev', activePage: 'plugins', basePath: '../../../' };

@@ -3,72 +3,76 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>alyhenr ~ 404</title>
+  <title>alyhenr — page not found</title>
 
   <!--
-    SITE ROOT — the only file that hardcodes it.
+    Paths here are root-absolute on purpose.
 
     GitHub Pages serves this page for a missing path at ANY depth (e.g.
-    /personal-website/plugins/nope/) while leaving that path in the URL bar,
-    so relative asset paths ('css/…', '../css/…') would resolve against the
-    wrong directory and silently fail. Root-absolute paths that include the
-    repo prefix are the only form that works at every depth.
+    /plugins/nope/) while leaving that path in the URL bar, so relative
+    paths ('css/…', '../css/…') would resolve against whatever folder the
+    visitor mistyped. Root-absolute is the only form that works everywhere.
 
-    Moving to a custom domain (alyhenr.dev): change every
-    /personal-website/ below — and CHROME_CONFIG.basePath at the bottom —
-    to just /
+    This is a user page (repo: alyhenr.github.io), served at the domain
+    root, so no path prefix is needed. A move to a project page would
+    require prefixing every path below, plus CHROME_CONFIG.basePath.
   -->
-  <link rel="stylesheet" href="/personal-website/css/tokens.css" />
-  <link rel="stylesheet" href="/personal-website/css/terminal.css" />
-  <link rel="stylesheet" href="/personal-website/css/effects.css" />
+  <link rel="stylesheet" href="/css/tokens.css" />
+  <link rel="stylesheet" href="/css/components.css" />
 </head>
-<body class="terminal-window">
+<body>
 
-  <div id="terminal-header"></div>
+  <main class="page">
 
-  <main class="terminal-content">
-    <div class="cmd-block">
-      <div class="prompt">
-        <span class="prompt__user">alyhenr</span><span class="prompt__at">@</span><span
-          class="prompt__host">alyhenr.dev</span><span class="prompt__sep">:</span><span
-          class="prompt__path">~</span><span class="prompt__sigil">$</span>&nbsp;<span
-          class="prompt__command" id="not-found-path"></span>
+    <section class="window">
+      <div class="window__bar">
+        <span class="window__title">error</span>
+        <span class="window__controls" aria-hidden="true">
+          <span class="window__control"></span>
+          <span class="window__control"></span>
+          <span class="window__control"></span>
+        </span>
       </div>
+      <div class="window__body">
 
-      <p class="output output--error">bash: <span id="not-found-cmd"></span>: No such file or directory</p>
-      <div class="output output--blank"></div>
-      <p class="output output--dim">
-        The path you requested does not exist.
-        Try  <a href="/personal-website/">cd ~</a>  to go home.
-      </p>
-      <div class="output output--blank"></div>
+        <p class="subtitle">Error 404</p>
+        <h1 class="title">Page not found</h1>
 
-      <pre class="ascii-art ascii-art--dim">
-  _  _    ___  _  _
- | || |  / _ \| || |
- | || |_| | | | || |_
- |__   _| |_| |__   _|
-    |_|  \___/   |_|
-      </pre>
+        <p class="lede">
+          The page you asked for doesn't exist — it may have moved, or the address may
+          have a typo in it.
+        </p>
 
-      <p class="output output--dim">→ <a href="/personal-website/">return home</a></p>
-    </div>
+        <p class="notice">
+          Requested: <code id="not-found-path">—</code>
+        </p>
+
+        <div class="btn-row">
+          <a class="btn btn--primary" href="/">Go to the homepage</a>
+          <a class="btn" href="/plugins/index.html">Browser extensions</a>
+          <a class="btn" href="/contact.html">Contact</a>
+        </div>
+
+      </div>
+    </section>
+
   </main>
 
-  <div id="terminal-nav"></div>
-
   <script>
-    window.CHROME_CONFIG = { activePage: '', basePath: '/personal-website/' };
+    window.CHROME_CONFIG = { user: 'alyhenr', host: 'alyhenr.dev', activePage: '', basePath: '/' };
 
-    // Show the attempted path in the error output
-    const path = window.location.pathname;
-    const cmdEl = document.getElementById('not-found-path');
-    const errEl = document.getElementById('not-found-cmd');
-    if (cmdEl) cmdEl.textContent = `cat ${path}`;
-    if (errEl) errEl.textContent = path;
+    // Show the attempted path, so a mistyped URL is obvious
+    (function showPath() {
+      const el = document.getElementById('not-found-path');
+      if (el) el.textContent = window.location.pathname;
+    })();
   </script>
-  <script src="/personal-website/js/chrome.js"></script>
-  <script src="/personal-website/js/filesystem.js"></script>
+  <script src="/js/chrome.js"></script>
+  <script src="/js/filesystem.js"></script>
+  <script src="/js/terminal.js"></script>
+  <script>
+    Terminal.init({ user: 'alyhenr', host: 'alyhenr.dev', cwd: '/', basePath: '/' });
+  </script>
 
 </body>
 </html>

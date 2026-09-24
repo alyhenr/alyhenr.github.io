@@ -118,22 +118,6 @@
       date: '2025-06',
       desc: 'Contact info & message form',
     },
-
-    /* Games */
-    '/games': {
-      type: 'dir',
-      href: 'games.html',
-      date: '2025-06',
-      desc: 'Playable browser games',
-    },
-    '/games/snake': {
-      type: 'file',
-      href: 'games/snake.html',
-      size: '8kb',
-      date: '2025-06',
-      desc: 'Classic snake — terminal edition',
-      perms: '-rwxr-xr-x',
-    },
   };
 
   /* ── Virtual file contents ──────────────────────────────── */
@@ -184,7 +168,7 @@
    * Resolve a path relative to a cwd.
    *
    * resolve('~', '../blog/first-post') → '/blog/first-post'
-   * resolve('/games', '..') → '/'
+   * resolve('/plugins', '..') → '/'
    * resolve('/blog', './first-post.md') → '/blog/first-post.md'
    * resolve('/blog', '/projects') → '/projects'  (absolute)
    *

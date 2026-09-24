@@ -362,7 +362,7 @@
   /* ── open / go ──────────────────────────────────────────── */
   const goCmd = {
     description: 'Navigate to a site page by name.',
-    usage: 'go <home|projects|blog|plugins|contact|games>',
+    usage: 'go <home|projects|blog|plugins|contact>',
     run(args, term) {
       const target = args[1] ? args[1].toLowerCase() : null;
       if (!target) { term.error(`go: missing destination`); return; }
@@ -375,7 +375,6 @@
         blog:     '/blog',
         plugins:  '/plugins',
         contact:  '/contact',
-        games:    '/games',
       };
 
       const absPath = shortcuts[target] || '/' + target;
@@ -383,7 +382,7 @@
       const node    = fs ? fs.get(absPath) : null;
 
       if (!node) {
-        term.error(`go: unknown destination '${target}'. Try: home, projects, blog, plugins, contact, games`);
+        term.error(`go: unknown destination '${target}'. Try: home, projects, blog, plugins, contact`);
         return;
       }
       if (!node.href) {
@@ -550,7 +549,7 @@
         `Uptime:   ${uptimeStr}`,
         `Date:     ${now.toDateString()}`,
         `Term:     xterm-256color`,
-        `Pages:    5 (home, projects, blog, contact, games)`,
+        `Pages:    5 (home, projects, blog, plugins, contact)`,
       ];
 
       term.blank();

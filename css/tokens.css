@@ -1,60 +1,107 @@
 /* ============================================================
-   tokens.css — Design tokens for the terminal design system
+   tokens.css — Design tokens for the 90s desktop design system
    All visual decisions live here. Change this file to retheme
    the entire site.
+
+   ── The one rule that makes this palette work ──────────────
+   Beige is CHROME, never a text background. Body copy sits on
+   --color-doc (near-white) inside a window, the way a System 7
+   document area did. That is what keeps text at 13.9:1 instead
+   of the muddy 4:1 you get from ink-on-beige.
+
+   Accent text follows from the same rule: --color-accent on
+   --color-doc is 5.3:1 (fine), but on --color-face it is only
+   3.8:1. On beige, use white-on-accent (5.8:1) instead.
    ============================================================ */
 
-/* JetBrains Mono via Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
+/* IBM Plex via Google Fonts — Plex has genuine computer-company
+   heritage and stays readable at prose sizes, where a pixel font
+   would not. */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
 
 :root {
-  /* ── Palette ──────────────────────────────────────────── */
-  --color-bg:           #0a0a0a;   /* near-black background */
-  --color-bg-surface:   #0f0f0f;   /* slightly lighter surface (panels) */
-  --color-bg-highlight: #141414;   /* hover / selection bg */
+  /* ── Surfaces ─────────────────────────────────────────── */
+  --color-desktop:      #B7AE9E;   /* ground behind the windows */
+  --color-desktop-alt:  #ADA494;   /* desktop pattern second tone */
+  --color-face:         #D6CFC0;   /* window chrome, menu bar, buttons */
+  --color-face-hover:   #E2DCD0;   /* hovered chrome */
+  --color-face-active:  #C6BFB0;   /* pressed chrome */
+  --color-doc:          #F7F4ED;   /* document area — all body text */
+  --color-doc-alt:      #EDE8DD;   /* zebra rows, code blocks, wells */
 
-  --color-fg:           #33ff66;   /* primary phosphor green */
-  --color-fg-dim:       #1a6633;   /* dimmed green — comments, secondary output */
-  --color-fg-bright:    #88ffaa;   /* bright highlight green */
-  --color-fg-muted:     #2a4a33;   /* very dim — borders, separators */
+  /* ── Ink ──────────────────────────────────────────────── */
+  --color-ink:          #2A2420;   /* primary text     — 13.9:1 on doc */
+  --color-ink-2:        #5F564A;   /* secondary text   —  6.6:1 on doc */
+  --color-ink-3:        #8C8374;   /* faint / disabled — decorative only */
 
-  --color-amber:        #ffb347;   /* amber accent — warnings, emphasis */
-  --color-amber-dim:    #7a4f1a;   /* dim amber */
+  /* ── Accent ───────────────────────────────────────────── */
+  --color-accent:       #A8480A;   /* links, active    —  5.3:1 on doc */
+  --color-accent-hover: #863908;
+  --color-on-accent:    #FFFFFF;   /* text on accent   —  5.8:1 */
 
-  --color-white:        #d4d4d4;   /* off-white — filenames, prompts, input */
-  --color-white-dim:    #7a7a7a;   /* dim white — timestamps, metadata */
+  /* ── Title bars ───────────────────────────────────────── */
+  --color-titlebar:     #3E3428;
+  --color-title-text:   #F0EBE0;   /* on titlebar      — 10.2:1 */
+  --color-titlebar-off: #9A9186;   /* inactive window */
 
-  --color-error:        #ff4444;   /* errors */
-  --color-error-dim:    #5c1a1a;   /* dim error */
-  --color-success:      #33ff66;   /* same as fg — success is green */
-  --color-warning:      #ffb347;   /* same as amber */
+  /* ── Bevels & borders ─────────────────────────────────── */
+  --bevel-light:        #FFFFFF;
+  --bevel-dark:         #8C8374;
+  --color-border:       #6B6254;   /* hard outline     —  3.9:1 on face */
+  --color-border-soft:  #C3BBAC;
 
-  --color-cursor:       #33ff66;   /* blinking block cursor */
-  --color-selection-bg: rgba(51, 255, 102, 0.15);
-  --color-border:       #1a3d26;   /* subtle green border */
+  /* Ready-made bevel shadows. --bevel-out = raised (buttons,
+     windows), --bevel-in = sunken (wells, inputs, pressed). */
+  --bevel-out: inset  1px  1px 0 var(--bevel-light),
+               inset -1px -1px 0 var(--bevel-dark);
+  --bevel-in:  inset  1px  1px 0 var(--bevel-dark),
+               inset -1px -1px 0 var(--bevel-light);
+  --shadow-window: 3px 3px 0 rgba(42, 36, 32, 0.22);
+  --shadow-card:   2px 2px 0 rgba(42, 36, 32, 0.16);
+
+  /* ── Status ───────────────────────────────────────────── */
+  --color-ok:           #2E6B3A;
+  --color-warn:         #A8480A;
+  --color-error:        #9E1F1F;
+
+  /* ── Terminal overlay ─────────────────────────────────── */
+  /* The easter-egg shell stays dark and mono on purpose: a
+     Terminal.app window sitting on the beige desktop. Amber
+     rather than phosphor green, so it belongs to this palette. */
+  --term-bg:            #1C1815;
+  --term-bg-alt:        #262019;
+  --term-fg:            #EDE6DA;
+  --term-dim:           #9A9186;
+  --term-accent:        #F0A868;
+  --term-success:       #7FBF6A;
+  --term-error:         #E86F6F;
+  --term-border:        #4A4038;
 
   /* ── Typography ───────────────────────────────────────── */
-  --font-mono: "JetBrains Mono", "Fira Code", "Cascadia Code",
-               ui-monospace, "SF Mono", "Consolas", "Liberation Mono",
-               "Menlo", monospace;
+  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system,
+               "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", "Cascadia Code",
+               "Consolas", "Liberation Mono", "Menlo", monospace;
 
   --font-size-xs:   11px;
-  --font-size-sm:   12px;
-  --font-size-base: 14px;
-  --font-size-md:   15px;
-  --font-size-lg:   16px;
-  --font-size-xl:   18px;
-  --font-size-2xl:  20px;
+  --font-size-sm:   13px;
+  --font-size-base: 16px;   /* up from 14 — this is a reading site now */
+  --font-size-md:   17px;
+  --font-size-lg:   19px;
+  --font-size-xl:   22px;
+  --font-size-2xl:  28px;
+  --font-size-3xl:  34px;
 
-  --font-weight-thin:    100;
-  --font-weight-light:   300;
   --font-weight-regular: 400;
   --font-weight-medium:  500;
+  --font-weight-semi:    600;
   --font-weight-bold:    700;
 
-  --line-height-tight:  1.3;
-  --line-height-base:   1.6;
-  --line-height-loose:  2.0;
+  --line-height-tight: 1.25;
+  --line-height-base:  1.6;
+  --line-height-loose: 1.75;
+
+  --tracking-label: 0.08em;  /* small-caps UI labels */
 
   /* ── Spacing ──────────────────────────────────────────── */
   /* Base unit: 4px. All spacing is multiples of this. */
@@ -70,53 +117,31 @@
   --space-16: 64px;
 
   /* ── Layout ───────────────────────────────────────────── */
-  --header-height:     40px;
-  --status-bar-height: 36px;
-  --content-max-width: 900px;
+  --menubar-height:    34px;
+  --statusbar-height:  28px;
+  --content-max-width: 880px;
   --content-padding:   var(--space-6);
 
-  /* ── Animation & Timing ───────────────────────────────── */
-  --speed-instant:  0ms;
-  --speed-fast:     80ms;
-  --speed-normal:  150ms;
-  --speed-slow:    300ms;
-  --speed-sluggish: 500ms;
+  /* ── Shape ────────────────────────────────────────────── */
+  /* 90s software is square. 2px is the most we allow. */
+  --radius-none: 0px;
+  --radius-sm:   2px;
 
-  /* Typing effect: ms per character */
+  /* ── Animation ────────────────────────────────────────── */
+  --speed-instant: 0ms;
+  --speed-fast:    80ms;
+  --speed-normal: 150ms;
+  --speed-slow:   300ms;
+
+  /* Terminal typing effect: ms per character */
   --speed-type-fast:   20ms;
   --speed-type-normal: 40ms;
-  --speed-type-slow:   80ms;
-
-  /* Boot sequence: ms between boot lines */
-  --speed-boot-line:  120ms;
-  --speed-boot-pause: 400ms;
-
-  /* Cursor blink period */
-  --speed-blink: 1000ms;
-
-  /* CRT flicker period */
-  --speed-flicker: 8000ms;
-
-  /* ── Effects ──────────────────────────────────────────── */
-  /* Phosphor glow intensity */
-  --glow-sm:  0 0 4px var(--color-fg);
-  --glow-md:  0 0 8px var(--color-fg), 0 0 16px rgba(51, 255, 102, 0.3);
-  --glow-lg:  0 0 12px var(--color-fg), 0 0 24px rgba(51, 255, 102, 0.4),
-              0 0 40px rgba(51, 255, 102, 0.15);
-
-  /* Scanline density */
-  --scanline-size:    2px;
-  --scanline-opacity: 0.04;
-
-  /* CRT screen curvature (border-radius on outer container) */
-  --crt-radius: 0px; /* set to e.g. 8px for curve effect */
+  --speed-blink:     1000ms;
 
   /* ── Z-indices ────────────────────────────────────────── */
-  --z-content:    1;
-  --z-overlay:   10;
-  --z-header:    20;
-  --z-status:    20;
-  --z-scanlines: 30;
-  --z-modal:     50;
-  --z-tooltip:   60;
+  --z-content:   1;
+  --z-menubar:  20;
+  --z-statusbar: 20;
+  --z-overlay:  50;
+  --z-tooltip:  60;
 }
