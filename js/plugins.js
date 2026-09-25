@@ -40,7 +40,7 @@
       name:     'Alvarás — controle de vencimento',
       tagline:  'Escaneie a página do processo e acompanhe o vencimento dos seus ' +
                 'alvarás de construção em um só lugar.',
-      status:   'unpublished',
+      status:   'published',
       date:     '2026-07',
       size:     '46kb',
       browsers: ['Chrome', 'Brave', 'Edge', 'Opera', 'Firefox'],
