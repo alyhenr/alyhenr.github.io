@@ -1,0 +1,12 @@
+{
+  "name": "alyhenr.github.io",
+  "private": true,
+  "description": "QA tooling only. The site itself has no dependencies and no build step.",
+  "type": "module",
+  "scripts": {
+    "qa": "node .jarvis/qa.mjs"
+  },
+  "devDependencies": {
+    "playwright-core": "1.53.2"
+  }
+}
