@@ -56,7 +56,7 @@
   - Each Studio piece has a scene direction with key frames and a marked slot in the mock.
   - The calculator, packages, form and LGPD note work in every direction, with no phone number or e-mail exposed.
   - The preview and send pages serve them.
-- **Build the site: Traço** (agreed) — The owner picked Traço from round 2 (12/11): the new portfolio becomes his storefront for small-business sites and the home of his projects, with Studio's line scene as the proof of craft.
+- **Build the site: Traço** (building) — The owner picked Traço from round 2 (12/11): the new portfolio becomes his storefront for small-business sites and the home of his projects, with Studio's line scene as the proof of craft.
   Goal: the real static site in the Traço direction, replacing the old template, live-ready on GitHub Pages, with the stage working on its plates until Studio's scene is mounted.
   In:
   - Finalize first: the designer (finalize mode) turns 01-traco into DESIGN.md and final mockups, with the owner's changes below.
