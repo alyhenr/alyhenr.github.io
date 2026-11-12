@@ -9,7 +9,8 @@
  *   node .jarvis/qa.mjs flows | <flow>   the browser flows (all, or by name)
  *
  * Steps:
- *   install      npm ci (playwright-core only: QA tooling; the site itself has no dependencies)
+ *   install      npm ci (tooling only: playwright-core for the QA, three and esbuild for the scene's
+ *                bundle; the site itself has no dependencies)
  *   syntax       node --check on every script in js/
  *   links        every local href/src in every page, and every module import and
  *                new URL(…, import.meta.url) in js/, points at a file that exists
@@ -24,6 +25,8 @@
  *                frozen URL the site links to and none of our files (docs, roadmap, QA, tooling),
  *                and that no page shows a phone number, an e-mail, "sênior" or an app kept off it.
  *                The HTTP checks and the flows then run against that folder: what goes live.
+ *   scene        js/scene/traco-wireframe.js is what tools/bundle-scene.mjs makes from Studio's
+ *                package and three (pinned), and within the scene's 140 KB gzip budget
  * There is no lint, typecheck, build or unit test in this codebase: those steps don't exist here.
  * Nothing runs against a live service: the contact form's Formspree endpoint is blocked in the flows.
  */
@@ -34,6 +37,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import vm from 'node:vm';
 import { webQa } from './web/kit.mjs';
 import { stage, SITE_FILES } from '../.github/stage-site.mjs';
+import { OUT as SCENE_BUNDLE, check as sceneCheck } from '../tools/bundle-scene.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const SKIP_DIRS = new Set(['.git', '.github', '.jarvis', '.qa', 'node_modules', 'e2e', 'docs']);
@@ -171,7 +175,9 @@ function offSite(site, files) {
   for (const f of files.filter((x) => /\.(html|js|mjs|json|css)$/.test(x))) {
     let src = readFileSync(join(site, f), 'utf8');
     if (f === POLICY) src = src.replaceAll(`mailto:${POLICY_CONTACT}`, '').replaceAll(POLICY_CONTACT, '');
-    const hit = src.match(CONTACT);
+    // The scene's bundle is minified three: its numeric constants (4294967295…) read as phones.
+    // It shows no text, so only the word and app checks apply to it.
+    const hit = f === SCENE_BUNDLE ? null : src.match(CONTACT);
     if (hit) out.push(`${f}: shows a contact outside the form ("${hit[0]}")`);
     if (/s[êe]nior/i.test(src)) out.push(`${f}: says "sênior" (he is "engenheiro de software")`);
     if (NOT_ON_SITE.test(src)) out.push(`${f}: names an app the brief keeps off the site (${src.match(NOT_ON_SITE)[0]})`);
@@ -410,6 +416,13 @@ async function checks(qa, base) {
   });
 }
 
+/**
+ * three's console.error from Studio's traco-wireframe 1.0.0: its line geometry's 2D quad has no z, so
+ * the renderer's depth sort (computeBoundingSphere) gets NaN. Harmless (both meshes draw, culling is
+ * off); fixed in Studio's 1.0.1 (asked for 12/11). Drop this when that version is taken.
+ */
+const SCENE_NAN = /THREE\.BufferGeometry\.computeBoundingSphere\(\): Computed radius is NaN/;
+
 const steps = [
   { name: 'install', run: ['npm', 'ci', '--no-audit', '--no-fund'] },
   { name: 'syntax', run: async () => syntax(), onPaths: true },
@@ -419,6 +432,7 @@ const steps = [
   { name: 'published', run: async () => published(), onPaths: true },
   { name: 'directions', run: async () => directions(), onPaths: true },
   { name: 'estimate', run: estimate, onPaths: true },
+  { name: 'scene', run: () => sceneCheck(), onPaths: true },
 ];
 
 process.exit(
@@ -428,5 +442,6 @@ process.exit(
     need: ['install', 'published'],
     build: { command: ['node', join(ROOT, '.jarvis/serve.mjs'), '{port}', SITE] },
     checks,
+    browse: { allow: [SCENE_NAN] },
   }),
 );

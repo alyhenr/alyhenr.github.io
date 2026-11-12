@@ -1,12 +1,14 @@
 {
   "name": "alyhenr.github.io",
   "private": true,
-  "description": "QA tooling only. The site itself has no dependencies and no build step.",
+  "description": "Tooling only: the QA (playwright-core) and the scene bundle (three, esbuild; tools/bundle-scene.mjs). The site itself has no dependencies and no build step.",
   "type": "module",
   "scripts": {
     "qa": "node .jarvis/qa.mjs"
   },
   "devDependencies": {
-    "playwright-core": "1.53.2"
+    "esbuild": "0.28.2",
+    "playwright-core": "1.53.2",
+    "three": "0.187.0"
   }
 }
