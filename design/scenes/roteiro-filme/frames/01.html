@@ -1,0 +1,18 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>roteiro-filme · 00:02</title><link rel="stylesheet" href="../frame.css">
+<style>
+.obj { width: 44vh; height: 44vh; }
+.bubble { position: absolute; inset: 0; border: 1vh solid #fff; border-radius: 6vh; }
+.bubble::after { content: ''; position: absolute; left: 7vh; bottom: -6vh; width: 6vh; height: 6vh; border-left: 1vh solid #fff; border-bottom: 1vh solid #fff; background: #1E3BD0; transform: skewY(-35deg); }
+.dots { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: flex; gap: 3vh; }
+.dots i { width: 4vh; height: 4vh; border-radius: 50%; background: #FFD23F; }
+.dots i:nth-child(2) { opacity: .7; } .dots i:nth-child(3) { opacity: .4; }
+.chip { position: absolute; font: 900 4.4vh/1 'Big Shoulders Display'; text-transform: uppercase; border: .5vh solid #fff; border-radius: 99px; padding: 1.2vh 2.6vh; white-space: nowrap; }
+@media (max-aspect-ratio: 1/1) { .obj { width: 30vh; height: 30vh; bottom: 14vh; } }
+</style></head><body>
+<h1 class="k"><span>Me conta</span><span>do seu</span><span class="y">negócio.</span></h1>
+<div class="obj"><div class="bubble"></div><div class="dots"><i></i><i></i><i></i></div>
+<span class="chip" style="left:-14vh;top:-8vh;transform:rotate(-8deg)">Salão</span>
+<span class="chip blur" style="right:-10vh;top:4vh;transform:rotate(6deg)">Oficina</span>
+<span class="chip" style="right:-6vh;bottom:-10vh;transform:rotate(-4deg)">Clínica</span>
+<span class="chip blur" style="left:-18vh;bottom:6vh;transform:rotate(5deg)">Padaria</span></div>
+</body></html>

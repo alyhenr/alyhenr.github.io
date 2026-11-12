@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>traco-wireframe · quadro 1</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@75..150,500..900&family=Hanken+Grotesk:wght@400;600&display=swap');
+html, body { margin: 0; height: 100%; overflow: hidden; background: #0E1517; }
+svg { display: block; }
+.shade { position: fixed; inset: 0; background: linear-gradient(90deg, rgb(14 21 23 / .78) 0%, rgb(14 21 23 / .2) 46%, rgb(14 21 23 / 0) 70%); }
+.type { position: fixed; left: max(20px, calc((100vw - 1180px) / 2)); top: 50%; transform: translateY(-50%); max-width: 30rem; color: #D9E2E0; font: 400 19px/1.55 'Hanken Grotesk', sans-serif; }
+.type span { display: block; color: #F2A93B; font-weight: 600; font-size: 15px; margin-bottom: 16px; }
+.type h2 { margin: 0 0 24px; font: 800 76px/1.02 'Anybody', sans-serif; font-stretch: 125%; letter-spacing: -0.02em; }
+.type p { margin: 0; }
+@media (max-width: 700px) {
+  .shade { background: linear-gradient(0deg, rgb(14 21 23 / .92) 0%, rgb(14 21 23 / .5) 38%, rgb(14 21 23 / 0) 62%); }
+  .type { top: auto; bottom: 48px; transform: none; right: 20px; font-size: 17px; }
+  .type h2 { font-size: 44px; }
+}
+</style>
+</head>
+<body>
+<script>window.FRAME = 1; window.PLATE = false;</script>
+<script src="../draw.js"></script>
+</body>
+</html>

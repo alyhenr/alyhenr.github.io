@@ -1,0 +1,15 @@
+/* Key frames for roteiro-filme: storyboard stills of the film, not the film. 16:9 and 4:5 from the same page. */
+@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Figtree:wght@400;600;700&display=swap');
+html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; }
+body { background: #1E3BD0; color: #fff; font-family: 'Figtree', sans-serif; position: relative; }
+.k { position: absolute; left: 7vw; top: 50%; transform: translateY(-50%); font: 900 13vh/1 'Big Shoulders Display', sans-serif; text-transform: uppercase; letter-spacing: -0.005em; margin: 0; }
+.k span { display: block; }
+.y { color: #FFD23F; }
+.small { font: 600 2.6vh/1.3 'Figtree', sans-serif; position: absolute; left: 7vw; bottom: 6vh; color: #C9D1FF; }
+.obj { position: absolute; right: 7vw; top: 50%; transform: translateY(-50%); }
+.blur { filter: blur(3px); opacity: .6; }
+@media (max-aspect-ratio: 1/1) {
+  .k { top: 9vh; transform: none; font-size: 8.4vh; }
+  .obj { right: auto; left: 50%; top: auto; bottom: 7vh; transform: translateX(-50%); }
+  .small { bottom: 3vh; font-size: 2vh; }
+}
