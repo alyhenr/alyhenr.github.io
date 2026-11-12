@@ -1,0 +1,537 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alysson: sites rápidos para o seu negócio</title>
+<meta name="description" content="Sites para salão, clínica, restaurante, loja, oficina e estúdio. A partir de R$ 900, no ar em 7 dias úteis. Orçamento na hora e conversa pelo WhatsApp.">
+<meta name="theme-color" content="#4A1020">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="style.css">
+<script>
+  // Marca que há JS e se o visitante aceita movimento; o conteúdo já está visível sem isso.
+  document.documentElement.classList.add('js');
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('motion');
+</script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-wa" viewBox="0 0 24 24"><path d="M4.5 19.5l1.2-3.6A8 8 0 1 1 8.4 18.6z"/><path d="M9.2 8.6c.2 2.9 2.4 5.3 5.4 5.8l1-1.3-1.9-.9-.8.8a4.6 4.6 0 0 1-2.3-2.3l.8-.8-.9-1.9z"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 24 24"><path d="M6 12h12"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 6v12M6 12h12"/></symbol>
+  <symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"/><path d="M11 12l8-8M16 7l2 2M14 9l1.5 1.5"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4M10 12h5M10 16h5"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.5-3 8.2-7 10-4-1.8-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/></symbol>
+  <symbol id="i-note" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.2v.1"/></symbol>
+</svg>
+
+<!-- 1. HERO, com o quadro do vídeo de 20 s -->
+<section class="hero stage" data-shot="hero">
+  <div class="wrap">
+    <nav class="nav" aria-label="Principal">
+      <a class="wordmark" href="#">Alysson</a>
+      <div class="nav-right">
+        <a class="nav-link" href="#en" hreflang="en" lang="en">English</a>
+        <a class="btn btn-light" data-wa="Oi, Alysson! Vi seu site e quero conversar sobre um site para o meu negócio." href="https://wa.me/?text=Oi%2C%20Alysson!%20Vi%20seu%20site%20e%20quero%20conversar%20sobre%20um%20site%20para%20o%20meu%20neg%C3%B3cio.">
+          <svg class="icon" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp</a>
+      </div>
+    </nav>
+
+    <div class="hero-grid">
+      <div>
+        <h1 class="fit">
+          <span class="line" style="--i:0">Sites</span>
+          <span class="line" style="--i:1">rápidos</span>
+          <span class="line" style="--i:2">para o seu</span>
+          <span class="line" style="--i:3">negócio.</span>
+        </h1>
+        <p class="hero-sub">Salão, clínica, restaurante, loja, oficina, estúdio. <strong>Eu faço o site que seu cliente encontra no celular</strong> e que leva direto para o seu WhatsApp.</p>
+        <p class="hero-price">
+          <span class="from">a partir de</span>
+          <span class="amount" data-price="base">R$&nbsp;900</span>
+          <span class="days">no ar em <span data-days="base">7</span> dias úteis, com preço fechado antes de começar</span>
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-light" data-wa="Oi, Alysson! Vi seu site e quero um site para o meu negócio. Meu negócio é: " href="https://wa.me/?text=Oi%2C%20Alysson!%20Vi%20seu%20site%20e%20quero%20um%20site%20para%20o%20meu%20neg%C3%B3cio.%20Meu%20neg%C3%B3cio%20%C3%A9%3A%20">
+            <svg class="icon" aria-hidden="true"><use href="#i-wa"/></svg>Chamar no WhatsApp</a>
+          <a class="btn btn-ghost" href="#calculadora">Calcular o preço do meu</a>
+        </div>
+      </div>
+
+      <figure class="film" aria-label="Como funciona, em 20 segundos: roteiro do vídeo">
+        <div class="frame">
+          <span class="studio-tag">Studio · como-funciona · 20 s</span>
+          <div class="reel" id="reel" tabindex="0" aria-label="Quadros-chave do vídeo; deslize para ver os próximos">
+            <div class="still still--1" id="still-1" role="group" aria-label="0 a 5 segundos">
+              <span class="still-time">0–5 s</span>
+              <div class="chat">
+                <div class="chat-head"><span class="avatar">A</span><span><b>Alysson</b>online</span></div>
+                <div class="bubble bubble--out">Oi, Alysson! Quero um site para o meu salão.
+                  <span class="bubble-meta">09:41 <svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span></div>
+                <div class="bubble bubble--in">Oi! Me conta: o que seus clientes mais perguntam?</div>
+              </div>
+              <p class="still-cap">Você manda um oi no WhatsApp</p>
+            </div>
+            <div class="still still--2" id="still-2" role="group" aria-label="5 a 10 segundos">
+              <span class="still-time">5–10 s</span>
+              <div class="paper">
+                <p class="paper-title">Proposta</p>
+                <p class="paper-for">Salão Ipê, 12/11/2026</p>
+                <ul class="paper-rows">
+                  <li><span>3 páginas</span><span>R$ 1.400</span></li>
+                  <li><span>Galeria de fotos</span><span>R$ 250</span></li>
+                  <li><span>Prazo</span><span>13 dias úteis</span></li>
+                </ul>
+                <div class="paper-total"><span>Total</span><b>R$ 1.650</b></div>
+                <span class="paper-seal">Preço fechado</span>
+              </div>
+              <p class="still-cap">Recebe a proposta com preço fechado</p>
+            </div>
+            <div class="still still--3" id="still-3" role="group" aria-label="10 a 15 segundos">
+              <span class="still-time">10–15 s</span>
+              <div class="pix">
+                <span class="pix-check"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span>
+                <p class="pix-label">Pix enviado</p>
+                <p class="pix-amount">R$ 825,00</p>
+                <p class="pix-what">Sinal de 50% para Alysson</p>
+              </div>
+              <p class="still-cap">Paga 50% de sinal no Pix</p>
+            </div>
+            <div class="still still--4" id="still-4" role="group" aria-label="15 a 20 segundos">
+              <span class="still-time">15–20 s</span>
+              <div class="phone" aria-hidden="true">
+                <div class="mini-top"><span>Salão Ipê</span><i></i></div>
+                <div class="mini-hero"><b>Cabelo, unhas e sobrancelha</b><span>Rua das Flores, 210. Ter a sáb, 9h às 19h</span></div>
+                <div class="mini-btn">Agendar horário</div>
+              </div>
+              <div>
+                <p class="live-dot">salaoipe.com.br</p>
+                <p class="still-cap">Seu site no ar</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <ol class="film-tabs" aria-label="Quadros">
+          <li><a href="#still-1" data-still="0" aria-current="true"><b>0–5 s</b>Oi no WhatsApp</a></li>
+          <li><a href="#still-2" data-still="1"><b>5–10 s</b>Proposta</a></li>
+          <li><a href="#still-3" data-still="2"><b>10–15 s</b>Sinal no Pix</a></li>
+          <li><a href="#still-4" data-still="3"><b>15–20 s</b>Site no ar</a></li>
+        </ol>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- 3. PASSOS -->
+<section class="stage" data-shot="passos" id="passos">
+  <div class="wrap steps-head">
+    <h2>Como funciona</h2>
+    <p>Quatro passos, do primeiro oi ao site no ar. Você sabe o preço antes de pagar qualquer coisa.</p>
+  </div>
+  <ol class="steps">
+    <li class="step">
+      <div class="wrap step-inner">
+        <p class="step-count">1 de 4</p>
+        <h3 class="fit step-word"><span class="line">Conversa</span></h3>
+        <div class="step-copy">
+          <p class="step-text">Você chama no WhatsApp e conta o que precisa.</p>
+          <p class="step-fine">Sem formulário e sem reunião longa. Eu pergunto o que seus clientes procuram e o que você quer que eles façam no site.</p>
+        </div>
+      </div>
+    </li>
+    <li class="step">
+      <div class="wrap step-inner">
+        <p class="step-count">2 de 4</p>
+        <h3 class="fit step-word"><span class="line">Proposta</span></h3>
+        <div class="step-copy">
+          <p class="step-text">Escopo, prazo e preço fechados por escrito.</p>
+          <p class="step-fine">Tudo o que o site vai ter fica combinado antes. O preço não muda no meio do caminho.</p>
+        </div>
+      </div>
+    </li>
+    <li class="step">
+      <div class="wrap step-inner">
+        <p class="step-count">3 de 4</p>
+        <h3 class="fit step-word"><span class="line">Sinal de 50%</span></h3>
+        <div class="step-copy">
+          <p class="step-text">Você paga metade via Pix e o trabalho começa.</p>
+          <p class="step-fine">O prazo da proposta começa a contar no dia do sinal.</p>
+        </div>
+      </div>
+    </li>
+    <li class="step">
+      <div class="wrap step-inner">
+        <p class="step-count">4 de 4</p>
+        <h3 class="fit step-word"><span class="line">Entrega</span></h3>
+        <div class="step-copy">
+          <p class="step-text">Seu site no ar. Os outros 50% só na entrega.</p>
+          <p class="step-fine">Depois, 15 dias de garantia para ajustes: se algo não ficou como combinado, eu corrijo.</p>
+        </div>
+      </div>
+    </li>
+  </ol>
+  <div class="owns">
+    <div class="wrap">
+      <h3>O site é seu. Tudo dele é seu.</h3>
+      <ul>
+        <li><svg class="icon" aria-hidden="true"><use href="#i-key"/></svg><span><strong>Código, domínio e contas no seu nome.</strong> Você não fica preso a mim nem a uma mensalidade.</span></li>
+        <li><svg class="icon" aria-hidden="true"><use href="#i-doc"/></svg><span><strong>Escopo fechado antes de começar.</strong> O que está na proposta é o que você recebe.</span></li>
+        <li><svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg><span><strong>Direitos totais para você.</strong> Pode mudar, copiar ou levar para outra pessoa cuidar.</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 4. CALCULADORA -->
+<section class="house" data-shot="calculadora" id="calculadora">
+  <div class="wrap calc-grid">
+    <div class="calc-head">
+      <h2 class="sec-title">Quanto custa seu site?</h2>
+      <p class="lede">Escolha quantas páginas e o que o site precisa fazer. O preço e o prazo mudam na hora.</p>
+      <p class="provisional"><svg class="icon" aria-hidden="true"><use href="#i-note"/></svg>Valores provisórios: o Alysson ainda define os preços finais.</p>
+    </div>
+
+    <form class="calc-form" id="calc" aria-label="Monte seu site">
+      <fieldset>
+        <legend>Quantas páginas</legend>
+        <div class="stepper">
+          <button type="button" id="pg-minus" aria-label="Uma página a menos"><svg class="icon" aria-hidden="true"><use href="#i-minus"/></svg></button>
+          <output class="pages-num" id="pg-out" aria-live="polite" aria-label="Páginas">3</output>
+          <button type="button" id="pg-plus" aria-label="Uma página a mais"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></button>
+          <span class="pages-word" id="pg-word">páginas</span>
+        </div>
+        <p class="hint" id="pg-hint">Por exemplo: Início, Serviços e Contato. A primeira está no preço base; cada página extra custa <span data-price="extraPage">R$&nbsp;250</span> e soma <span data-days="extraPage">2</span> dias úteis.</p>
+      </fieldset>
+
+      <fieldset>
+        <legend>O que o site precisa ter</legend>
+        <div class="feats">
+          <label class="feat is-locked">
+            <input type="checkbox" name="feat" value="whatsapp" checked disabled>
+            <span class="box"><svg aria-hidden="true" viewBox="0 0 24 24"><use href="#i-check"/></svg></span>
+            <span class="feat-name">Botão de WhatsApp<small>Em todas as páginas, sempre</small></span>
+            <span class="feat-price">incluso</span>
+          </label>
+          <label class="feat">
+            <input type="checkbox" name="feat" value="agendamento">
+            <span class="box"><svg aria-hidden="true" viewBox="0 0 24 24"><use href="#i-check"/></svg></span>
+            <span class="feat-name">Agendamento online<small>O cliente marca o horário sozinho, a qualquer hora</small></span>
+            <span class="feat-price" data-feat-price="agendamento">+ R$&nbsp;600</span>
+          </label>
+          <label class="feat">
+            <input type="checkbox" name="feat" value="galeria" checked>
+            <span class="box"><svg aria-hidden="true" viewBox="0 0 24 24"><use href="#i-check"/></svg></span>
+            <span class="feat-name">Galeria de fotos<small>O espaço, a equipe e os trabalhos</small></span>
+            <span class="feat-price" data-feat-price="galeria">+ R$&nbsp;250</span>
+          </label>
+          <label class="feat">
+            <input type="checkbox" name="feat" value="cardapio">
+            <span class="box"><svg aria-hidden="true" viewBox="0 0 24 24"><use href="#i-check"/></svg></span>
+            <span class="feat-name">Cardápio ou catálogo<small>Pratos ou produtos, com foto e preço</small></span>
+            <span class="feat-price" data-feat-price="cardapio">+ R$&nbsp;400</span>
+          </label>
+          <label class="feat">
+            <input type="checkbox" name="feat" value="dominio">
+            <span class="box"><svg aria-hidden="true" viewBox="0 0 24 24"><use href="#i-check"/></svg></span>
+            <span class="feat-name">Domínio próprio<small>seunegocio.com.br configurado. O registro no Registro.br é pago à parte, por ano.</small></span>
+            <span class="feat-price" data-feat-price="dominio">+ R$&nbsp;150</span>
+          </label>
+          <label class="feat">
+            <input type="checkbox" name="feat" value="google">
+            <span class="box"><svg aria-hidden="true" viewBox="0 0 24 24"><use href="#i-check"/></svg></span>
+            <span class="feat-name">Google Meu Negócio<small>Seu perfil no Google Maps, com horário, fotos e link para o site</small></span>
+            <span class="feat-price" data-feat-price="google">+ R$&nbsp;200</span>
+          </label>
+          <label class="feat">
+            <input type="checkbox" name="feat" value="formulario">
+            <span class="box"><svg aria-hidden="true" viewBox="0 0 24 24"><use href="#i-check"/></svg></span>
+            <span class="feat-name">Formulário de contato<small>Para quem prefere escrever a chamar</small></span>
+            <span class="feat-price" data-feat-price="formulario">+ R$&nbsp;150</span>
+          </label>
+        </div>
+      </fieldset>
+    </form>
+
+    <aside class="quote" aria-labelledby="q-title">
+      <h3 id="q-title">Seu orçamento</h3>
+      <p class="q-summary" id="q-summary">3 páginas, galeria de fotos e botão de WhatsApp</p>
+      <p class="q-total"><span class="visually-hidden">Total: </span><output id="q-total" aria-live="polite">R$&nbsp;1.650</output></p>
+      <div class="timeline">
+        <div class="tl-bar" aria-hidden="true">
+          <span class="tl-dot"></span>
+          <span class="tl-days" id="q-days-bar">13 dias úteis</span>
+          <span class="tl-dot"></span>
+        </div>
+        <dl class="tl-ends">
+          <div><dt>Sinal de 50%, no Pix</dt><dd><span id="q-sinal">R$&nbsp;825</span><span class="when">para começar</span></dd></div>
+          <div><dt>Restante na entrega</dt><dd><span id="q-resto">R$&nbsp;825</span><span class="when">site no ar em <span id="q-date">01/12/2026</span></span></dd></div>
+        </dl>
+      </div>
+      <a class="btn btn-primary" id="q-cta" href="https://wa.me/?text=Oi%2C%20Alysson!%20Fiz%20um%20or%C3%A7amento%20no%20seu%20site%3A%203%20p%C3%A1ginas%2C%20galeria%20de%20fotos%20e%20bot%C3%A3o%20de%20WhatsApp.%20Total%3A%20R%24%201.650.%20Sinal%20de%2050%25%3A%20R%24%20825.%20Restante%20na%20entrega%3A%20R%24%20825.%20Prazo%3A%2013%20dias%20%C3%BAteis%20(entrega%20estimada%20em%2001%2F12%2F2026).%20Meu%20neg%C3%B3cio%20%C3%A9%3A%20" data-wa="Oi, Alysson! Fiz um orçamento no seu site: 3 páginas, galeria de fotos e botão de WhatsApp. Total: R$ 1.650. Sinal de 50%: R$ 825. Restante na entrega: R$ 825. Prazo: 13 dias úteis (entrega estimada em 01/12/2026). Meu negócio é: ">
+        <svg class="icon" aria-hidden="true"><use href="#i-wa"/></svg>Pedir este orçamento no WhatsApp</a>
+      <p class="q-note">Prazo em dias úteis contados do sinal, sem feriados. Valores provisórios.</p>
+    </aside>
+  </div>
+</section>
+
+<!-- 5. PREÇOS -->
+<section class="house house--follow" data-shot="precos" id="precos">
+  <div class="wrap">
+    <h2 class="sec-title">Pacotes prontos</h2>
+    <p class="lede">Os pedidos mais comuns, já somados. Dá para ajustar qualquer um na conversa.</p>
+    <p class="provisional"><svg class="icon" aria-hidden="true"><use href="#i-note"/></svg>Preços provisórios, a confirmar pelo Alysson.</p>
+    <ol class="bill">
+      <li class="pkg" data-pkg="cartao">
+        <h3>Cartão de visita</h3>
+        <p class="pkg-price"><span class="from">a partir de</span><b data-pkg-total>R$&nbsp;900</b><span class="days" data-pkg-days>7 dias úteis</span></p>
+        <p>Uma página com quem você é, o que faz, onde fica e o botão de WhatsApp. Para ser encontrado e chamado.</p>
+        <a class="btn btn-primary" href="https://wa.me/?text=Oi%2C%20Alysson!%20Vi%20seu%20site%20e%20quero%20o%20pacote%20Cart%C3%A3o%20de%20visita%20(1%20p%C3%A1gina%2C%20a%20partir%20de%20R%24%20900%2C%207%20dias%20%C3%BAteis).%20Meu%20neg%C3%B3cio%20%C3%A9%3A%20" data-pkg-cta><svg class="icon" aria-hidden="true"><use href="#i-wa"/></svg>Quero o Cartão de visita</a>
+      </li>
+      <li class="pkg pkg--featured" data-pkg="vitrine">
+        <h3>Vitrine</h3>
+        <p class="pkg-price"><span class="from">a partir de</span><b data-pkg-total>R$&nbsp;1.650</b><span class="days" data-pkg-days>13 dias úteis</span></p>
+        <p>Três páginas e uma galeria de fotos. Para mostrar o espaço e os trabalhos antes do cliente chegar.</p>
+        <a class="btn btn-primary" href="https://wa.me/?text=Oi%2C%20Alysson!%20Vi%20seu%20site%20e%20quero%20o%20pacote%20Vitrine%20(3%20p%C3%A1ginas%20e%20galeria%20de%20fotos%2C%20a%20partir%20de%20R%24%201.650%2C%2013%20dias%20%C3%BAteis).%20Meu%20neg%C3%B3cio%20%C3%A9%3A%20" data-pkg-cta><svg class="icon" aria-hidden="true"><use href="#i-wa"/></svg>Quero o Vitrine</a>
+      </li>
+      <li class="pkg" data-pkg="agenda">
+        <h3>Agenda cheia</h3>
+        <p class="pkg-price"><span class="from">a partir de</span><b data-pkg-total>R$&nbsp;2.400</b><span class="days" data-pkg-days>19 dias úteis</span></p>
+        <p>Quatro páginas, agendamento online e domínio próprio configurado. Para o cliente marcar sem precisar ligar.</p>
+        <a class="btn btn-primary" href="https://wa.me/?text=Oi%2C%20Alysson!%20Vi%20seu%20site%20e%20quero%20o%20pacote%20Agenda%20cheia%20(4%20p%C3%A1ginas%2C%20agendamento%20online%20e%20dom%C3%ADnio%20pr%C3%B3prio%2C%20a%20partir%20de%20R%24%202.400%2C%2019%20dias%20%C3%BAteis).%20Meu%20neg%C3%B3cio%20%C3%A9%3A%20" data-pkg-cta><svg class="icon" aria-hidden="true"><use href="#i-wa"/></svg>Quero o Agenda cheia</a>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- 6. TRABALHOS (vazio, de propósito) -->
+<section class="stage empty" data-shot="trabalhos" id="trabalhos">
+  <div class="wrap">
+    <h2>Trabalhos</h2>
+    <p class="empty-line">O primeiro site entregue aparece aqui.</p>
+    <p class="empty-sub">Ainda não tem nenhum. Quando o primeiro cliente estiver no ar, ele ganha este palco, com o link e o antes e depois.</p>
+    <a class="btn btn-light" data-wa="Oi, Alysson! Vi que o primeiro site entregue vai aparecer no seu site. Quero conversar sobre o meu. Meu negócio é: " href="https://wa.me/?text=Oi%2C%20Alysson!%20Vi%20que%20o%20primeiro%20site%20entregue%20vai%20aparecer%20no%20seu%20site.%20Quero%20conversar%20sobre%20o%20meu.%20Meu%20neg%C3%B3cio%20%C3%A9%3A%20">
+      <svg class="icon" aria-hidden="true"><use href="#i-wa"/></svg>Quero ser o primeiro</a>
+  </div>
+</section>
+
+<!-- 7. PRODUTOS -->
+<section class="house" data-shot="produtos" id="produtos">
+  <div class="wrap">
+    <h2 class="sec-title">Produtos</h2>
+    <p class="lede">O que eu faço por conta própria, entre um site e outro.</p>
+    <div class="products">
+      <article class="product">
+        <div class="poster" aria-hidden="true">
+          <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+            <path d="M40 70h70M20 100h52M300 230h70M320 258h50" stroke="#DDB6B8" stroke-width="2" stroke-linecap="round" opacity=".45"/>
+            <path d="M232 168 C 200 220, 140 230, 60 300" fill="none" stroke="#FBEDE4" stroke-width="1.6" opacity=".8"/>
+            <g transform="rotate(-14 240 110)">
+              <path d="M240 30 L292 108 L240 186 L188 108 Z" fill="#FFC56E"/>
+              <path d="M240 30 L240 186 M188 108 L292 108" stroke="#3A0B16" stroke-width="2.4"/>
+              <path d="M240 30 L292 108 L240 108 Z" fill="#3A0B16" opacity=".14"/>
+              <path d="M240 186 C 248 206, 232 222, 242 244 C 250 262, 236 276, 244 296" fill="none" stroke="#FFC56E" stroke-width="2"/>
+              <path d="M232 200 l10 6 l-10 6 z M252 200 l-10 6 l10 6 z M232 236 l10 6 l-10 6 z M252 236 l-10 6 l10 6 z M236 268 l10 6 l-10 6 z M256 268 l-10 6 l10 6 z" fill="#FBEDE4"/>
+            </g>
+          </svg>
+        </div>
+        <div class="product-copy" style="display:grid;gap:16px">
+          <span class="product-status soon">Primeiro lançamento chegando</span>
+          <h3>Pipa</h3>
+          <p class="product-desc">Um jogo de pipa que se joga com um dedo só. Você corta, desvia e sobe, no iPhone e no Android.</p>
+          <div class="stores">
+            <a class="store" aria-disabled="true" role="link"><small>Em breve na</small><b>App Store</b></a>
+            <a class="store" aria-disabled="true" role="link"><small>Em breve no</small><b>Google Play</b></a>
+          </div>
+          <div class="links"><a href="https://alyhenr.github.io/pipa/privacidade/">Política de privacidade</a></div>
+        </div>
+      </article>
+
+      <article class="product">
+        <div class="poster" aria-hidden="true">
+          <div class="permits">
+            <div class="permit"><b>Alvará 2025/04417</b><span class="late">vence em 6 dias</span></div>
+            <div class="permit"><b>Alvará 2025/03980</b><span>vence em 41 dias</span></div>
+            <div class="permit"><b>Alvará 2026/00212</b><span>vence em 118 dias</span></div>
+            <div class="permit"><b>Alvará 2026/01305</b><span>vence em 203 dias</span></div>
+          </div>
+        </div>
+        <div class="product-copy" style="display:grid;gap:16px">
+          <span class="product-status">Na Chrome Web Store</span>
+          <h3 class="long">Alvarás — controle de vencimento</h3>
+          <p class="product-desc">Uma extensão para engenheiros civis: lê a data do alvará de obra no portal da prefeitura e deixa todos os seus alvarás numa lista, do que vence primeiro ao último.</p>
+          <div class="links">
+            <a href="https://alyhenr.github.io/plugins/alvaras/">Conhecer a extensão</a>
+            <a href="https://alyhenr.github.io/plugins/alvaras/privacidade/">Política de privacidade</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- 8. ENGINEER (/en/) -->
+<section class="en" data-shot="engineer" id="en" lang="en">
+  <div class="wrap">
+    <span class="en-tab">alyhenr.github.io/en/</span>
+    <h2>For engineers &amp; recruiters</h2>
+    <div class="en-body">
+      <div style="display:grid;gap:16px">
+        <p>I'm Alysson, a software engineer in Brazil. I build fast websites for small businesses, and my own products: a mobile game and a browser extension that civil engineers use at work.</p>
+        <p class="en-stack"><strong>The stack, in plain words:</strong> TypeScript and JavaScript; plain HTML and CSS when a page doesn't need a framework (this site has none); React Native for iOS and Android; the WebExtensions API for Chrome and Firefox; Playwright to test every page in Chromium and WebKit before it ships.</p>
+        <div class="links"><a href="https://github.com/alyhenr">GitHub: alyhenr</a></div>
+      </div>
+      <ul class="en-list">
+        <li><b>Web</b><span>Static sites and small web apps, phone first, light enough for a budget Android on 4G.</span></li>
+        <li><b>Mobile</b><span><a href="#produtos">Pipa</a>, a one-thumb kite game for iOS and Android. First launch coming.</span></li>
+        <li><b>Browser extensions</b><span><a href="https://alyhenr.github.io/plugins/alvaras/">Alvarás</a>, live on the Chrome Web Store: keeps construction permits sorted by expiry.</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 9. CONTATO -->
+<footer class="stage contact" data-shot="contato" id="contato">
+  <div class="wrap">
+    <h2 class="fit"><span class="line">Me chama</span><span class="line">no WhatsApp.</span></h2>
+    <p class="contact-sub">Conta o que é o seu negócio e o que você precisa. Eu respondo com perguntas, e depois com uma proposta de preço fechado.</p>
+    <div class="contact-actions">
+      <a class="btn btn-light" data-wa="Oi, Alysson! Quero conversar sobre um site para o meu negócio. Meu negócio é: " href="https://wa.me/?text=Oi%2C%20Alysson!%20Quero%20conversar%20sobre%20um%20site%20para%20o%20meu%20neg%C3%B3cio.%20Meu%20neg%C3%B3cio%20%C3%A9%3A%20">
+        <svg class="icon" aria-hidden="true"><use href="#i-wa"/></svg>Chamar no WhatsApp</a>
+      <a class="btn btn-ghost" href="https://github.com/alyhenr">GitHub</a>
+    </div>
+    <div class="foot">
+      <p>Alysson, engenheiro de software no Brasil. Este site não usa cookies e não guarda nenhum dado seu.</p>
+      <p><a href="#en" hreflang="en" lang="en">For engineers &amp; recruiters</a></p>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ===== Para o Alysson editar =====
+// número do Alysson aqui (só dígitos, com DDI e DDD, ex.: '5511999999999'); vazio abre o WhatsApp para escolher o contato
+const WHATSAPP_NUMBER = '';
+
+// Preços provisórios: o Alysson define os valores finais aqui (reais e dias úteis).
+const PRICES = {
+  base:      { label: 'Site de 1 página', price: 900, days: 7 },
+  extraPage: { label: 'Página extra', price: 250, days: 2 },
+  features: {
+    whatsapp:    { label: 'botão de WhatsApp', price: 0, days: 0, locked: true },
+    agendamento: { label: 'agendamento online', price: 600, days: 5 },
+    galeria:     { label: 'galeria de fotos', price: 250, days: 2 },
+    cardapio:    { label: 'cardápio ou catálogo', price: 400, days: 3 },
+    dominio:     { label: 'domínio próprio', price: 150, days: 1 },
+    google:      { label: 'Google Meu Negócio', price: 200, days: 1 },
+    formulario:  { label: 'formulário de contato', price: 150, days: 1 }
+  }
+};
+const PACKAGES = {
+  cartao:  { name: 'Cartão de visita', pages: 1, features: [] },
+  vitrine: { name: 'Vitrine', pages: 3, features: ['galeria'] },
+  agenda:  { name: 'Agenda cheia', pages: 4, features: ['agendamento', 'dominio'] }
+};
+const PAGE_EXAMPLES = ['Início', 'Serviços', 'Contato', 'Galeria', 'Sobre', 'Equipe', 'Preços', 'Dúvidas'];
+
+// ===== Daqui para baixo, o funcionamento =====
+const root = document.documentElement;
+const brl = (n) => 'R$ ' + Math.round(n).toLocaleString('pt-BR');
+const waHref = (msg) => (WHATSAPP_NUMBER ? `https://wa.me/${WHATSAPP_NUMBER}` : 'https://wa.me/') + '?text=' + encodeURIComponent(msg);
+const listPt = (items) => items.length < 2 ? items.join('') : items.slice(0, -1).join(', ') + ' e ' + items[items.length - 1];
+const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
+
+function quote(pages, feats) {
+  let total = PRICES.base.price + (pages - 1) * PRICES.extraPage.price;
+  let days = PRICES.base.days + (pages - 1) * PRICES.extraPage.days;
+  for (const k of feats) { total += PRICES.features[k].price; days += PRICES.features[k].days; }
+  return { total, days, sinal: total / 2, resto: total - total / 2 };
+}
+function addBusinessDays(from, n) {
+  const d = new Date(from.getFullYear(), from.getMonth(), from.getDate());
+  while (n > 0) { d.setDate(d.getDate() + 1); const w = d.getDay(); if (w !== 0 && w !== 6) n--; }
+  return d;
+}
+const fmtDate = (d) => d.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+
+// CTAs fixos
+document.querySelectorAll('[data-wa]').forEach((a) => { a.href = waHref(a.dataset.wa); });
+document.querySelectorAll('[data-price]').forEach((el) => { el.textContent = brl(PRICES[el.dataset.price].price); });
+document.querySelectorAll('[data-days]').forEach((el) => { el.textContent = PRICES[el.dataset.days].days; });
+document.querySelectorAll('[data-feat-price]').forEach((el) => { el.textContent = '+ ' + brl(PRICES.features[el.dataset.featPrice].price); });
+
+// Pacotes, somados a partir de PRICES
+document.querySelectorAll('[data-pkg]').forEach((li) => {
+  const p = PACKAGES[li.dataset.pkg];
+  const q = quote(p.pages, p.features);
+  li.querySelector('[data-pkg-total]').textContent = brl(q.total);
+  li.querySelector('[data-pkg-days]').textContent = `${q.days} dias úteis`;
+  const what = listPt([plural(p.pages, 'página', 'páginas'), ...p.features.map((k) => PRICES.features[k].label)]);
+  li.querySelector('[data-pkg-cta]').href = waHref(`Oi, Alysson! Vi seu site e quero o pacote ${p.name} (${what}, a partir de ${brl(q.total)}, ${q.days} dias úteis). Meu negócio é: `);
+});
+
+// Calculadora
+const form = document.getElementById('calc');
+const out = { pages: document.getElementById('pg-out'), word: document.getElementById('pg-word'), hint: document.getElementById('pg-hint'),
+  minus: document.getElementById('pg-minus'), plus: document.getElementById('pg-plus'), summary: document.getElementById('q-summary'),
+  total: document.getElementById('q-total'), sinal: document.getElementById('q-sinal'), resto: document.getElementById('q-resto'),
+  bar: document.getElementById('q-days-bar'), date: document.getElementById('q-date'), cta: document.getElementById('q-cta') };
+let pages = 3;
+function render() {
+  const feats = [...form.querySelectorAll('input[name=feat]:checked')].map((i) => i.value).filter((k) => !PRICES.features[k].locked);
+  const q = quote(pages, feats);
+  const date = fmtDate(addBusinessDays(new Date(), q.days));
+  const what = listPt([plural(pages, 'página', 'páginas'), ...feats.map((k) => PRICES.features[k].label), PRICES.features.whatsapp.label]);
+  out.pages.textContent = pages;
+  out.word.textContent = pages === 1 ? 'página' : 'páginas';
+  // aria-disabled (não disabled) para o foco do teclado não se perder no limite
+  out.minus.setAttribute('aria-disabled', String(pages <= 1)); out.plus.setAttribute('aria-disabled', String(pages >= 8));
+  out.hint.firstChild.textContent = `Por exemplo: ${listPt(PAGE_EXAMPLES.slice(0, pages))}. A primeira está no preço base; cada página extra custa `;
+  out.summary.textContent = what.charAt(0).toUpperCase() + what.slice(1);
+  out.total.textContent = brl(q.total);
+  out.sinal.textContent = brl(q.sinal);
+  out.resto.textContent = brl(q.resto);
+  out.bar.textContent = `${q.days} dias úteis`;
+  out.date.textContent = date;
+  out.cta.href = waHref(`Oi, Alysson! Fiz um orçamento no seu site:\n- ${what}\nTotal: ${brl(q.total)}\nSinal de 50% (Pix): ${brl(q.sinal)}\nRestante na entrega: ${brl(q.resto)}\nPrazo: ${q.days} dias úteis (entrega estimada em ${date})\nMeu negócio é: `);
+}
+out.minus.addEventListener('click', () => { pages = Math.max(1, pages - 1); render(); });
+out.plus.addEventListener('click', () => { pages = Math.min(8, pages + 1); render(); });
+form.addEventListener('change', render);
+render();
+
+// Roteiro do vídeo: tocar num quadro mostra aquele quadro (sem avançar sozinho)
+const reel = document.getElementById('reel');
+const tabs = [...document.querySelectorAll('.film-tabs a')];
+const setTab = (i) => tabs.forEach((t, j) => t.setAttribute('aria-current', String(i === j)));
+tabs.forEach((t, i) => t.addEventListener('click', (e) => {
+  e.preventDefault();
+  reel.scrollTo({ left: i * reel.clientWidth, behavior: root.classList.contains('motion') ? 'smooth' : 'auto' });
+  setTab(i);
+}));
+reel.addEventListener('scroll', () => setTab(Math.round(reel.scrollLeft / reel.clientWidth)), { passive: true });
+
+// O momento do título: as linhas se esticam até a largura delas, uma vez, e param
+if (root.classList.contains('motion')) {
+  const play = () => requestAnimationFrame(() => root.classList.add('play'));
+  Promise.race([document.fonts.ready, new Promise((r) => setTimeout(r, 900))]).then(play);
+
+  // Passos: quando o visitante começa a rolar, cada palavra entra em cena ao chegar
+  const steps = [...document.querySelectorAll('.step')];
+  const io = new IntersectionObserver((entries) => entries.forEach((e) => {
+    if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); }
+  }), { rootMargin: '0px 0px -30% 0px' });
+  const arm = () => {
+    removeEventListener('wheel', arm); removeEventListener('touchstart', arm); removeEventListener('keydown', arm);
+    steps.forEach((s) => { if (s.getBoundingClientRect().top < innerHeight * 0.7) s.classList.add('on'); else io.observe(s); });
+    root.classList.add('armed');
+  };
+  addEventListener('wheel', arm, { passive: true });
+  addEventListener('touchstart', arm, { passive: true });
+  addEventListener('keydown', arm);
+} else {
+  root.classList.add('play');
+}
+</script>
+</body>
+</html>
