@@ -1,0 +1,6 @@
+[
+  { "file": "index.js", "source": "Studio, written for this request (procedural geometry and shaders, no downloads)", "licence": "UNLICENSED", "author": "alyhenr" },
+  { "file": "scaffold.js, rig.js, idle.js", "source": "Studio's web kit (@studio/web 0.2.0), types stripped", "licence": "UNLICENSED", "author": "alyhenr" },
+  { "file": "plates/*.jpg", "source": "rendered from index.js with @studio/preview (previews/render.ts)", "licence": "UNLICENSED", "author": "alyhenr" },
+  { "file": "previews/*", "source": "rendered from index.js with @studio/preview (previews/render.ts)", "licence": "UNLICENSED", "author": "alyhenr" }
+]

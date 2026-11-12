@@ -1,0 +1,12 @@
+{
+  "name": "traco-wireframe",
+  "version": "1.0.0",
+  "license": "UNLICENSED",
+  "type": "module",
+  "description": "A scroll-scrubbed Three.js line scene: chalk segments gather into the wireframe of a site on a phone",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "dependencies": {
+    "three": "0.187.0"
+  }
+}
