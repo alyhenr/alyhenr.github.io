@@ -1,28 +1,6 @@
 # Roadmap — Portfolio
 
 ## Now
-- **Design directions, round 2** (ready) — Round 1 (Planta, Feira, Cena) read as flat one-prompt pages differing only in style; the owner wants immersive, senior, professional work, with a clear view of where each Studio piece would sit and what it would be, before anything is made.
-  Goal: 3 new directions, each built a truly different way, mockups only, so the owner can see the whole site and where its signature pieces go. No Studio requests and no rendered video in this round: each piece is directed, not made.
-  The three ways:
-  - Cinematic: a scroll-driven WebGL scene is the spine (e.g. lines assembling into a site's wireframe as the 4 steps pass).
-  - Film: a 20–30 s motion film (Studio's Remotion promo kit) carries the story; the page's sections are its chapters.
-  - System: precise editorial type and live architecture diagrams (web-craft's live data-pipeline dashboard), immersive through interaction, no video; the senior engineer's voice.
-  Each Studio piece: a scene direction in design/scenes/<name>.md with its key frames, and in the mock a clearly marked slot at its real size showing a key frame, what it will be, how it moves, its budget and its reduced-motion still. Pieces made with plain page work (CSS, SVG, small scripts) are built for real.
-  Content, every direction, pt-BR, for small-business owners:
-  - What we make and the 4 steps (conversa, proposta, sinal de 50%, entrega); "O site é seu. Tudo dele é seu."
-  - Pacotes prontos (the web agency's catalogue: four tiers, launch-price label "preço de lançamento").
-  - The calculator, labelled as an estimate: "É uma estimativa. Conte seu objetivo e fechamos o valor juntos." Its result goes into the contact form.
-  - Contact only through a form (name, e-mail or phone, message, the estimate), with a short LGPD note; no WhatsApp number or e-mail shown anywhere.
-  - No projects on the home page: a short section linking to a separate Projetos page. The Projetos page is mocked too, with two entries: Jarvis (an engineering company of AI agents on one Mac mini, told through an animated architecture diagram, no code or private details) and the published Alvarás plugin; plus his GitHub and a small "Lab" for deeper engineering topics. No Pipa, Racha, Garantia or other apps.
-  - A personal touch: who he is, a senior engineer, in a few honest lines.
-  Avoid the one-prompt look: each direction names its look from visual-vocabulary and its techniques from web-craft, and says why it suits a senior engineer selling sites. Light on a budget Android phone over 4G.
-  Rules: /plugins/alvaras/ and /plugins/alvaras/privacidade/ stay live; static site on GitHub Pages; round 1 stays in design/directions as history (or is moved aside), round 2 is what the preview shows.
-  Out: Studio requests, rendered video, the contact endpoint, a domain, real client work.
-  Done when:
-  - 3 directions in the showcase layout, each with its home and its Projetos page, naming its look, techniques and why.
-  - Each Studio piece has a scene direction with key frames and a marked slot in the mock.
-  - The calculator, packages, form and LGPD note work in every direction, with no phone number or e-mail exposed.
-  - The preview and send pages serve them.
 - **Build the site: Traço** (ready) — The owner picked Traço from round 2 (12/11): the new portfolio becomes his storefront for small-business sites and the home of his projects, with Studio's line scene as the proof of craft.
   Goal: the real static site in the Traço direction, replacing the old template, live-ready on GitHub Pages, with the stage working on its plates until Studio's scene is mounted.
   In:
@@ -66,6 +44,7 @@
 - The Alvarás policy's Contato line shows an e-mail (verbatim from alvaras-pg's PRIVACY.md), the one contact left on the site; changing it means editing PRIVACY.md in the extension's repo first, then this copy, with the date in both.
 
 ## History
+- 2026-11-12: Design directions, round 2
 - 2026-11-12: Design directions
 - 2026-11-12: Publish only the site
 - 2026-11-12: Adopt into our standard
