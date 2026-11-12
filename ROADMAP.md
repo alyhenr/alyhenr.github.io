@@ -56,7 +56,7 @@
   - Each Studio piece has a scene direction with key frames and a marked slot in the mock.
   - The calculator, packages, form and LGPD note work in every direction, with no phone number or e-mail exposed.
   - The preview and send pages serve them.
-- **Build the site: Traço** (building) — The owner picked Traço from round 2 (12/11): the new portfolio becomes his storefront for small-business sites and the home of his projects, with Studio's line scene as the proof of craft.
+- **Build the site: Traço** (ready) — The owner picked Traço from round 2 (12/11): the new portfolio becomes his storefront for small-business sites and the home of his projects, with Studio's line scene as the proof of craft.
   Goal: the real static site in the Traço direction, replacing the old template, live-ready on GitHub Pages, with the stage working on its plates until Studio's scene is mounted.
   In:
   - Finalize first: the designer (finalize mode) turns 01-traco into DESIGN.md and final mockups, with the owner's changes below.
@@ -75,16 +75,13 @@
   - A demo (stills and a short scroll video) for the owner's phone.
 
 ## Next
-- **Connect the contact form** (idea) — the form's action is still the Formspree placeholder (contact.html); connecting it sends visitors' name, email and message to a third party, which needs a short privacy note on the page (LGPD).
-- **Real Work and Writing content** (idea) — projects.html (project-alpha, project-beta, "Replace this with your actual project description", `href="#"` buttons) and blog.html / blog/first-post.html ("Your First Blog Post") are template placeholders live on the site; js/filesystem.js mirrors them.
+- **Connect the contact form** (idea) — the home's form (name, e-mail or phone, message, estimate) validates and stops; connecting it through the Gateway sends a visitor's data to us (its LGPD note is already on the form). Until then its done message says the request was not sent.
+- **Mount Studio's traco-wireframe** (idea) — when Studio's package (requested 12/11, run 6705) arrives: vendor it, set the stage's `data-scene-src` to its module, add its files to `SITE_FILES`, and check Lighthouse mobile stays ≥ 90 with the scene.
 
 ## Later
 
 ## Fixes and chores
-- js/plugins.js: Alvarás has `status: 'published'`, which isn't a key of STATUS_LABELS (`live`, `review`, `unpublished`), so its card on /plugins/ shows an unstyled lowercase "published"; set it to `live`.
-- js/plugins.js: `stores.chrome` is still `null` with a TODO though the Chrome Web Store listing is live; fill it with the listing's canonical URL.
-- plugins/alvaras/index.html, Instalação: the notice still says the extension isn't published in the stores (with typos: "serao disponibilzados"), while the button says "Chrome Web Store — Publicado"; that button keeps `btn--pending` and `aria-disabled="true"` though it's a working link, and its URL carries account parameters (`authuser=2`, `pli=1`) from a signed-in session.
-- Firefox Add-ons: the button and `stores.firefox` are pending; fill them when the listing is approved.
-- js/chrome.js: comments still describe the removed game pages (`terminal: false`); `chrome.setCwd()` looks up `#chrome-cwd`, which no page has.
+- Firefox Add-ons: the Alvarás page shows "Firefox Add-ons: em revisão" (disabled) and no store link; fill the button when the listing is approved.
+- The Alvarás policy's Contato line shows an e-mail (verbatim from alvaras-pg's PRIVACY.md), the one contact left on the site; changing it means editing PRIVACY.md in the extension's repo first, then this copy, with the date in both.
 
 ## History

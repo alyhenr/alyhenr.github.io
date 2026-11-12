@@ -11,7 +11,8 @@
   },
   "e2e": "playwright",
   "personal_data": [
-    "contact.html",
+    "index.html",
+    "js/site.js",
     "*privacidade*"
   ],
   "gate": "qa"

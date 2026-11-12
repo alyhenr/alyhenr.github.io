@@ -1,7 +1,8 @@
 # alyhenr.github.io
 
-My personal site — projects, writing, and the browser extensions I publish,
-along with the privacy policy each one needs.
+My site, in Portuguese: sites for small businesses (packages, a live price
+estimate, a contact form), the projects I build on my own, and the browser
+extensions I publish, along with the privacy policy each one needs.
 
 **Live:** <https://alyhenr.github.io>
 
@@ -13,38 +14,28 @@ dependencies: the site's files are served exactly as committed.
 ## Structure
 
 ```
-index.html            landing page
-projects.html         portfolio
-blog.html  blog/      writing
-contact.html          email + message form
+index.html            Início: the stage, the four steps, packages, calculator, contact
+projetos.html         Projetos: Jarvis, Alvarás, the Lab, GitHub
 plugins/              browser extensions  ← URLs are frozen, see below
 404.html              custom not-found page
 
-css/tokens.css        every colour, size and spacing decision
-css/components.css    the component library
-js/chrome.js          menu bar, status bar, terminal overlay
-js/plugins.js         extension registry (data)
-js/filesystem.js      virtual filesystem for the terminal
-js/terminal.js        the terminal itself
+css/tokens.css        every colour, font and size decision (light and dark)
+css/site.css          the components
+fonts/                Anybody and Hanken Grotesk, self-hosted
+img/plates/           the stage's plates
+js/stage.js           the sticky stage, and the mount point for its 3D scene
+js/site.js            the calculator and the contact form
+js/estimate.js        what the calculator hands the form (pure, tested)
+js/flow.js            the live architecture diagrams
+vendor/web/prices/    the price catalogue and its quote math (vendored)
 ```
 
 ## Design
 
-A 90s desktop: bevelled windows, a menu bar, chunky buttons.
-
-The rule that holds it together is that **beige is chrome, never a text
-background** — body copy sits on the near-white `--color-doc` surface inside
-a window, the way a System 7 document area did. That is what keeps text at
-13.9:1 instead of a muddy ink-on-beige. Accent colour follows from it: fine
-on the document surface, but on beige it has to be white-on-accent.
-
-Retheme the whole site from `css/tokens.css`; nothing else hardcodes a colour.
-
-## The terminal
-
-The site used to be a terminal. It still is, tucked away — press `~` or the
-`>_` button in the status bar, `Esc` to close. `ls`, `cd`, `cat`, `go` and
-friends all work against the virtual filesystem in `js/filesystem.js`.
+"Traço": a dark stage where loose lines become a site on a phone as you
+scroll through the four steps, then calm light sections. The design system
+is in `DESIGN.md`. Retheme from `css/tokens.css`; nothing else hardcodes a
+colour.
 
 ## ⚠️ Frozen URLs
 
@@ -52,6 +43,7 @@ These are submitted to the Chrome Web Store and Firefox Add-ons. A moved or
 dead policy URL fails review — not just the first one, every future one:
 
 ```
+/plugins/
 /plugins/alvaras/
 /plugins/alvaras/privacidade/
 ```
@@ -61,45 +53,27 @@ repo. Restyle it freely; **do not reword it**. Reviewers compare it against
 the manifest, and any discrepancy is a rejection. Change both files together
 and update the date in both.
 
-It must also stay readable with JavaScript disabled — reviewers and crawlers
-may not run scripts, so no part of the policy can depend on JS.
-
-## Adding things
-
-**An extension** — append an entry to `PLUGINS` in `js/plugins.js`, then add
-`plugins/<slug>/index.html` and `plugins/<slug>/privacidade/index.html`.
-The index page renders itself from that data, so it needs no edit. Give each
-extension its own policy; a shared generic one is a common rejection reason.
-
-**A post** — add `blog/<slug>.html`, then a card in `blog.html`.
-
-**A project** — copy a `<section class="window">` block in `projects.html`.
-
-Register new pages in `js/filesystem.js` so the terminal can find them too.
+These pages carry no script: reviewers and crawlers may not run JavaScript.
 
 ## Running it locally
 
 ```sh
-python3 -m http.server 8000
+node .jarvis/serve.mjs 8000
 ```
 
-Open <http://localhost:8000>. Opening the files directly over `file://` will
-not work properly — a directory URL lists the folder instead of loading its
-`index.html`.
-
-Note that `404.html` is only exercised by a real server that routes misses to
-it; `http.server` shows its own plain 404 instead. `node .jarvis/serve.mjs 8000`
-serves it the way Pages does, 404 included.
+Open <http://localhost:8000>. It serves the site the way Pages does, 404
+included. (`python3 -m http.server 8000` also works, without the 404 page.)
 
 ## Checks
 
-`node .jarvis/qa.mjs` checks every local link, the frozen URLs, and each page
-in Chromium and WebKit with Playwright. `package.json` exists only for that;
-the site itself still has no dependencies.
+`node .jarvis/qa.mjs` checks every local link, the frozen URLs, the
+calculator's quotes against the price rules, that no page shows a phone or
+e-mail, and each page in Chromium and WebKit with Playwright. `package.json`
+exists only for that; the site itself still has no dependencies.
 
 ## Deploying
 
 Push to `main`. The workflow in `.github/workflows/deploy.yml` stages the
-site's files with `.github/stage-site.mjs` (the root `*.html` pages and
-`css/`, `js/`, `plugins/`, `blog/`) and publishes only those to GitHub Pages.
-A new top-level folder the pages use goes in that script's `SITE_DIRS`.
+site's files with `.github/stage-site.mjs` (the root `*.html` pages, `css/`,
+`js/`, `fonts/`, `img/`, `plugins/` and the vendored price files) and
+publishes only those to GitHub Pages.
