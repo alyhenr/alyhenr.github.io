@@ -1,7 +1,7 @@
 # Roadmap — Portfolio
 
 ## Now
-- **Adopt into our standard** (agreed) — Portfolio came in with its history; our docs, rules and QA come from what its code really is.
+- **Adopt into our standard** (building) — Portfolio came in with its history; our docs, rules and QA come from what its code really is.
   Goal: our docs, rules and a real QA, written from what the code really is (the work skill's adopt mode); no product code changes.
   In:
   - PRODUCT.md, ARCHITECTURE.md, AGENTS.md, ROADMAP.md and docs/IDEAS.md from the code; each existing doc (README, AGENTS.md, CLAUDE.md, docs/) folded in, kept or removed, every choice listed.
