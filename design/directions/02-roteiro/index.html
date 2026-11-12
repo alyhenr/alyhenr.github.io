@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alysson · Sites para pequenos negócios</title>
+<meta name="description" content="Sites para pequenos negócios, em quatro passos: conversa, proposta, sinal de 50% e entrega. O site é seu. Tudo dele é seu.">
+<meta name="theme-color" content="#1E3BD0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 24 24"><path d="M6 12h12"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 6v12M6 12h12"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></symbol>
+  <symbol id="i-scene" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 9h18M8 5l-2 4M13 5l-2 4M18 5l-2 4"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.5v13l10.5-6.5z"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><rect x="7" y="3" width="10" height="18" rx="2"/><path d="M11 18h2"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><path d="M9 8l-4 4 4 4M15 8l4 4-4 4"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-6-5.6-6-11a6 6 0 0 1 12 0c0 5.4-6 11-6 11z"/><circle cx="12" cy="10" r="2"/></symbol>
+</svg>
+
+<header class="top">
+  <div class="wrap">
+    <a class="wordmark" href="index.html">Alysson</a>
+    <nav aria-label="Seções">
+      <a href="#cap-2">Pacotes e preços</a>
+      <a href="#creditos">Quem faz</a>
+      <a href="projetos.html">Projetos</a>
+    </nav>
+    <a class="btn btn--primary" href="#contato">Pedir orçamento</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero" data-shot="hero" aria-labelledby="h-hero">
+    <div class="wrap hero-row">
+      <div>
+        <h1 id="h-hero">Seu site em quatro passos.</h1>
+        <p class="lede">Sites para pequenos negócios, feitos por um engenheiro de software. Preço e prazo combinados antes de começar; no fim, o site é todo seu. Dê o play: são 24 segundos.</p>
+      </div>
+      <div class="actions">
+        <a class="btn btn--ghost" href="#cap-2">Ver os preços</a>
+      </div>
+    </div>
+
+    <!-- Studio piece: roteiro-filme (design/scenes/roteiro-filme.md). The real piece is a 24 s MP4
+         (Remotion): 16:9 here on wide screens, a 4:5 cut on phones. In the mock: its key frames. -->
+    <figure class="film" data-studio="roteiro-filme" aria-label="Filme de 24 segundos: como funciona, em quatro passos">
+      <picture><source media="(max-width: 760px)" srcset="scene/4x5-01.jpg"><img class="is-on" src="scene/16x9-01.jpg" alt="Me conta do seu negócio." data-key="0"></picture>
+      <picture><source media="(max-width: 760px)" srcset="scene/4x5-02.jpg"><img src="scene/16x9-02.jpg" alt="Preço fechado." loading="lazy" data-key="6"></picture>
+      <picture><source media="(max-width: 760px)" srcset="scene/4x5-03.jpg"><img src="scene/16x9-03.jpg" alt="Metade agora, metade na entrega." loading="lazy" data-key="12"></picture>
+      <picture><source media="(max-width: 760px)" srcset="scene/4x5-04.jpg"><img src="scene/16x9-04.jpg" alt="O site é seu. Tudo dele é seu." loading="lazy" data-key="18"></picture>
+      <a class="studio-tag" href="#ficha"><svg class="icon"><use href="#i-scene"/></svg>Studio · roteiro-filme (quadro-chave)</a>
+      <div class="film-controls">
+        <button type="button" class="play" aria-label="Ver a prévia do roteiro"><svg class="icon i-play"><use href="#i-play"/></svg><svg class="icon i-pause"><use href="#i-pause"/></svg></button>
+        <div class="scrub" aria-hidden="true"><span></span></div>
+        <span class="film-note">Prévia em quadros-chave, não o filme</span>
+        <span class="timecode" aria-live="off">00:00 / 00:24</span>
+      </div>
+    </figure>
+  </section>
+
+  <nav class="chapters" aria-label="Capítulos">
+    <ol>
+      <li><a href="#cap-1"><b>00:00</b><span>Conversa</span></a></li>
+      <li><a href="#cap-2"><b>00:06</b><span>Proposta</span></a></li>
+      <li><a href="#cap-3"><b>00:12</b><span>Sinal de 50%</span></a></li>
+      <li><a href="#cap-4"><b>00:18</b><span>Entrega</span></a></li>
+      <li><a href="#creditos"><b>00:24</b><span>Créditos</span></a></li>
+    </ol>
+    <div class="playhead"><span></span></div>
+  </nav>
+
+  <section class="chapter" id="cap-1" data-shot="passos" aria-labelledby="h-c1">
+    <div class="wrap">
+      <div class="chapter-head">
+        <span class="tc">00:00</span>
+        <h2 id="h-c1">Conversa</h2>
+        <p class="legenda">Me conta do seu negócio.</p>
+      </div>
+      <div class="step">
+        <p>Você me conta pelo formulário o que vende, quem atende e o que o site precisa fazer. Eu respondo em até 1 dia útil, com perguntas e sem jargão.</p>
+        <div>
+          <p class="aside">Faço sites para quem tem um negócio de verdade e precisa ser achado, entendido e chamado:</p>
+          <ul class="kinds"><li>Salão</li><li>Oficina</li><li>Clínica</li><li>Restaurante</li><li>Loja de bairro</li><li>Escritório</li></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter chapter--split" id="cap-2" aria-labelledby="h-c2">
+    <div class="shot-block" data-shot="pacotes"><div class="wrap">
+      <div class="chapter-head">
+        <span class="tc">00:06</span>
+        <h2 id="h-c2">Proposta</h2>
+        <p class="legenda">Preço fechado antes de começar.</p>
+      </div>
+      <div class="step">
+        <p>Em até 2 dias úteis, uma proposta por escrito: as páginas, o que cada uma faz, o prazo e o preço fechado. O que está ali é o que você paga.</p>
+        <p class="aside">Já sabe o que quer? Escolha um pacote pronto. Quer montar o seu? A calculadora logo abaixo mostra quanto fica.</p>
+      </div>
+
+      <h3 class="sub" id="pacotes">Pacotes prontos</h3>
+      <p class="sub-lede">Todos com formulário de contato, pensados primeiro para o celular e entregues no seu nome. <span class="tag-launch" data-launch>preço de lançamento</span></p>
+      <ul class="packages">
+        <li class="pkg">
+          <span class="frame-no">Pacote 1</span><h4>Essencial</h4>
+          <span><b class="price" data-money="pkg:essencial">R$ 690</b></span>
+          <span class="days">em uns <span data-days="pkg:essencial">5</span> dias úteis</span>
+          <ul><li><svg class="icon"><use href="#i-check"/></svg>1 página</li><li><svg class="icon"><use href="#i-check"/></svg>Mapa e horários</li><li><svg class="icon"><use href="#i-check"/></svg>Formulário de contato</li></ul>
+          <a class="btn btn--ghost" href="#contato" data-pick="essencial">Quero este</a>
+        </li>
+        <li class="pkg pkg--lit">
+          <span class="frame-no">Pacote 2</span><h4>Vitrine</h4>
+          <span><b class="price" data-money="pkg:vitrine">R$ 1.290</b></span>
+          <span class="days">em uns <span data-days="pkg:vitrine">10</span> dias úteis</span>
+          <ul><li><svg class="icon"><use href="#i-check"/></svg>Até 4 páginas</li><li><svg class="icon"><use href="#i-check"/></svg>Galeria de fotos</li><li><svg class="icon"><use href="#i-check"/></svg>Mapa e horários</li><li><svg class="icon"><use href="#i-check"/></svg>Domínio .com.br configurado</li></ul>
+          <a class="btn btn--sub" href="#contato" data-pick="vitrine">Quero este</a>
+        </li>
+        <li class="pkg">
+          <span class="frame-no">Pacote 3</span><h4>Agenda</h4>
+          <span><b class="price" data-money="pkg:agenda">R$ 1.990</b></span>
+          <span class="days">em uns <span data-days="pkg:agenda">15</span> dias úteis</span>
+          <ul><li><svg class="icon"><use href="#i-check"/></svg>Até 5 páginas</li><li><svg class="icon"><use href="#i-check"/></svg>Agendamento on-line</li><li><svg class="icon"><use href="#i-check"/></svg>Galeria de fotos</li><li><svg class="icon"><use href="#i-check"/></svg>Domínio configurado</li></ul>
+          <a class="btn btn--ghost" href="#contato" data-pick="agenda">Quero este</a>
+        </li>
+        <li class="pkg">
+          <span class="frame-no">Pacote 4</span><h4>Completo</h4>
+          <span><b class="price" data-money="pkg:completo">R$ 2.890</b></span>
+          <span class="days">em uns <span data-days="pkg:completo">20</span> dias úteis</span>
+          <ul><li><svg class="icon"><use href="#i-check"/></svg>Até 8 páginas</li><li><svg class="icon"><use href="#i-check"/></svg>Agendamento</li><li><svg class="icon"><use href="#i-check"/></svg>Cardápio ou catálogo</li><li><svg class="icon"><use href="#i-check"/></svg>Blog ou novidades</li><li><svg class="icon"><use href="#i-check"/></svg>Galeria e domínio</li></ul>
+          <a class="btn btn--ghost" href="#contato" data-pick="completo">Quero este</a>
+        </li>
+      </ul>
+      <p class="provisional" data-provisional><svg class="icon"><use href="#i-info"/></svg>Valores provisórios até o catálogo da agência entrar. O domínio você paga direto ao Registro.br, por ano.</p>
+    </div></div>
+    <div class="shot-block" data-shot="calculadora"><div class="wrap">
+      <h3 class="sub" id="calculadora">Monte o seu</h3>
+      <p class="sub-lede">Toque no que o seu site precisa. O valor muda na hora.</p>
+      <form class="calc" data-calc aria-label="Calculadora de estimativa">
+        <div>
+          <fieldset>
+            <legend>Quantas páginas</legend>
+            <div class="pages-ctl">
+              <button type="button" class="stepper" data-step="-1" aria-label="Uma página a menos"><svg class="icon"><use href="#i-minus"/></svg></button>
+              <output aria-live="polite" data-out="pages">3</output>
+              <input type="hidden" name="pages" value="3">
+              <button type="button" class="stepper" data-step="1" aria-label="Uma página a mais"><svg class="icon"><use href="#i-plus"/></svg></button>
+              <span class="unit"><span data-out="pages-word">páginas</span>: início, serviços, contato…</span>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>O que mais</legend>
+            <div class="opts">
+              <label class="opt"><input type="checkbox" name="feat" value="galeria" checked><svg class="icon"><use href="#i-check"/></svg>Galeria de fotos <span class="p" data-money="feat:galeria"></span></label>
+              <label class="opt"><input type="checkbox" name="feat" value="mapa" checked><svg class="icon"><use href="#i-check"/></svg>Mapa e horários <span class="p" data-money="feat:mapa"></span></label>
+              <label class="opt"><input type="checkbox" name="feat" value="agendamento"><svg class="icon"><use href="#i-check"/></svg>Agendamento on-line <span class="p" data-money="feat:agendamento"></span></label>
+              <label class="opt"><input type="checkbox" name="feat" value="cardapio"><svg class="icon"><use href="#i-check"/></svg>Cardápio ou catálogo <span class="p" data-money="feat:cardapio"></span></label>
+              <label class="opt"><input type="checkbox" name="feat" value="blog"><svg class="icon"><use href="#i-check"/></svg>Blog ou novidades <span class="p" data-money="feat:blog"></span></label>
+              <label class="opt"><input type="checkbox" name="feat" value="dominio"><svg class="icon"><use href="#i-check"/></svg>Domínio .com.br <span class="p" data-money="feat:dominio"></span></label>
+            </div>
+          </fieldset>
+        </div>
+        <aside class="quote" aria-live="polite">
+          <span class="label">Sua estimativa</span>
+          <b class="total" data-out="price">R$ 0</b>
+          <span>em uns <span data-out="days">0</span> dias úteis</span>
+          <ul data-out="lines"></ul>
+          <p class="hint" data-out="hint" hidden></p>
+          <p class="estimate-note">É uma estimativa. Conte seu objetivo e fechamos o valor juntos.</p>
+          <button type="button" class="btn btn--sub" data-use-estimate>Levar para o contato<svg class="icon"><use href="#i-arrow"/></svg></button>
+        </aside>
+      </form>
+    </div></div>
+  </section>
+
+  <section class="chapter" id="cap-3" data-shot="sinal" aria-labelledby="h-c3">
+    <div class="wrap">
+      <div class="chapter-head">
+        <span class="tc">00:12</span>
+        <h2 id="h-c3">Sinal de 50%</h2>
+        <p class="legenda">Metade para começar. Metade na entrega.</p>
+      </div>
+      <div class="step">
+        <p>Você paga metade por Pix e eu começo. A outra metade só quando o site estiver pronto e aprovado por você.</p>
+        <p class="aside">Sem mensalidade comigo. Se precisar mudar algo depois, combinamos à parte.</p>
+      </div>
+      <div class="split" aria-live="polite">
+        <div class="now"><span>Para começar<small>por Pix, depois da proposta</small></span><b data-half>R$ 635</b></div>
+        <div class="later"><span>Na entrega<small>com o site pronto e aprovado</small></span><b data-half>R$ 635</b></div>
+      </div>
+      <p class="provisional"><svg class="icon"><use href="#i-info"/></svg>Calculado sobre a sua estimativa acima. Mude a calculadora e veja aqui.</p>
+    </div>
+  </section>
+
+  <section class="chapter" id="cap-4" data-shot="entrega" aria-labelledby="h-c4">
+    <div class="wrap">
+      <div class="chapter-head">
+        <span class="tc">00:18</span>
+        <h2 id="h-c4">Entrega</h2>
+        <p class="legenda">O site é seu. Tudo dele é seu.</p>
+      </div>
+      <div class="step">
+        <p>O site no ar, no seu domínio, testado no celular e no computador. Junto vêm o código, o acesso ao domínio e um guia curto para mexer no que for seu.</p>
+      </div>
+      <p class="owned-line">O site é seu. <span>Tudo dele é seu.</span></p>
+      <ul class="owned">
+        <li><b>Domínio</b>Registrado no seu CPF ou CNPJ.</li>
+        <li><b>Código</b>Num repositório na sua conta.</li>
+        <li><b>Hospedagem</b>Sem mensalidade comigo para continuar no ar.</li>
+        <li><b>Acessos</b>Senhas entregues a você, não guardadas por mim.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="credits" id="creditos" data-shot="sobre" aria-labelledby="h-cred">
+    <div class="wrap">
+      <span class="tc">00:24</span>
+      <h2 id="h-cred">Créditos</h2>
+      <dl class="roll">
+        <div><dt>Conversa</dt><dd>Alysson</dd></div>
+        <div><dt>Proposta</dt><dd>Alysson</dd></div>
+        <div><dt>Código e testes</dt><dd>Alysson</dd></div>
+        <div><dt>Suporte depois da entrega</dt><dd>Alysson</dd></div>
+      </dl>
+      <p class="bio">Sou engenheiro de software sênior. No trabalho, cuido de sistemas que não podem parar; aqui, faço sites para pequenos negócios com o mesmo cuidado.</p>
+      <p class="bio">Sem agência no meio, sem estagiário: quem conversa com você é quem faz. Meu código está no <a href="https://github.com/alyhenr">GitHub</a>.</p>
+
+      <a class="teaser" href="projetos.html" data-shot="projetos">
+        <span>
+          <h2>Projetos</h2>
+          <p>Uma empresa de agentes de IA num Mac mini e um plugin publicado para engenheiros civis. O que eu construo por conta própria.</p>
+        </span>
+        <span class="go" aria-hidden="true"><svg class="icon"><use href="#i-arrow"/></svg></span>
+      </a>
+    </div>
+  </section>
+
+  <section class="ficha" id="ficha" data-shot="ficha" aria-labelledby="h-ficha">
+    <div class="wrap">
+      <span class="mock-note"><svg class="icon"><use href="#i-info"/></svg>Só no mockup: a ficha da peça do Studio</span>
+      <h2 id="h-ficha">roteiro-filme: 24 segundos, quatro capítulos</h2>
+      <p class="intro">Um filme de tipografia em movimento, feito em código com o kit de vídeo do Studio (Remotion), sem narração: as palavras contam a história e esta página é o roteiro escrito. Um corte 16:9 para telas largas e um 4:5 para celular, que também serve para o Instagram e o status do WhatsApp. Direção completa em design/scenes/roteiro-filme.md.</p>
+      <ol class="frames">
+        <li><figure><img src="scene/16x9-01.jpg" alt="" loading="lazy"><figcaption><b>00:02</b>“Me conta do seu negócio.” As palavras entram uma a uma; tipos de negócio passam rápido.</figcaption></figure></li>
+        <li><figure><img src="scene/16x9-02.jpg" alt="" loading="lazy"><figcaption><b>00:09</b>Uma folha de proposta desliza; as linhas se preenchem; “Preço fechado.” bate na tela.</figcaption></figure></li>
+        <li><figure><img src="scene/16x9-03.jpg" alt="" loading="lazy"><figcaption><b>00:15</b>Uma barra se parte ao meio: metade enche de amarelo, metade fica tracejada.</figcaption></figure></li>
+        <li><figure><img src="scene/16x9-04.jpg" alt="" loading="lazy"><figcaption><b>00:22</b>A folha vira um celular com o site; “O site é seu. Tudo dele é seu.”</figcaption></figure></li>
+      </ol>
+      <dl class="spec">
+        <div><dt>O que será</dt><dd>Um MP4 de 24 s, sem som, renderizado pelo Studio a partir de código (Remotion): azul e amarelo da página, as mesmas fontes.</dd></div>
+        <div><dt>Como se move</dt><dd>Toca sozinho, sem som, quando aparece na tela; uma vez, e para no último quadro. Cortes secos entre capítulos, palavras com mola curta. Cada capítulo desta página começa no segundo em que o filme chega nele.</dd></div>
+        <div><dt>Orçamento</dt><dd>Até 1,6 MB por corte (720p, H.264), carregado só quando chega perto da tela; capa de até 60 KB. Com economia de dados ligada, só a capa.</dd></div>
+        <div><dt>Movimento reduzido</dt><dd>Não toca sozinho: mostra o último quadro como foto, com o play para quem quiser ver.<img src="scene/16x9-04.jpg" alt="" loading="lazy"></dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="chapter" id="contato" data-shot="contato" aria-labelledby="h-contato">
+    <div class="wrap contact">
+      <div class="side">
+        <h2 id="h-contato">Próxima cena: a sua</h2>
+        <p>Conte o que você precisa pelo formulário, sem compromisso. Eu respondo em até 1 dia útil, pelo e-mail ou telefone que você deixar.</p>
+      </div>
+        <form class="contact-form" data-contact novalidate aria-label="Pedido de orçamento">
+          <div class="field">
+            <label for="c-nome">Nome</label>
+            <input id="c-nome" name="nome" autocomplete="name" required>
+            <p class="field-error" data-error-for="nome"></p>
+          </div>
+          <div class="field">
+            <label for="c-contato">E-mail ou telefone</label>
+            <input id="c-contato" name="contato" autocomplete="email" required aria-describedby="c-contato-hint">
+            <p class="hint" id="c-contato-hint">O que você preferir: eu respondo por ali.</p>
+            <p class="field-error" data-error-for="contato"></p>
+          </div>
+          <div class="field">
+            <label for="c-msg">Mensagem</label>
+            <textarea id="c-msg" name="mensagem" rows="4" placeholder="Seu negócio, o que o site precisa fazer, se você já tem um domínio."></textarea>
+            <p class="field-error" data-error-for="mensagem"></p>
+          </div>
+          <div class="field estimate-field" data-estimate-field>
+            <label for="c-est">Estimativa</label>
+            <textarea id="c-est" name="estimativa" rows="3" readonly placeholder="Sem estimativa ainda. Use a calculadora ou escolha um pacote, e ela aparece aqui."></textarea>
+            <button type="button" class="linkish" data-clear-estimate hidden>Tirar a estimativa</button>
+          </div>
+          <p class="lgpd">Seus dados (nome, contato, mensagem e estimativa) servem só para eu responder e preparar sua proposta, como pede a LGPD (Lei 13.709/2018). Não entram em lista de e-mails e não são usados para mais nada. Quer ver, corrigir ou apagar? É só pedir na resposta.</p>
+          <button class="btn btn--primary" type="submit">Enviar pedido</button>
+          <p class="form-status" data-form-status role="status" aria-live="polite"></p>
+        </form>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <span>© 2026 Alysson · site estático, sem rastreadores</span>
+    <nav aria-label="Rodapé">
+      <a href="projetos.html">Projetos</a>
+      <a href="https://github.com/alyhenr">GitHub</a>
+      <a href="https://alyhenr.github.io/plugins/alvaras/privacidade/">Alvarás: privacidade</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="site.js"></script>
+<script>
+(function () {
+  /* The film slot: the play button steps through the key frames (the real piece is the MP4). */
+  var film = document.querySelector('.film');
+  var imgs = film.querySelectorAll('[data-key]');
+  var tc = film.querySelector('.timecode');
+  var bar = film.querySelector('.scrub span');
+  var btn = film.querySelector('.play');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var t = 0, timer = null;
+  var fmt = function (s) { return '00:' + String(Math.floor(s)).padStart(2, '0'); };
+  function show(s) {
+    t = s;
+    var k = Math.min(3, Math.floor(s / 6));
+    imgs.forEach(function (img, i) { img.classList.toggle('is-on', i === k); });
+    tc.textContent = fmt(s) + ' / 00:24';
+    bar.style.width = (s / 24 * 100) + '%';
+  }
+  function stop() { clearInterval(timer); timer = null; film.classList.remove('is-playing'); btn.setAttribute('aria-label', 'Ver a prévia do roteiro'); }
+  btn.addEventListener('click', function () {
+    if (timer) return stop();
+    if (reduce) return show((Math.floor(t / 6) + 1) % 4 * 6); // one key frame per tap
+    if (t >= 24) show(0);
+    film.classList.add('is-playing');
+    btn.setAttribute('aria-label', 'Pausar a prévia');
+    timer = setInterval(function () { if (t + 0.25 > 24) { show(24); return stop(); } show(t + 0.25); }, 250);
+  });
+
+  /* Chapters: the bar marks where you are, the playhead follows the scroll through them. */
+  var links = document.querySelectorAll('.chapters a');
+  var head = document.querySelector('.playhead span');
+  var secs = Array.prototype.map.call(links, function (a) { return document.querySelector(a.getAttribute('href')); });
+  function onScroll() {
+    var y = window.scrollY + window.innerHeight * 0.35, cur = -1;
+    secs.forEach(function (s, i) { if (s && s.offsetTop <= y) cur = i; });
+    links.forEach(function (a, i) { if (i === cur) a.setAttribute('aria-current', 'step'); else a.removeAttribute('aria-current'); });
+    var first = secs[0].offsetTop, last = secs[secs.length - 1].offsetTop;
+    head.style.width = Math.max(0, Math.min(1, (y - first) / (last - first))) * 100 + '%';
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  /* Chapter 3: the 50/50 split follows the calculator. */
+  document.addEventListener('estimate:change', function (e) {
+    var half = window.Site.money(Math.round(e.detail.price / 2));
+    document.querySelectorAll('[data-half]').forEach(function (b) { b.textContent = half; });
+  });
+})();
+</script>
+</body>
+</html>

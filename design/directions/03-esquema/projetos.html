@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Projetos · Alysson</title>
+<meta name="description" content="O que o Alysson constrói por conta própria: o Jarvis, uma empresa de agentes de IA num Mac mini, e o plugin Alvarás.">
+<meta name="theme-color" content="#F3F4F1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 24 24"><path d="M6 12h12"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 6v12M6 12h12"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></symbol>
+  <symbol id="i-scene" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 9h18M8 5l-2 4M13 5l-2 4M18 5l-2 4"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.5v13l10.5-6.5z"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><rect x="7" y="3" width="10" height="18" rx="2"/><path d="M11 18h2"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><path d="M9 8l-4 4 4 4M15 8l4 4-4 4"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-6-5.6-6-11a6 6 0 0 1 12 0c0 5.4-6 11-6 11z"/><circle cx="12" cy="10" r="2"/></symbol>
+</svg>
+
+<header class="top">
+  <div class="wrap">
+    <a class="wordmark" href="index.html">Alysson<small>engenheiro de software</small></a>
+    <nav aria-label="Seções">
+      <a href="index.html#como-funciona">Como funciona</a>
+      <a href="index.html#pacotes">Pacotes</a>
+      <a href="index.html#calculadora">Calculadora</a>
+      <a href="projetos.html" aria-current="page">Projetos</a>
+    </nav>
+    <a class="btn btn--primary" href="index.html#contato">Pedir orçamento</a>
+  </div>
+</header>
+
+<main>
+  <section class="page-hero" data-shot="projetos-topo" aria-labelledby="h-top">
+    <div class="wrap grid">
+      <div>
+        <h1 id="h-top">Projetos</h1>
+        <p class="lede">O que eu construo quando ninguém encomenda. É onde eu testo, primeiro em mim, o que depois uso nos sites dos clientes.</p>
+      </div>
+      <p class="note"><b>Nesta página:</b> o Jarvis, o plugin Alvarás, meu GitHub e o Lab, com textos para quem quer o detalhe de engenharia.</p>
+    </div>
+  </section>
+
+  <section class="section project" id="jarvis" data-shot="jarvis" aria-labelledby="h-jarvis">
+    <div class="wrap grid">
+      <div class="body">
+        <span class="kind">em uso todo dia</span>
+        <h2 id="h-jarvis">Jarvis</h2>
+        <p class="lede">Uma empresa de engenharia feita de agentes de IA, rodando num Mac mini.</p>
+        <p>Eu dou o rumo pelo celular. O Jarvis recebe, o Core organiza a fila, e cada departamento faz a sua parte: produtos, arte e movimento, pesquisa. Nada vai ao ar sem passar pelo QA, que testa em dois navegadores, no celular e no computador. O que falha volta, com o motivo.</p>
+        <p>Não é um robô que faz tudo sozinho: é um jeito de trabalhar com regras, revisão e testes, como numa equipe boa. O diagrama ao lado é uma simulação do caminho que um pedido faz.</p>
+        <dl class="facts">
+          <dt>onde roda</dt><dd>Um Mac mini, ligado o dia todo</dd>
+          <dt>quem manda</dt><dd>Eu, pelo celular</dd>
+          <dt>regra de ouro</dt><dd>Sem teste passando, não vai ao ar</dd>
+        </dl>
+      </div>
+      <figure class="diagram" style="margin:0">
+        <figcaption class="diagram-head"><span>Como um pedido anda no Jarvis</span><span class="live">simulação ao vivo</span></figcaption>
+        <div class="jarvis-flow" data-flow data-speed="150" data-gap="1100" data-routes='[
+          {"id":"site","label":"Pedido: um formulário de contato. Produtos faz, o QA testa, vai ao ar.","wires":["w-pedido","w-jc","w-cp","w-pq","w-out"]},
+          {"id":"arte","label":"Pedido: a animação de uma página. Arte faz, o QA confere, vai ao ar.","wires":["w-pedido","w-jc","w-ca","w-aq","w-out"]},
+          {"id":"falha","label":"Um teste falhou no Safari: volta para Produtos, corrige, passa, vai ao ar.","wires":["w-cp","w-pq","w-qc","w-cp","w-pq","w-out"]},
+          {"id":"pesquisa","label":"Pesquisa: um vídeo que vale estudar vira uma proposta para mim.","wires":["w-cs","w-sj","w-resp"]}
+        ]'>
+          <svg viewBox="0 0 360 520" role="img" aria-labelledby="jd-title jd-desc">
+            <title id="jd-title">Como o Jarvis trabalha</title>
+            <desc id="jd-desc">Eu peço pelo celular. Dentro de um Mac mini, o Jarvis recebe o pedido e o Core o distribui para Produtos, Arte ou Pesquisa. O que Produtos e Arte fazem passa pelo QA antes de ir ao ar; o que falha volta. A Pesquisa responde a mim com propostas.</desc>
+            <rect class="frame-box" x="8" y="84" width="344" height="344" rx="10"/>
+            <text class="frame-label" x="22" y="102">um Mac mini</text>
+            <path id="w-pedido" class="wire" data-wire data-to="jarvis" d="M172 60 V112"/>
+            <path id="w-resp" class="wire" data-wire data-to="dono" d="M188 112 V60"/>
+            <path id="w-jc" class="wire" data-wire data-to="core" d="M180 156 V192"/>
+            <path id="w-cp" class="wire" data-wire data-to="produtos" d="M150 236 C150 258 72 254 72 278"/>
+            <path id="w-ca" class="wire" data-wire data-to="arte" d="M180 236 V278"/>
+            <path id="w-cs" class="wire" data-wire data-to="pesquisa" d="M210 236 C210 258 288 254 288 278"/>
+            <path id="w-sj" class="wire" data-wire data-to="jarvis" d="M318 278 C342 250 344 150 255 140"/>
+            <path id="w-pq" class="wire" data-wire data-to="qa" d="M72 326 C72 348 150 344 150 366"/>
+            <path id="w-aq" class="wire" data-wire data-to="qa" d="M180 326 V366"/>
+            <path id="w-qc" class="wire wire--back" data-wire data-to="core" d="M85 388 C-6 388 -6 214 85 214"/>
+            <path id="w-out" class="wire" data-wire data-to="producao" d="M180 410 V468"/>
+            <g data-node="dono"><rect class="node-box node-box--you" x="105" y="16" width="150" height="44" rx="8"/><text class="node-title" x="180" y="35">Eu</text><text class="node-sub" x="180" y="50">peço pelo celular</text></g>
+            <g data-node="jarvis"><rect class="node-box" x="105" y="112" width="150" height="44" rx="8"/><text class="node-title" x="180" y="131">Jarvis</text><text class="node-sub" x="180" y="146">o assistente</text></g>
+            <g data-node="core"><rect class="node-box" x="85" y="192" width="190" height="44" rx="8"/><text class="node-title" x="180" y="211">Core</text><text class="node-sub" x="180" y="226">fila, agenda, entregas</text></g>
+            <g data-node="produtos"><rect class="node-box" x="24" y="278" width="96" height="48" rx="8"/><text class="node-title" x="72" y="298">Produtos</text><text class="node-sub" x="72" y="313">sites e apps</text></g>
+            <g data-node="arte"><rect class="node-box" x="132" y="278" width="96" height="48" rx="8"/><text class="node-title" x="180" y="298">Arte</text><text class="node-sub" x="180" y="313">movimento, 3D</text></g>
+            <g data-node="pesquisa"><rect class="node-box" x="240" y="278" width="96" height="48" rx="8"/><text class="node-title" x="288" y="298">Pesquisa</text><text class="node-sub" x="288" y="313">o que vale a pena</text></g>
+            <g data-node="qa"><rect class="node-box" x="85" y="366" width="190" height="44" rx="8"/><text class="node-title" x="180" y="385">QA</text><text class="node-sub" x="180" y="400">2 navegadores, celular e desktop</text></g>
+            <g data-node="producao"><rect class="node-box node-box--out" x="105" y="468" width="150" height="44" rx="8"/><text class="node-title" x="180" y="487">No ar</text><text class="node-sub" x="180" y="502">sites e lojas de apps</text></g>
+          </svg>
+          <ol class="flow-log" data-flow-log data-max="3" aria-label="O que está passando pelo diagrama (simulação)"></ol>
+        </div>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section project" id="alvaras" data-shot="alvaras" aria-labelledby="h-alv">
+    <div class="wrap grid">
+      <div class="body">
+        <span class="kind">publicado na Chrome Web Store</span>
+        <h2 id="h-alv">Alvarás</h2>
+        <p class="lede">Um plugin de navegador para engenheiros civis acompanharem o vencimento dos alvarás de obra.</p>
+        <p>Ele lê a data de concessão no portal da prefeitura e guarda todos os alvarás numa lista só, do que vence primeiro ao último, com exportação em CSV. Não coleta nem envia nenhum dado: não há servidor, tudo fica no seu navegador.</p>
+        <div class="links">
+          <a class="btn btn--primary" href="https://alyhenr.github.io/plugins/alvaras/">Página do plugin</a>
+          <a class="btn" href="https://alyhenr.github.io/plugins/alvaras/privacidade/">Política de privacidade</a>
+        </div>
+      </div>
+      <dl class="facts">
+        <dt>Chrome</dt><dd>Publicado</dd>
+        <dt>Firefox</dt><dd>Em revisão na loja</dd>
+        <dt>permissões</dt><dd>Só a aba aberta, e só quando você clica</dd>
+        <dt>servidor</dt><dd>Nenhum</dd>
+      </dl>
+    </div>
+  </section>
+
+  <section class="section" id="lab" data-shot="lab" aria-labelledby="h-lab">
+    <div class="wrap grid">
+      <div>
+        <h2 id="h-lab">Lab</h2>
+        <p class="lede">Textos curtos sobre engenharia, um assunto cada.</p>
+        <ul class="lab">
+          <li><span><b>Uma empresa de agentes num Mac mini</b><span>Filas, revisões e o que acontece quando um teste falha às 3 da manhã.</span></span><em>em breve</em></li>
+          <li><span><b>Testar um site estático como se fosse um app</b><span>Chromium e WebKit, celular e computador, a cada mudança.</span></span><em>em breve</em></li>
+          <li><span><b>Uma política de privacidade que passa na revisão da loja</b><span>O que a Chrome Web Store pede, e por que ela não pode depender de JavaScript.</span></span><em>em breve</em></li>
+        </ul>
+      </div>
+      <p class="note"><b>GitHub:</b> o código aberto e os experimentos que ainda não viraram texto estão em <a href="https://github.com/alyhenr">github.com/alyhenr</a>.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <span>© 2026 Alysson · site estático, sem rastreadores</span>
+    <nav aria-label="Rodapé">
+      <a href="index.html">Início</a>
+      <a href="index.html#contato">Pedir orçamento</a>
+      <a href="https://alyhenr.github.io/plugins/alvaras/privacidade/">Alvarás: privacidade</a>
+    </nav>
+  </div>
+</footer>
+<script src="flow.js"></script>
+</body>
+</html>

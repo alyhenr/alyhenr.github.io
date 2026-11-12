@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alysson · Sites para pequenos negócios</title>
+<meta name="description" content="Sites para pequenos negócios, construídos como sistema: rápidos, testados e no seu nome. Preço e prazo combinados antes de começar.">
+<meta name="theme-color" content="#F3F4F1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 24 24"><path d="M6 12h12"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 6v12M6 12h12"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></symbol>
+  <symbol id="i-scene" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 9h18M8 5l-2 4M13 5l-2 4M18 5l-2 4"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.5v13l10.5-6.5z"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><rect x="7" y="3" width="10" height="18" rx="2"/><path d="M11 18h2"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><path d="M9 8l-4 4 4 4M15 8l4 4-4 4"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-6-5.6-6-11a6 6 0 0 1 12 0c0 5.4-6 11-6 11z"/><circle cx="12" cy="10" r="2"/></symbol>
+</svg>
+
+<header class="top">
+  <div class="wrap">
+    <a class="wordmark" href="index.html">Alysson<small>engenheiro de software</small></a>
+    <nav aria-label="Seções">
+      <a href="#como-funciona">Como funciona</a>
+      <a href="#pacotes">Pacotes</a>
+      <a href="#calculadora">Calculadora</a>
+      <a href="projetos.html">Projetos</a>
+    </nav>
+    <a class="btn btn--primary" href="#contato">Pedir orçamento</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero" data-shot="hero" aria-labelledby="h-hero">
+    <div class="wrap grid">
+      <div>
+        <h1 id="h-hero">Um site pequeno, construído como um <em>sistema</em> grande.</h1>
+        <p class="lede">Sites para pequenos negócios, feitos por um engenheiro de software: rápidos no celular, testados antes de ir ao ar e entregues no seu nome. Preço e prazo combinados antes de começar.</p>
+        <div class="actions">
+          <a class="btn btn--primary" href="#calculadora">Ver quanto custa</a>
+          <a class="btn" href="#como-funciona">Como funciona</a>
+        </div>
+        <p class="note"><b>Por que estático:</b> o site é feito de páginas prontas, sem servidor para cair, sem plugin para atualizar e sem mensalidade de hospedagem.</p>
+      </div>
+      <figure class="diagram" style="margin:0" data-flow data-speed="170" data-gap="1000" data-routes='[
+        {"label":"Visita: o cliente abre o seu endereço e as páginas chegam prontas.","wires":["w-vd","w-dp"]},
+        {"label":"Busca: o Google lê suas páginas, sem nada no caminho.","wires":["w-gd","w-dp"]},
+        {"label":"Pedido: o cliente preenche o formulário e você recebe.","wires":["w-vd","w-df","w-fy"]},
+        {"label":"Mudança: o código no seu GitHub publica a nova versão.","wires":["w-ch"]}
+      ]'>
+        <figcaption class="diagram-head"><span>Anatomia do seu site</span><span class="live">simulação ao vivo</span></figcaption>
+        <svg viewBox="0 0 420 280" role="img" aria-labelledby="an-t an-d">
+          <title id="an-t">Anatomia do seu site</title>
+          <desc id="an-d">O cliente, no celular, e o Google chegam pelo seu domínio. O domínio entrega as páginas e o formulário, hospedados sem servidor. O pedido do formulário chega até você. O código fica no seu GitHub e publica as páginas.</desc>
+          <rect class="frame-box" x="282" y="4" width="134" height="146" rx="6"/>
+          <text class="frame-label" x="290" y="18">sem servidor</text>
+          <path id="w-vd" class="wire" data-wire data-to="dominio" d="M134 38 C142 38 142 70 150 70"/>
+          <path id="w-gd" class="wire" data-wire data-to="dominio" d="M134 118 C142 118 142 86 150 86"/>
+          <path id="w-dp" class="wire" data-wire data-to="paginas" d="M270 72 C280 72 280 48 290 48"/>
+          <path id="w-df" class="wire" data-wire data-to="formulario" d="M270 86 C280 86 280 118 290 118"/>
+          <path id="w-fy" class="wire" data-wire data-to="voce" d="M300 140 C300 200 150 248 134 248"/>
+          <path id="w-ch" class="wire wire--back" data-wire data-to="paginas" d="M350 226 V150"/>
+          <g data-node="visitante"><rect class="node-box" x="10" y="16" width="124" height="44" rx="4"/><text class="node-title" x="72" y="35">Cliente</text><text class="node-sub" x="72" y="50">no celular, no 4G</text></g>
+          <g data-node="google"><rect class="node-box" x="10" y="96" width="124" height="44" rx="4"/><text class="node-title" x="72" y="115">Google</text><text class="node-sub" x="72" y="130">lê suas páginas</text></g>
+          <g data-node="dominio"><rect class="node-box node-box--you" x="150" y="56" width="120" height="44" rx="4"/><text class="node-title" x="210" y="75">Domínio</text><text class="node-sub" x="210" y="90">no seu nome</text></g>
+          <g data-node="paginas"><rect class="node-box" x="290" y="26" width="120" height="44" rx="4"/><text class="node-title" x="350" y="45">Páginas</text><text class="node-sub" x="350" y="60">prontas, leves</text></g>
+          <g data-node="formulario"><rect class="node-box" x="290" y="96" width="120" height="44" rx="4"/><text class="node-title" x="350" y="115">Formulário</text><text class="node-sub" x="350" y="130">seus pedidos</text></g>
+          <g data-node="voce"><rect class="node-box node-box--out" x="10" y="226" width="124" height="44" rx="4"/><text class="node-title" x="72" y="245">Você</text><text class="node-sub" x="72" y="260">recebe o pedido</text></g>
+          <g data-node="codigo"><rect class="node-box node-box--you" x="290" y="226" width="120" height="44" rx="4"/><text class="node-title" x="350" y="245">Código</text><text class="node-sub" x="350" y="260">no seu GitHub</text></g>
+        </svg>
+        <ol class="flow-log" data-flow-log data-max="3" aria-label="O que está passando pelo diagrama (simulação)"></ol>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section" id="como-funciona" data-shot="passos" aria-labelledby="h-passos">
+    <div class="wrap">
+      <div class="grid">
+        <div>
+          <h2 id="h-passos">Como o trabalho anda</h2>
+          <p class="lede">Quatro etapas, sempre nesta ordem. Toque numa delas para ver o que acontece, quem faz e o que você recebe.</p>
+        </div>
+        <p class="note"><b>Regra da casa:</b> nada começa sem preço fechado por escrito, e nada vai ao ar sem ser testado no celular e no computador.</p>
+      </div>
+      <div class="pipeline" data-pipeline>
+        <div class="stages" role="tablist" aria-label="As quatro etapas">
+          <button class="stage" role="tab" id="t-1" aria-controls="s-1" aria-selected="true"><span class="num">1</span><b>Conversa</b><span class="t">até 1 dia útil</span></button>
+          <button class="stage" role="tab" id="t-2" aria-controls="s-2" aria-selected="false" tabindex="-1"><span class="num">2</span><b>Proposta</b><span class="t">até 2 dias úteis</span></button>
+          <button class="stage" role="tab" id="t-3" aria-controls="s-3" aria-selected="false" tabindex="-1"><span class="num">3</span><b>Sinal de 50%</b><span class="t">o prazo da proposta</span></button>
+          <button class="stage" role="tab" id="t-4" aria-controls="s-4" aria-selected="false" tabindex="-1"><span class="num">4</span><b>Entrega</b><span class="t">no dia combinado</span></button>
+        </div>
+        <dl class="stage-panel" role="tabpanel" id="s-1" aria-labelledby="t-1">
+          <div><dt>O que acontece</dt><dd>Você conta do negócio pelo formulário; eu respondo com perguntas, sem jargão.</dd></div>
+          <div><dt>Quem faz</dt><dd>Você e eu.</dd></div>
+          <div><dt>Você recebe</dt><dd>As perguntas certas e uma ideia clara do caminho.</dd></div>
+          <div><dt>Quanto tempo</dt><dd>Resposta em até 1 dia útil.</dd></div>
+        </dl>
+        <dl class="stage-panel" role="tabpanel" id="s-2" aria-labelledby="t-2" hidden>
+          <div><dt>O que acontece</dt><dd>Escrevo a proposta: as páginas, o que cada uma faz, o prazo e o preço fechado.</dd></div>
+          <div><dt>Quem faz</dt><dd>Eu.</dd></div>
+          <div><dt>Você recebe</dt><dd>Um documento com tudo combinado. O que está ali é o que você paga.</dd></div>
+          <div><dt>Quanto tempo</dt><dd>Até 2 dias úteis.</dd></div>
+        </dl>
+        <dl class="stage-panel" role="tabpanel" id="s-3" aria-labelledby="t-3" hidden>
+          <div><dt>O que acontece</dt><dd>Você paga metade por Pix e eu começo a construir.</dd></div>
+          <div><dt>Quem faz</dt><dd>Você paga; eu construo e testo.</dd></div>
+          <div><dt>Você recebe</dt><dd>Um link de prévia para acompanhar o site sendo feito.</dd></div>
+          <div><dt>Quanto tempo</dt><dd>O prazo escrito na proposta.</dd></div>
+        </dl>
+        <dl class="stage-panel" role="tabpanel" id="s-4" aria-labelledby="t-4" hidden>
+          <div><dt>O que acontece</dt><dd>O site vai ao ar no seu domínio, testado no celular e no computador. Você aprova e paga a outra metade.</dd></div>
+          <div><dt>Quem faz</dt><dd>Eu, com o seu de acordo.</dd></div>
+          <div><dt>Você recebe</dt><dd>O site, o código, o domínio e as senhas.</dd></div>
+          <div><dt>Quanto tempo</dt><dd>No dia combinado.</dd></div>
+        </dl>
+      </div>
+
+      <table class="owned">
+        <caption>O site é seu. Tudo dele é seu.</caption>
+        <tbody>
+          <tr><th scope="row">domínio</th><td class="who">Seu</td><td>Registrado no seu CPF ou CNPJ, pago direto ao Registro.br.</td></tr>
+          <tr><th scope="row">código</th><td class="who">Seu</td><td>Num repositório na sua conta do GitHub, com o histórico de cada mudança.</td></tr>
+          <tr><th scope="row">hospedagem</th><td class="who">Sua</td><td>Na sua conta, sem mensalidade comigo para continuar no ar.</td></tr>
+          <tr><th scope="row">acessos</th><td class="who">Seus</td><td>Senhas entregues a você e trocadas por você; eu não guardo nenhuma.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section" id="pacotes" data-shot="pacotes" aria-labelledby="h-pac">
+    <div class="wrap">
+      <div class="grid">
+        <div>
+          <h2 id="h-pac">Pacotes prontos</h2>
+          <p class="lede">Para quem já sabe o que quer. Todos com formulário de contato, pensados primeiro para o celular e entregues no seu nome.</p>
+        </div>
+        <p class="note"><b>Preço de lançamento:</b> valem para os primeiros clientes. Um pacote sai mais barato que as mesmas peças montadas na calculadora.</p>
+      </div>
+      <div class="table-scroll">
+        <table class="spec-table">
+          <colgroup><col><col><col class="lit"><col><col></colgroup>
+          <thead>
+            <tr><td></td><th scope="col">Essencial<small>uma página</small></th><th scope="col">Vitrine<small>para mostrar o trabalho</small></th><th scope="col">Agenda<small>para marcar horário</small></th><th scope="col">Completo<small>tudo junto</small></th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">páginas</th><td>1</td><td>até 4</td><td>até 5</td><td>até 8</td></tr>
+            <tr><th scope="row">formulário de contato</th><td><svg class="icon" aria-label="sim"><use href="#i-check"/></svg></td><td><svg class="icon" aria-label="sim"><use href="#i-check"/></svg></td><td><svg class="icon" aria-label="sim"><use href="#i-check"/></svg></td><td><svg class="icon" aria-label="sim"><use href="#i-check"/></svg></td></tr>
+            <tr><th scope="row">mapa e horários</th><td><svg class="icon" aria-label="sim"><use href="#i-check"/></svg></td><td><svg class="icon" aria-label="sim"><use href="#i-check"/></svg></td><td><svg class="icon" aria-label="sim"><use href="#i-check"/></svg></td><td><svg class="icon" aria-label="sim"><use href="#i-check"/></svg></td></tr>
+            <tr><th scope="row">galeria de fotos</th><td class="no" aria-label="não">·</td><td><svg class="icon" aria-label="sim"><use href="#i-check"/></svg></td><td><svg class="icon" aria-label="sim"><use href="#i-check"/></svg></td><td><svg class="icon" aria-label="sim"><use href="#i-check"/></svg></td></tr>
+            <tr><th scope="row">domínio configurado</th><td class="no" aria-label="não">·</td><td><svg class="icon" aria-label="sim"><use href="#i-check"/></svg></td><td><svg class="icon" aria-label="sim"><use href="#i-check"/></svg></td><td><svg class="icon" aria-label="sim"><use href="#i-check"/></svg></td></tr>
+            <tr><th scope="row">agendamento on-line</th><td class="no" aria-label="não">·</td><td class="no" aria-label="não">·</td><td><svg class="icon" aria-label="sim"><use href="#i-check"/></svg></td><td><svg class="icon" aria-label="sim"><use href="#i-check"/></svg></td></tr>
+            <tr><th scope="row">cardápio ou catálogo</th><td class="no" aria-label="não">·</td><td class="no" aria-label="não">·</td><td class="no" aria-label="não">·</td><td><svg class="icon" aria-label="sim"><use href="#i-check"/></svg></td></tr>
+            <tr><th scope="row">blog ou novidades</th><td class="no" aria-label="não">·</td><td class="no" aria-label="não">·</td><td class="no" aria-label="não">·</td><td><svg class="icon" aria-label="sim"><use href="#i-check"/></svg></td></tr>
+            <tr><th scope="row">prazo</th><td class="mono"><span data-days="pkg:essencial">5</span> dias úteis</td><td class="mono"><span data-days="pkg:vitrine">10</span> dias úteis</td><td class="mono"><span data-days="pkg:agenda">15</span> dias úteis</td><td class="mono"><span data-days="pkg:completo">20</span> dias úteis</td></tr>
+            <tr class="price"><th scope="row">preço</th><td><span data-money="pkg:essencial">R$ 690</span><br><span class="tag-launch" data-launch>preço de lançamento</span></td><td><span data-money="pkg:vitrine">R$ 1.290</span><br><span class="tag-launch" data-launch>preço de lançamento</span></td><td><span data-money="pkg:agenda">R$ 1.990</span><br><span class="tag-launch" data-launch>preço de lançamento</span></td><td><span data-money="pkg:completo">R$ 2.890</span><br><span class="tag-launch" data-launch>preço de lançamento</span></td></tr>
+          </tbody>
+          <tfoot>
+            <tr><td></td><td><a class="btn" href="#contato" data-pick="essencial">Quero este</a></td><td><a class="btn btn--primary" href="#contato" data-pick="vitrine">Quero este</a></td><td><a class="btn" href="#contato" data-pick="agenda">Quero este</a></td><td><a class="btn" href="#contato" data-pick="completo">Quero este</a></td></tr>
+          </tfoot>
+        </table>
+      </div>
+      <p class="scroll-hint">Arraste a tabela para ver os quatro pacotes.</p>
+      <p class="provisional" data-provisional><svg class="icon"><use href="#i-info"/></svg>Valores provisórios até o catálogo da agência entrar. O domínio você paga direto ao Registro.br, por ano.</p>
+    </div>
+  </section>
+
+  <section class="section" id="calculadora" data-shot="calculadora" aria-labelledby="h-calc">
+    <div class="wrap">
+      <div class="grid">
+        <div>
+          <h2 id="h-calc">Monte o seu e veja o desenho</h2>
+          <p class="lede">Cada coisa que você marca entra no desenho do seu site e na conta, na hora.</p>
+        </div>
+        <p class="note"><b>Como a conta é feita:</b> uma base com a primeira página e o formulário, mais cada página e cada recurso. Nada escondido.</p>
+      </div>
+      <form class="calc" data-calc aria-label="Calculadora de estimativa">
+        <div>
+          <fieldset>
+            <legend>páginas</legend>
+            <div class="pages-ctl">
+              <button type="button" class="stepper" data-step="-1" aria-label="Uma página a menos"><svg class="icon"><use href="#i-minus"/></svg></button>
+              <output aria-live="polite" data-out="pages">3</output>
+              <input type="hidden" name="pages" value="3">
+              <button type="button" class="stepper" data-step="1" aria-label="Uma página a mais"><svg class="icon"><use href="#i-plus"/></svg></button>
+              <span class="unit"><span data-out="pages-word">páginas</span>: início, serviços, contato…</span>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>recursos</legend>
+            <div class="opts">
+              <label class="opt"><input type="checkbox" name="feat" value="galeria" checked><span>Galeria de fotos</span><span class="p" data-money="feat:galeria"></span></label>
+              <label class="opt"><input type="checkbox" name="feat" value="mapa" checked><span>Mapa e horários</span><span class="p" data-money="feat:mapa"></span></label>
+              <label class="opt"><input type="checkbox" name="feat" value="agendamento"><span>Agendamento on-line</span><span class="p" data-money="feat:agendamento"></span></label>
+              <label class="opt"><input type="checkbox" name="feat" value="cardapio"><span>Cardápio ou catálogo</span><span class="p" data-money="feat:cardapio"></span></label>
+              <label class="opt"><input type="checkbox" name="feat" value="blog"><span>Blog ou novidades</span><span class="p" data-money="feat:blog"></span></label>
+              <label class="opt"><input type="checkbox" name="feat" value="dominio"><span>Domínio .com.br configurado</span><span class="p" data-money="feat:dominio"></span></label>
+            </div>
+          </fieldset>
+        </div>
+        <div class="build diagram">
+          <div class="diagram-head"><span>O desenho do seu site</span><span>muda com o que você marca</span></div>
+          <svg viewBox="0 0 480 250" role="img" aria-label="Desenho do seu site: as páginas e os recursos ligados a ele" data-build></svg>
+          <div class="sheet" aria-live="polite">
+            <div>
+              <span class="label">estimativa</span>
+              <b class="total" data-out="price">R$ 0</b>
+              <span class="mono" style="font-size:14px">em uns <span data-out="days">0</span> dias úteis</span>
+              <p class="hint" data-out="hint" hidden></p>
+            </div>
+            <ul data-out="lines"></ul>
+            <p class="estimate-note">É uma estimativa. Conte seu objetivo e fechamos o valor juntos.</p>
+            <button type="button" class="btn btn--primary" data-use-estimate>Levar para o contato<svg class="icon"><use href="#i-arrow"/></svg></button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <section class="section" id="sobre" data-shot="sobre" aria-labelledby="h-sobre">
+    <div class="wrap grid">
+      <div class="about">
+        <h2 id="h-sobre">Quem faz</h2>
+        <p class="first" style="margin-top:24px">Sou o Alysson, engenheiro de software sênior. No trabalho, cuido de sistemas que não podem parar. Aqui, aplico o mesmo método a sites pequenos.</p>
+        <p>Sou eu quem conversa, quem escreve a proposta, quem faz e quem responde depois. Sem agência no meio.</p>
+        <ol class="principles">
+          <li><span><b>Preço antes do código.</b> A proposta diz o que será feito e quanto custa; o que não está nela não é cobrado.</span></li>
+          <li><span><b>Testado em celular barato.</b> O site precisa abrir rápido num Android de entrada, no 4G, não só no meu computador.</span></li>
+          <li><span><b>Tudo no seu nome.</b> Se um dia você quiser seguir com outra pessoa, ela recebe tudo pronto.</span></li>
+        </ol>
+      </div>
+      <p class="note"><b>Onde ver meu código:</b> <a href="https://github.com/alyhenr">github.com/alyhenr</a>. Os projetos que faço por conta própria estão na página <a href="projetos.html">Projetos</a>.</p>
+    </div>
+  </section>
+
+  <section class="section" data-shot="projetos" aria-labelledby="h-proj">
+    <div class="wrap">
+      <a class="teaser" href="projetos.html">
+        <span>
+          <h2 id="h-proj">Projetos</h2>
+          <p>Uma empresa de agentes de IA num Mac mini, explicada num diagrama vivo, e um plugin publicado para engenheiros civis.</p>
+        </span>
+        <span class="go">ver projetos<svg class="icon"><use href="#i-arrow"/></svg></span>
+      </a>
+    </div>
+  </section>
+
+  <section class="section" id="contato" data-shot="contato" aria-labelledby="h-contato">
+    <div class="wrap grid">
+      <div>
+        <h2 id="h-contato">Conte o que você precisa</h2>
+        <p class="lede">Pelo formulário, sem compromisso. Eu respondo em até 1 dia útil, pelo e-mail ou telefone que você deixar.</p>
+        <form class="contact-form" data-contact novalidate aria-label="Pedido de orçamento">
+          <div class="field">
+            <label for="c-nome">Nome</label>
+            <input id="c-nome" name="nome" autocomplete="name" required>
+            <p class="field-error" data-error-for="nome"></p>
+          </div>
+          <div class="field">
+            <label for="c-contato">E-mail ou telefone</label>
+            <input id="c-contato" name="contato" autocomplete="email" required aria-describedby="c-contato-hint">
+            <p class="hint" id="c-contato-hint">O que você preferir: eu respondo por ali.</p>
+            <p class="field-error" data-error-for="contato"></p>
+          </div>
+          <div class="field">
+            <label for="c-msg">Mensagem</label>
+            <textarea id="c-msg" name="mensagem" rows="4" placeholder="Seu negócio, o que o site precisa fazer, se você já tem um domínio."></textarea>
+            <p class="field-error" data-error-for="mensagem"></p>
+          </div>
+          <div class="field estimate-field" data-estimate-field>
+            <label for="c-est">Estimativa</label>
+            <textarea id="c-est" name="estimativa" rows="3" readonly placeholder="Sem estimativa ainda. Use a calculadora ou escolha um pacote, e ela aparece aqui."></textarea>
+            <button type="button" class="linkish" data-clear-estimate hidden>Tirar a estimativa</button>
+          </div>
+          <p class="lgpd">Seus dados (nome, contato, mensagem e estimativa) servem só para eu responder e preparar sua proposta, como pede a LGPD (Lei 13.709/2018). Não entram em lista de e-mails e não são usados para mais nada. Quer ver, corrigir ou apagar? É só pedir na resposta.</p>
+          <button class="btn btn--primary" type="submit">Enviar pedido</button>
+          <p class="form-status" data-form-status role="status" aria-live="polite"></p>
+        </form>
+      </div>
+      <p class="note"><b>Para onde vai:</b> o pedido chega só até mim. Sem lista de e-mails, sem rastreador nesta página.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <span>© 2026 Alysson · site estático, sem rastreadores</span>
+    <nav aria-label="Rodapé">
+      <a href="projetos.html">Projetos</a>
+      <a href="https://github.com/alyhenr">GitHub</a>
+      <a href="https://alyhenr.github.io/plugins/alvaras/privacidade/">Alvarás: privacidade</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="site.js"></script>
+<script src="flow.js"></script>
+<script>
+(function () {
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* The pipeline: tabs that advance on their own until you touch them. */
+  var pipe = document.querySelector('[data-pipeline]');
+  var tabs = Array.prototype.slice.call(pipe.querySelectorAll('[role="tab"]'));
+  var cur = 0, timer = null, started = 0, DUR = 5200;
+  function select(i, focus) {
+    cur = i;
+    tabs.forEach(function (t, k) {
+      t.setAttribute('aria-selected', k === i ? 'true' : 'false');
+      t.tabIndex = k === i ? 0 : -1;
+      document.getElementById(t.getAttribute('aria-controls')).hidden = k !== i;
+    });
+    if (focus) tabs[i].focus();
+  }
+  function tick(now) {
+    if (!timer) return;
+    var k = Math.min(1, (now - started) / DUR);
+    tabs[cur].style.setProperty('--fill', (k * 100) + '%');
+    if (k >= 1) { select((cur + 1) % tabs.length); started = now; }
+    timer = requestAnimationFrame(tick);
+  }
+  function stopAuto() { if (timer) cancelAnimationFrame(timer); timer = null; tabs.forEach(function (t) { t.style.removeProperty('--fill'); }); }
+  tabs.forEach(function (t, i) {
+    t.addEventListener('click', function () { stopAuto(); select(i); });
+    t.addEventListener('keydown', function (e) {
+      var d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+      if (d) { stopAuto(); select((cur + d + tabs.length) % tabs.length, true); e.preventDefault(); }
+    });
+  });
+  if (!reduce && 'IntersectionObserver' in window) {
+    new IntersectionObserver(function (es) {
+      if (es[0].isIntersecting && !timer && !pipe.dataset.touched) { started = performance.now(); timer = requestAnimationFrame(tick); }
+      else if (!es[0].isIntersecting && timer) { cancelAnimationFrame(timer); timer = null; }
+    }, { threshold: 0.4 }).observe(pipe);
+    pipe.addEventListener('pointerdown', function () { pipe.dataset.touched = '1'; });
+  }
+
+  /* The calculator's drawing: the pages and the features wired to the site. */
+  var svg = document.querySelector('[data-build]');
+  var NS = 'http://www.w3.org/2000/svg';
+  var short = { galeria: 'galeria', mapa: 'mapa', cardapio: 'cardápio', agendamento: 'agenda', blog: 'blog', dominio: 'domínio' };
+  var drawn = {};
+  function el(tag, attrs, text) {
+    var n = document.createElementNS(NS, tag);
+    for (var k in attrs) n.setAttribute(k, attrs[k]);
+    if (text) n.textContent = text;
+    return n;
+  }
+  function draw(est) {
+    var seen = {};
+    while (svg.firstChild) svg.removeChild(svg.firstChild);
+    var cx = 300, cy = 128;
+    // pages along the top, wired to a bus
+    var n = est.pages, pw = 30, gap = 8, total = n * pw + (n - 1) * gap, x0 = cx - total / 2;
+    svg.appendChild(el('path', { class: 'wire', d: 'M' + (x0 + pw / 2) + ' 70 H' + (x0 + total - pw / 2) + ' M' + cx + ' 70 V' + (cy - 20) }));
+    for (var i = 0; i < n; i++) {
+      var x = x0 + i * (pw + gap), key = 'p' + i;
+      var g = el('g', { class: 'mod' + (drawn[key] ? '' : ' is-new') });
+      g.appendChild(el('path', { class: 'wire', d: 'M' + (x + pw / 2) + ' 54 V70' }));
+      g.appendChild(el('rect', { class: 'node-box', x: x, y: 14, width: pw, height: 40, rx: 3 }));
+      g.appendChild(el('text', { class: 'node-sub', x: x + pw / 2, y: 38 }, String(i + 1)));
+      svg.appendChild(g); seen[key] = 1;
+    }
+    svg.appendChild(el('text', { class: 'frame-label', x: 10, y: 38 }, 'páginas'));
+    // the base: the site and its form
+    svg.appendChild(el('path', { class: 'wire', d: 'M132 ' + cy + ' H240' }));
+    var base = el('g', {}); base.appendChild(el('rect', { class: 'node-box', x: 12, y: cy - 20, width: 120, height: 40, rx: 4 }));
+    base.appendChild(el('text', { class: 'node-title', x: 72, y: cy - 2 }, 'formulário')); base.appendChild(el('text', { class: 'node-sub', x: 72, y: cy + 12 }, 'sempre incluso'));
+    svg.appendChild(base);
+    var core = el('g', {}); core.appendChild(el('rect', { class: 'node-box node-box--you', x: 240, y: cy - 20, width: 120, height: 40, rx: 4 }));
+    core.appendChild(el('text', { class: 'node-title', x: 300, y: cy - 2 }, 'seu site')); core.appendChild(el('text', { class: 'node-sub', x: 300, y: cy + 12 }, est.pages + (est.pages === 1 ? ' página' : ' páginas')));
+    svg.appendChild(core);
+    // features along the bottom
+    var f = est.features, fw = 70, fg = 8, ft = f.length * fw + Math.max(0, f.length - 1) * fg, fx0 = Math.max(6, Math.min(cx - ft / 2, 474 - ft));
+    if (f.length) svg.appendChild(el('path', { class: 'wire', d: 'M' + cx + ' ' + (cy + 20) + ' V188 M' + (fx0 + fw / 2) + ' 188 H' + (fx0 + ft - fw / 2) }));
+    f.forEach(function (id, k) {
+      var x = fx0 + k * (fw + fg), key = 'f' + id;
+      var g = el('g', { class: 'mod' + (drawn[key] ? '' : ' is-new') });
+      g.appendChild(el('path', { class: 'wire is-live', d: 'M' + (x + fw / 2) + ' 188 V200' }));
+      g.appendChild(el('rect', { class: 'node-box', x: x, y: 200, width: fw, height: 36, rx: 3, style: 'stroke: var(--signal)' }));
+      g.appendChild(el('text', { class: 'node-sub', x: x + fw / 2, y: 222 }, short[id]));
+      svg.appendChild(g); seen[key] = 1;
+    });
+    if (!f.length) svg.appendChild(el('text', { class: 'frame-label', x: 240, y: 222 }, 'nenhum recurso extra'));
+    drawn = seen;
+    requestAnimationFrame(function () { requestAnimationFrame(function () {
+      svg.querySelectorAll('.is-new').forEach(function (m) { m.classList.remove('is-new'); });
+    }); });
+  }
+  document.addEventListener('estimate:change', function (e) { draw(e.detail); });
+})();
+</script>
+</body>
+</html>
