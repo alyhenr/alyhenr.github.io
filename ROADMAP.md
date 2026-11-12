@@ -11,6 +11,14 @@
   Done when:
   - The docs and the QA describe the real project, and the full QA runs (its failures, if any, listed in Fixes and chores).
   - The summary lists every doc choice and flags the production risks found (live keys in config, a deploy that runs on push to main).
+- **Publish only the site** (agreed) — The deploy uploads the whole repo root on every push to main, so our docs, roadmap, QA and .jarvis/ would go public on alyhenr.github.io with the next push.
+  Goal: the live site serves only the site's own files; everything of ours stays in the repo.
+  In: deploy.yml stages the site's files (the pages, css/, js/, plugins/, blog/, 404.html and any asset folder they use) into a folder and uploads that one; the QA checks the staged folder holds what the pages link to and none of our files.
+  Out: redesigning anything; the contact form; a custom domain.
+  Done when:
+  - The staged folder has every page and asset the site links to, and no PRODUCT.md, ROADMAP.md, AGENTS.md, docs/, e2e/, .jarvis/, .qa/ or package.json.
+  - /plugins/alvaras/ and /plugins/alvaras/privacidade/ are in it at the same paths (the published plugin's listing links them).
+  - The QA covers both lines.
 
 ## Next
 - **Publish only the site** (idea) — the deploy uploads the whole repo root, so PRODUCT.md, ROADMAP.md, AGENTS.md, docs/, e2e/, .jarvis/ and package.json are public on the live site; stage only the site's files (pages, css/, js/, plugins/, blog/, 404.html) in deploy.yml.
