@@ -73,7 +73,7 @@
   - No phone number or e-mail in the built site; the Alvarás URLs and the staged-folder checks still pass (QA).
   - The stage works with plates, with reduced motion and without JS, and exposes the scene interface for Studio's package.
   - A demo (stills and a short scroll video) for the owner's phone.
-- **Mount the Traço scene** (agreed) — Studio delivered traco-wireframe 1.0.0 (request 30ca11cc31cc) while the site was being built; the home's stage still shows only its plates.
+- **Mount the Traço scene** (building) — Studio delivered traco-wireframe 1.0.0 (request 30ca11cc31cc) while the site was being built; the home's stage still shows only its plates.
   Goal: the home's stage plays Studio's live line scene, with plates that match it, and falls back cleanly where it should.
   In:
   - Take the delivery (`jarvis deliveries take 30ca11cc31cc`, into vendor/studio/traco-wireframe); add three@0.187.0; mount it with `mount(el, inputs) → { update, destroy }` as its README says: progress from the spine's scroll, reducedMotion, the palette; onReady fades the plate out, onBeat syncs the step counter, onError keeps the plates.
