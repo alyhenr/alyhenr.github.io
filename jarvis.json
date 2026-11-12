@@ -1,0 +1,10 @@
+{
+  "name": "portfolio",
+  "stack": "unknown",
+  "template": "none",
+  "kind": "product",
+  "commands": {
+    "qa": "node .jarvis/qa.mjs"
+  },
+  "gate": "qa"
+}

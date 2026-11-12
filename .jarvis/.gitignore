@@ -1,0 +1,5 @@
+inbox.json
+outbox.json
+qa-failure.json
+ci-failure.json
+stop-requested

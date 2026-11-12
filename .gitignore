@@ -5,3 +5,6 @@ Thumbs.db
 *.orig
 .env
 node_modules/
+
+# Jarvis's runtime files
+.qa/
