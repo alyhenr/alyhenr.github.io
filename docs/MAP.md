@@ -1,6 +1,6 @@
 # Map — where things are
 
-## Pages (served as-is from the repo root)
+## Pages (published by `.github/stage-site.mjs`: root `*.html`, `css/`, `js/`, `plugins/`, `blog/`)
 | Path | Page |
 |---|---|
 | `index.html` | Home: intro, featured extension, cards to the other sections |
@@ -23,11 +23,12 @@
 - `js/plugins.js`: the extension registry (`window.PLUGINS`), status and store labels.
 
 ## Deploy
-- `.github/workflows/deploy.yml`: GitHub Pages, on push to `main` and by hand; uploads the repo root.
+- `.github/workflows/deploy.yml`: GitHub Pages, on push to `main` and by hand; stages the site into `_site/` and uploads that.
+- `.github/stage-site.mjs`: what the site is (root `*.html` pages and `SITE_DIRS`); copies it, dotfiles left out. The QA imports it too.
 
 ## QA (ours)
-- `.jarvis/qa.mjs`: the QA (steps `install`, `syntax`, `links`, `frozen-urls`; HTTP checks; flows).
-- `.jarvis/serve.mjs`: local GitHub Pages stand-in.
+- `.jarvis/qa.mjs`: the QA (steps `install`, `syntax`, `links`, `frozen-urls`, `published`; HTTP checks; flows, served from `.qa/site`).
+- `.jarvis/serve.mjs`: local GitHub Pages stand-in (`[port] [root]`; root defaults to the repo).
 - `.jarvis/web/kit.mjs`: Jarvis's web QA kit (Jarvis-owned; never edit, re-apply the pack).
 - `e2e/flows/*.flow.mjs`: `home`, `pages`, `extensions`, `privacy-policy-without-js`, `contact`, `terminal`, `not-found`.
 - `package.json`, `package-lock.json`: pin `playwright-core` for the QA only.

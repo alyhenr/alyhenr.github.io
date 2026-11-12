@@ -5,7 +5,7 @@
   "kind": "product",
   "commands": {
     "qa": "node .jarvis/qa.mjs",
-    "lint": "node .jarvis/qa.mjs syntax links frozen-urls",
+    "lint": "node .jarvis/qa.mjs syntax links frozen-urls published",
     "test": "node .jarvis/qa.mjs flows",
     "serve": "node .jarvis/serve.mjs 8000"
   },

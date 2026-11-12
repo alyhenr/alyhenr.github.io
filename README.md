@@ -6,7 +6,7 @@ along with the privacy policy each one needs.
 **Live:** <https://alyhenr.github.io>
 
 Hand-written HTML, CSS and vanilla JS. No framework, no build step, no
-dependencies: what is committed is exactly what is served.
+dependencies: the site's files are served exactly as committed.
 
 ---
 
@@ -99,5 +99,7 @@ the site itself still has no dependencies.
 
 ## Deploying
 
-Push to `main`. The workflow in `.github/workflows/deploy.yml` publishes the
-repository root to GitHub Pages as-is.
+Push to `main`. The workflow in `.github/workflows/deploy.yml` stages the
+site's files with `.github/stage-site.mjs` (the root `*.html` pages and
+`css/`, `js/`, `plugins/`, `blog/`) and publishes only those to GitHub Pages.
+A new top-level folder the pages use goes in that script's `SITE_DIRS`.

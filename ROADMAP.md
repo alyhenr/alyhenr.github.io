@@ -11,7 +11,7 @@
   Done when:
   - The docs and the QA describe the real project, and the full QA runs (its failures, if any, listed in Fixes and chores).
   - The summary lists every doc choice and flags the production risks found (live keys in config, a deploy that runs on push to main).
-- **Publish only the site** (building) — The deploy uploads the whole repo root on every push to main, so our docs, roadmap, QA and .jarvis/ would go public on alyhenr.github.io with the next push.
+- **Publish only the site** (ready) — The deploy uploads the whole repo root on every push to main, so our docs, roadmap, QA and .jarvis/ would go public on alyhenr.github.io with the next push.
   Goal: the live site serves only the site's own files; everything of ours stays in the repo.
   In: deploy.yml stages the site's files (the pages, css/, js/, plugins/, blog/, 404.html and any asset folder they use) into a folder and uploads that one; the QA checks the staged folder holds what the pages link to and none of our files.
   Out: redesigning anything; the contact form; a custom domain.
@@ -36,7 +36,6 @@
   - The preview and send pages serve them to the owner's phone.
 
 ## Next
-- **Publish only the site** (idea) — the deploy uploads the whole repo root, so PRODUCT.md, ROADMAP.md, AGENTS.md, docs/, e2e/, .jarvis/ and package.json are public on the live site; stage only the site's files (pages, css/, js/, plugins/, blog/, 404.html) in deploy.yml.
 - **Connect the contact form** (idea) — the form's action is still the Formspree placeholder (contact.html); connecting it sends visitors' name, email and message to a third party, which needs a short privacy note on the page (LGPD).
 - **Real Work and Writing content** (idea) — projects.html (project-alpha, project-beta, "Replace this with your actual project description", `href="#"` buttons) and blog.html / blog/first-post.html ("Your First Blog Post") are template placeholders live on the site; js/filesystem.js mirrors them.
 
