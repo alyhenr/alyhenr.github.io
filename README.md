@@ -88,7 +88,14 @@ not work properly — a directory URL lists the folder instead of loading its
 `index.html`.
 
 Note that `404.html` is only exercised by a real server that routes misses to
-it; `http.server` shows its own plain 404 instead.
+it; `http.server` shows its own plain 404 instead. `node .jarvis/serve.mjs 8000`
+serves it the way Pages does, 404 included.
+
+## Checks
+
+`node .jarvis/qa.mjs` checks every local link, the frozen URLs, and each page
+in Chromium and WebKit with Playwright. `package.json` exists only for that;
+the site itself still has no dependencies.
 
 ## Deploying
 

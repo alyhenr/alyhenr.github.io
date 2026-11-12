@@ -13,7 +13,17 @@
   - The summary lists every doc choice and flags the production risks found (live keys in config, a deploy that runs on push to main).
 
 ## Next
+- **Publish only the site** (idea) — the deploy uploads the whole repo root, so PRODUCT.md, ROADMAP.md, AGENTS.md, docs/, e2e/, .jarvis/ and package.json are public on the live site; stage only the site's files (pages, css/, js/, plugins/, blog/, 404.html) in deploy.yml.
+- **Connect the contact form** (idea) — the form's action is still the Formspree placeholder (contact.html); connecting it sends visitors' name, email and message to a third party, which needs a short privacy note on the page (LGPD).
+- **Real Work and Writing content** (idea) — projects.html (project-alpha, project-beta, "Replace this with your actual project description", `href="#"` buttons) and blog.html / blog/first-post.html ("Your First Blog Post") are template placeholders live on the site; js/filesystem.js mirrors them.
 
 ## Later
+
+## Fixes and chores
+- js/plugins.js: Alvarás has `status: 'published'`, which isn't a key of STATUS_LABELS (`live`, `review`, `unpublished`), so its card on /plugins/ shows an unstyled lowercase "published"; set it to `live`.
+- js/plugins.js: `stores.chrome` is still `null` with a TODO though the Chrome Web Store listing is live; fill it with the listing's canonical URL.
+- plugins/alvaras/index.html, Instalação: the notice still says the extension isn't published in the stores (with typos: "serao disponibilzados"), while the button says "Chrome Web Store — Publicado"; that button keeps `btn--pending` and `aria-disabled="true"` though it's a working link, and its URL carries account parameters (`authuser=2`, `pli=1`) from a signed-in session.
+- Firefox Add-ons: the button and `stores.firefox` are pending; fill them when the listing is approved.
+- js/chrome.js: comments still describe the removed game pages (`terminal: false`); `chrome.setCwd()` looks up `#chrome-cwd`, which no page has.
 
 ## History
