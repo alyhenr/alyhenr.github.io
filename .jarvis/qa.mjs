@@ -26,6 +26,7 @@ import { spawnSync } from 'node:child_process';
 import { readdirSync, readFileSync, statSync, existsSync } from 'node:fs';
 import { dirname, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import vm from 'node:vm';
 import { webQa } from './web/kit.mjs';
 import { stage } from '../.github/stage-site.mjs';
 
@@ -169,6 +170,97 @@ function frozenUrls() {
   return out.length ? out.join('\n') : undefined;
 }
 
+/**
+ * The design directions the owner picks from (design/directions/NN-slug/, never published): each has
+ * its home and its Projetos page with the brief's content, the calculator feeding the contact form,
+ * no phone number or e-mail anywhere, a scene direction with key frames for every Studio slot, and
+ * the same shared scripts. The estimate logic in site.js is tested here too.
+ */
+const DIRECTIONS = join(ROOT, 'design/directions');
+const REQUIRED_HOME = [
+  'O site é seu. Tudo dele é seu.',
+  'É uma estimativa. Conte seu objetivo e fechamos o valor juntos.',
+  'Pacotes prontos', 'preço de lançamento', 'Conversa', 'Proposta', 'Sinal de 50%', 'Entrega', 'LGPD',
+];
+const REQUIRED_MARKUP = ['data-calc', 'data-use-estimate', 'data-contact', 'name="nome"', 'name="contato"', 'name="mensagem"', 'name="estimativa"', 'href="projetos.html"', 'src="site.js"'];
+const REQUIRED_PROJECTS = ['Jarvis', 'Alvarás', 'https://github.com/alyhenr', 'Lab', 'data-flow'];
+const NOT_ON_SITE = /\b(Pipa|Racha|Garantia)\b/;
+/** A contact a visitor could use outside the form: what the brief keeps off every direction. */
+const CONTACT = /mailto:|tel:|wa\.me|whatsapp\.com|[\w.+-]+@[\w-]+\.[a-z]{2,}|\(?\b\d{2}\)?\s?9?\d{4}[-\s]?\d{4}\b/i;
+const text = (html) => html.replace(/<script\b[\s\S]*?<\/script>/gi, ' ').replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ').replace(/\s+/g, ' ');
+
+/** site.js's pure logic, loaded the way a page loads it, then asserted. */
+function estimateTests(file) {
+  const ctx = {};
+  vm.runInNewContext(readFileSync(file, 'utf8'), ctx); // no window, no document: only the logic runs
+  const S = ctx.Site;
+  const C = S.CATALOGUE;
+  const out = [];
+  const eq = (got, want, what) => { if (got !== want) out.push(`${what}: got ${JSON.stringify(got)}, want ${JSON.stringify(want)}`); };
+  eq(S.estimate({ pages: 1, features: [] }).price, C.base.price, 'one page with nothing costs the base');
+  eq(S.estimate({ pages: 3, features: [] }).price, C.base.price + 2 * C.extraPage.price, 'each extra page adds its price');
+  eq(S.estimate({ pages: 1, features: ['agendamento'] }).price, C.base.price + C.features.agendamento.price, 'a feature adds its price');
+  eq(S.estimate({ pages: 1, features: ['agendamento'] }).days, C.base.days + C.features.agendamento.days, 'a feature adds its days');
+  eq(S.estimate({ pages: 99, features: [] }).pages, C.maxPages, 'pages are capped at maxPages');
+  eq(S.estimate({ pages: 0, features: ['nope'] }).features.length, 0, 'unknown features are ignored');
+  for (const [id, p] of Object.entries(C.packages)) {
+    const parts = S.estimate({ pages: p.pages, features: p.features });
+    if (parts.price < p.price) out.push(`package ${id} (${p.price}) costs more than its parts in the calculator (${parts.price})`);
+  }
+  const v = C.packages.vitrine;
+  const suggested = S.estimate({ pages: v.pages, features: v.features });
+  eq(suggested.package && suggested.package.id, 'vitrine', 'a choice a cheaper package covers suggests that package');
+  eq(S.estimate({ pages: 1, features: [] }).package, null, 'no package is suggested when none is cheaper');
+  const line = S.summary(suggested);
+  if (!line.includes('É uma estimativa') || !line.includes(S.money(suggested.price))) out.push(`the form's estimate line misses the figure or the label: ${line}`);
+  eq(S.money(1290), 'R$ 1.290', 'money is pt-BR reais');
+  eq(S.packageSummary('agenda').startsWith('Pacote Agenda: R$ 1.990'), true, 'a package goes to the form with its price');
+  for (const ok of ['ana@exemplo.com.br', '(11) 98765-4321', '+55 11 98765-4321', '1133334444']) eq(S.validContact(ok), true, `accepts ${ok}`);
+  for (const bad of ['', 'ana', 'ana@', '12345', '(11) 9876']) eq(S.validContact(bad), false, `refuses "${bad}"`);
+  return out;
+}
+
+function directions() {
+  if (!existsSync(DIRECTIONS)) return;
+  const out = [];
+  const dirs = readdirSync(DIRECTIONS).filter((d) => /^\d\d-[a-z0-9-]+$/.test(d) && statSync(join(DIRECTIONS, d)).isDirectory());
+  if (dirs.length !== 3) out.push(`design/directions should hold the round's 3 directions, found ${dirs.length}`);
+  const shared = {};
+  for (const d of dirs) {
+    const at = (f) => join(DIRECTIONS, d, f);
+    for (const f of ['index.html', 'projetos.html', 'style.css', 'pitch.md', 'site.js']) if (!existsSync(at(f))) out.push(`${d}: no ${f}`);
+    if (!existsSync(at('index.html')) || !existsSync(at('projetos.html'))) continue;
+    const home = readFileSync(at('index.html'), 'utf8');
+    const projects = readFileSync(at('projetos.html'), 'utf8');
+    for (const s of REQUIRED_HOME) if (!text(home).includes(s)) out.push(`${d}/index.html: missing "${s}"`);
+    for (const s of REQUIRED_MARKUP) if (!home.includes(s)) out.push(`${d}/index.html: missing ${s}`);
+    if (!/data-shot=/.test(home)) out.push(`${d}/index.html: no data-shot sections for the showcase`);
+    for (const s of REQUIRED_PROJECTS) if (!projects.includes(s)) out.push(`${d}/projetos.html: missing ${s}`);
+    for (const [name, html] of [['index.html', home], ['projetos.html', projects], ['site.js', existsSync(at('site.js')) ? readFileSync(at('site.js'), 'utf8') : '']]) {
+      const hit = html.match(CONTACT);
+      if (hit) out.push(`${d}/${name}: exposes a contact outside the form ("${hit[0]}")`);
+      if (NOT_ON_SITE.test(html)) out.push(`${d}/${name}: names an app the brief keeps off the site (${html.match(NOT_ON_SITE)[0]})`);
+    }
+    for (const m of home.matchAll(/data-studio="([a-z0-9-]+)"/g)) {
+      const scene = join(ROOT, 'design/scenes', m[1] + '.md');
+      if (!existsSync(scene)) { out.push(`${d}: Studio slot ${m[1]} has no scene direction (design/scenes/${m[1]}.md)`); continue; }
+      const md = readFileSync(scene, 'utf8');
+      for (const h of ['## Beats', '## Key frames', '## Fallback', '## Performance budget']) if (!md.includes(h)) out.push(`design/scenes/${m[1]}.md: no "${h}"`);
+      const frames = join(ROOT, 'design/scenes', m[1], 'frames');
+      const pngs = existsSync(frames) ? readdirSync(frames).filter((f) => f.endsWith('.png')) : [];
+      if (pngs.length < 2) out.push(`design/scenes/${m[1]}: fewer than 2 key frames`);
+    }
+    for (const f of ['site.js', 'flow.js']) {
+      if (!existsSync(at(f))) continue;
+      const src = readFileSync(at(f), 'utf8');
+      if (shared[f] === undefined) shared[f] = src;
+      else if (shared[f] !== src) out.push(`${d}/${f} differs from ${dirs[0]}/${f}: the shared scripts are copies of one file`);
+    }
+  }
+  if (dirs.length && existsSync(join(DIRECTIONS, dirs[0], 'site.js'))) out.push(...estimateTests(join(DIRECTIONS, dirs[0], 'site.js')));
+  return out.length ? out.join('\n') : undefined;
+}
+
 /** Plain HTTP checks against the local Pages stand-in, before the browser flows. */
 async function checks(qa, base) {
   await qa.flow('http: the store URLs answer 200 as directories', 'http', async () => {
@@ -201,6 +293,7 @@ const steps = [
   { name: 'links', run: async () => links(), onPaths: true },
   { name: 'frozen-urls', run: async () => frozenUrls(), onPaths: true },
   { name: 'published', run: async () => published(), onPaths: true },
+  { name: 'directions', run: async () => directions(), onPaths: true },
 ];
 
 process.exit(
