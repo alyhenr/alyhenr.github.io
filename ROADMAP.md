@@ -73,6 +73,19 @@
   - No phone number or e-mail in the built site; the Alvarás URLs and the staged-folder checks still pass (QA).
   - The stage works with plates, with reduced motion and without JS, and exposes the scene interface for Studio's package.
   - A demo (stills and a short scroll video) for the owner's phone.
+- **Mount the Traço scene** (agreed) — Studio delivered traco-wireframe 1.0.0 (request 30ca11cc31cc) while the site was being built; the home's stage still shows only its plates.
+  Goal: the home's stage plays Studio's live line scene, with plates that match it, and falls back cleanly where it should.
+  In:
+  - Take the delivery (`jarvis deliveries take 30ca11cc31cc`, into vendor/studio/traco-wireframe); add three@0.187.0; mount it with `mount(el, inputs) → { update, destroy }` as its README says: progress from the spine's scroll, reducedMotion, the palette; onReady fades the plate out, onBeat syncs the step counter, onError keeps the plates.
+  - Replace the stage's plates with Studio's plates (desktop-01…05.jpg, phone-01…05.jpg, rendered from the scene), so plate and scene line up at the crossfade.
+  - Load after the first paint; plates only without WebGL, under reduced motion (crossfade per beat), and on weak phones (deviceMemory ≤ 2, saveData, or onReady's firstFrameMs > 50).
+  - Owner's decision (12/11): the Alvarás privacy policy keeps its e-mail as is (the stores want a contact); no change there.
+  Out: changing the scene itself (a departure goes back to Studio as 1.0.1), the form sending, other pages.
+  Done when:
+  - The home on phone and desktop plays the scene across the five beats, both scroll directions, and the step counter follows onBeat.
+  - Tests: reduced motion, no WebGL and a weak-phone signal each show the plates and never start the scene.
+  - The page stays light: the scene's script loads after the first paint and is ≤ 140 KB gzip; Lighthouse mobile performance stays ≥ 90.
+  - A demo (stills and a scroll video on phone and desktop) with the scene live.
 
 ## Next
 - **Connect the contact form** (idea) — the home's form (name, e-mail or phone, message, estimate) validates and stops; connecting it through the Gateway sends a visitor's data to us (its LGPD note is already on the form). Until then its done message says the request was not sent.
