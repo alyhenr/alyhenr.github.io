@@ -5,6 +5,7 @@ Alysson's personal site on GitHub Pages: static HTML, CSS and vanilla JS, no bui
 ## Commands
 - `node .jarvis/qa.mjs`: the full QA (install, syntax, links, frozen-urls, HTTP checks, Playwright flows in Chromium and WebKit, desktop and phone). Writes `.qa/qa-report.json`.
 - `node .jarvis/qa.mjs syntax links frozen-urls published`: the quick static checks (the project's lint); `published` stages the site into `.qa/site` the way the deploy does and checks it.
+- `node .jarvis/qa.mjs directions`: the design mocks' rules and the estimate's unit tests (design/directions/).
 - `node .jarvis/qa.mjs flows` or `node .jarvis/qa.mjs <flow>` (e.g. `contact`): browser flows only.
 - `node .jarvis/serve.mjs 8000`: the site locally the way Pages serves it (the README's `python3 -m http.server` also works, but has no 404 page).
 - First run on a machine: `npx playwright-core@1.53.2 install chromium webkit`.
@@ -31,4 +32,5 @@ Alysson's personal site on GitHub Pages: static HTML, CSS and vanilla JS, no bui
 - The HTTP checks and flows run against `.qa/site` (the staged site), not the repo root: a file the staging leaves out 404s there, as it would live.
 - Playwright's text and role locators skip `<noscript>` content: use CSS locators there.
 - The `links` check reads `href:` strings in `js/chrome.js` and `js/filesystem.js` (relative to the root) and `href:`/`privacy:` in `js/plugins.js` (relative to `plugins/`).
+- The design mocks' `site.js` and `flow.js` are one file copied into each `design/directions/NN-*/`: change one, copy it to all (the `directions` step fails otherwise). Their shots: `shots.mjs --sections design/directions` for the homes, which deletes the Projetos pages' `-p-` shots, so remake those after it with `node design/tools/shots-projetos.mjs <dirs>`.
 - Commit format: a short subject, a blank line, the why.

@@ -34,7 +34,7 @@
   - design/directions/ holds 3 directions in the showcase layout (live page, shots, pitch), each naming its look and techniques.
   - Each has the working calculator, the WhatsApp calls to action, the 4 steps, the hero video's storyboard and the products space, in pt-BR.
   - The preview and send pages serve them to the owner's phone.
-- **Design directions, round 2** (building) — Round 1 (Planta, Feira, Cena) read as flat one-prompt pages differing only in style; the owner wants immersive, senior, professional work, with a clear view of where each Studio piece would sit and what it would be, before anything is made.
+- **Design directions, round 2** (ready) — Round 1 (Planta, Feira, Cena) read as flat one-prompt pages differing only in style; the owner wants immersive, senior, professional work, with a clear view of where each Studio piece would sit and what it would be, before anything is made.
   Goal: 3 new directions, each built a truly different way, mockups only, so the owner can see the whole site and where its signature pieces go. No Studio requests and no rendered video in this round: each piece is directed, not made.
   The three ways:
   - Cinematic: a scroll-driven WebGL scene is the spine (e.g. lines assembling into a site's wireframe as the 4 steps pass).

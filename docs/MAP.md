@@ -27,10 +27,15 @@
 - `.github/stage-site.mjs`: what the site is (root `*.html` pages and `SITE_DIRS`); copies it, dotfiles left out. The QA imports it too.
 
 ## Design (ours, never published)
-- `design/directions/NN-<slug>/`: the look options for the redesign (`01-planta`, `02-feira`, `03-cena`), in the showcase layout Core serves to the owner's phone: `index.html` (the live page, `data-shot` sections), `style.css` (tokens light/dark), `pitch.md` (pt-BR pitch, then look, techniques and notes), `shots/` (made by the plugin's `shots.mjs --sections design/directions`). Placeholder prices sit in a `PRICES` object and the WhatsApp number in `WHATSAPP_NUMBER` at the top of each page's script. The `links` check covers these pages too, so a link must resolve locally or be absolute.
+- `design/directions/NN-<slug>/`: round 2 of the look options (`01-traco` cinematic, `02-roteiro` film, `03-esquema` system), in the showcase layout Core serves to the owner's phone: `index.html` (the home, `data-shot` sections), `projetos.html` (the Projetos page), `style.css` (tokens light/dark), `pitch.md` (pt-BR pitch, then look, techniques, pieces and notes), `shots/` (`shots.mjs --sections design/directions` makes the home's; the `-p-` ones are the Projetos page's, numbered after them), `scene/` (the Studio slot's key frames as JPEGs).
+  - `site.js` and `flow.js` are one file copied into each direction (the QA's `directions` step checks they match): `site.js` holds the provisional `CATALOGUE` (packages, per-page and per-feature figures, the "preço de lançamento" flag), the estimate, the calculator → contact form wiring and the form's validation (it never sends); `flow.js` animates the live SVG diagrams (`[data-flow]`, packets along `path[data-wire]`). The Jarvis diagram is the same SVG in the three Projetos pages.
+  - The `links` check covers these pages too, so a link must resolve locally or be absolute; the extension's URLs are linked absolute (alyhenr.github.io).
+- `design/scenes/<name>.md` and `design/scenes/<name>/frames/`: scene directions for Studio pieces (`traco-wireframe`, `roteiro-filme`), directed, not requested; key frames drawn as HTML/SVG (`frames/*.html`, `draw.js`/`frame.css`) and shot to PNG.
+- `design/tools/shots-projetos.mjs`: shoots the Projetos pages' `data-shot` sections into each direction's `shots/` (run after `shots.mjs`, which deletes them).
+- `design/history/round-1/`: round 1 (Planta, Feira, Cena), kept as history; not served by the preview.
 
 ## QA (ours)
-- `.jarvis/qa.mjs`: the QA (steps `install`, `syntax`, `links`, `frozen-urls`, `published`; HTTP checks; flows, served from `.qa/site`).
+- `.jarvis/qa.mjs`: the QA (steps `install`, `syntax`, `links`, `frozen-urls`, `published`, `directions`; HTTP checks; flows, served from `.qa/site`). `directions` checks the design mocks (the brief's copy, the form, no exposed phone or e-mail, a scene direction behind every `data-studio` slot, identical shared scripts) and unit-tests `site.js`'s estimate.
 - `.jarvis/serve.mjs`: local GitHub Pages stand-in (`[port] [root]`; root defaults to the repo).
 - `.jarvis/web/kit.mjs`: Jarvis's web QA kit (Jarvis-owned; never edit, re-apply the pack).
 - `e2e/flows/*.flow.mjs`: `home`, `pages`, `extensions`, `privacy-policy-without-js`, `contact`, `terminal`, `not-found`.
