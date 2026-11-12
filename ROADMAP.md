@@ -19,7 +19,7 @@
   - The staged folder has every page and asset the site links to, and no PRODUCT.md, ROADMAP.md, AGENTS.md, docs/, e2e/, .jarvis/, .qa/ or package.json.
   - /plugins/alvaras/ and /plugins/alvaras/privacidade/ are in it at the same paths (the published plugin's listing links them).
   - The QA covers both lines.
-- **Design directions** (agreed) — Before any site code, the owner picks a look from live demos: the portfolio becomes his storefront for paid sites for Brazilian small businesses and the home of our products, and the site itself is the proof of craft.
+- **Design directions** (building) — Before any site code, the owner picks a look from live demos: the portfolio becomes his storefront for paid sites for Brazilian small businesses and the home of our products, and the site itself is the proof of craft.
   Goal: the designer draws 3 distinct directions for the new portfolio as live phone-first HTML mockups, so the owner can compare looks and abilities on his iPhone before anything is built. Mockups only, no site code.
   Who it's for and what it does (every direction):
   - pt-BR first, for small-business owners arriving from WhatsApp or Instagram: what he makes, how it works in 4 steps (conversa, proposta, sinal de 50%, entrega), prices shown ("a partir de R$…"), and every call to action a pre-filled WhatsApp message (the web agency's discovery step).
