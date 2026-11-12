@@ -1,16 +1,6 @@
 # Roadmap — Portfolio
 
 ## Now
-- **Adopt into our standard** (ready) — Portfolio came in with its history; our docs, rules and QA come from what its code really is.
-  Goal: our docs, rules and a real QA, written from what the code really is (the work skill's adopt mode); no product code changes.
-  In:
-  - PRODUCT.md, ARCHITECTURE.md, AGENTS.md, ROADMAP.md and docs/IDEAS.md from the code; each existing doc (README, AGENTS.md, CLAUDE.md, docs/) folded in, kept or removed, every choice listed.
-  - `.jarvis/qa.mjs`: the stack's real checks (install, lint, typecheck, build, the tests it has), writing .qa/qa-report.json; jarvis.json's stack, commands and personal_data (the paths that touch personal data, for the ship's LGPD check) set.
-  - A database: a local stack from the repo's schema with seed data, or what's missing said.
-  Out: product code changes, deploy integrations, moving secrets; env files are never read and nothing runs against a live service.
-  Done when:
-  - The docs and the QA describe the real project, and the full QA runs (its failures, if any, listed in Fixes and chores).
-  - The summary lists every doc choice and flags the production risks found (live keys in config, a deploy that runs on push to main).
 - **Publish only the site** (ready) — The deploy uploads the whole repo root on every push to main, so our docs, roadmap, QA and .jarvis/ would go public on alyhenr.github.io with the next push.
   Goal: the live site serves only the site's own files; everything of ours stays in the repo.
   In: deploy.yml stages the site's files (the pages, css/, js/, plugins/, blog/, 404.html and any asset folder they use) into a folder and uploads that one; the QA checks the staged folder holds what the pages link to and none of our files.
@@ -99,3 +89,4 @@
 - The Alvarás policy's Contato line shows an e-mail (verbatim from alvaras-pg's PRIVACY.md), the one contact left on the site; changing it means editing PRIVACY.md in the extension's repo first, then this copy, with the date in both.
 
 ## History
+- 2026-11-12: Adopt into our standard
