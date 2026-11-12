@@ -6,17 +6,16 @@ export const flow = {
     await go('/plugins/alvaras/privacidade/');
     await page.getByRole('heading', { level: 1, name: 'Política de Privacidade — Alvarás (controle de vencimento)' }).waitFor();
     await page.getByText('Última atualização:').waitFor();
-    const sections = await page.getByRole('heading', { level: 2 }).count();
+    const sections = await page.locator('.doc').getByRole('heading', { level: 2 }).count();
     expect(sections >= 10, `the policy shows ${sections} sections without JS, expected its 10`);
-    await shot('policy-no-js');
+    await shot('politica-sem-js');
 
     await go('/plugins/alvaras/');
-    await page.getByRole('heading', { level: 1, name: 'Alvarás — controle de vencimento' }).waitFor();
+    await page.getByRole('heading', { level: 1, name: 'Alvarás' }).waitFor();
+    await page.getByRole('link', { name: 'Instalar no Chrome' }).waitFor();
 
     await go('/plugins/');
-    // Playwright's text and role matching skip <noscript> content: CSS locators reach it.
-    await page.locator('p.notice').waitFor();
-    await page.locator('a[href="alvaras/index.html"]').waitFor();
-    await page.locator('a[href="alvaras/privacidade/index.html"]').waitFor();
+    await page.locator('a[href="alvaras/"]').first().waitFor();
+    await page.locator('a[href="alvaras/privacidade/"]').waitFor();
   },
 };

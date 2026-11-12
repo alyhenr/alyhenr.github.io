@@ -1,212 +1,115 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Alvarás — controle de vencimento: extensão de navegador que escaneia a página do processo e acompanha o vencimento dos seus alvarás de construção em um só lugar." />
-
-  <title>Alvarás — controle de vencimento</title>
-
-  <link rel="stylesheet" href="../../css/tokens.css" />
-  <link rel="stylesheet" href="../../css/components.css" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alvarás: controle de vencimento</title>
+<meta name="description" content="Alvarás, controle de vencimento: extensão de navegador que escaneia a página do processo e acompanha o vencimento dos seus alvarás de construção em um só lugar.">
+<meta name="theme-color" content="#0E1517">
+<link rel="icon" href="../../img/favicon.svg" type="image/svg+xml">
+<link rel="preload" as="font" type="font/woff2" href="../../fonts/anybody-latin.woff2" crossorigin>
+<link rel="stylesheet" href="../../css/tokens.css">
+<link rel="stylesheet" href="../../css/site.css">
 </head>
 <body>
+<svg width="0" height="0" class="sprite" aria-hidden="true">
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol>
+</svg>
 
-  <main class="page">
+<header class="site-head">
+  <div class="wrap">
+    <a class="wordmark" href="../../index.html">Alysson</a>
+    <nav class="site-nav" aria-label="Site">
+      <a href="../../index.html">Início</a>
+      <a href="../../projetos.html">Projetos</a>
+      <a href="../../plugins/" aria-current="page">Extensões</a>
+    </nav>
+    <a class="btn btn--amber" href="../../index.html#contato">Pedir orçamento</a>
+  </div>
+</header>
 
-    <!-- ── Apresentação ──────────────────────────────────── -->
-    <section class="window">
-      <div class="window__bar">
-        <span class="window__title">alvarás — controle de vencimento</span>
-        <span class="window__controls" aria-hidden="true">
-          <span class="window__control"></span>
-          <span class="window__control"></span>
-          <span class="window__control"></span>
-        </span>
+<main>
+  <!-- /plugins/alvaras/ is submitted to the browser stores: never move it. Static HTML on purpose:
+       nothing here may depend on a script (reviewers and crawlers may not run JavaScript). -->
+  <section class="page-hero" data-shot="alvaras-topo" aria-labelledby="h-top">
+    <div class="wrap">
+      <h1 id="h-top" class="smaller">Alvarás</h1>
+      <p class="lede">Controle de vencimento. Escaneie a página do processo e acompanhe o vencimento dos seus alvarás de construção em um só lugar.</p>
+      <div class="actions">
+        <a class="btn btn--amber" href="https://chromewebstore.google.com/detail/nbfalncbmoaalmoiboakhgkfpoglceci">Instalar no Chrome</a>
+        <a class="btn btn--line" href="privacidade/">Política de privacidade</a>
       </div>
-      <div class="window__body">
-        <p class="subtitle">Extensão de navegador</p>
-        <h1 class="title">Alvarás — controle de vencimento</h1>
+      <dl class="ext-facts">
+        <dt>Navegadores</dt><dd>Chrome, Brave, Edge e Opera; Firefox em revisão</dd>
+        <dt>Situação</dt><dd class="ok">Publicada na Chrome Web Store</dd>
+        <dt>Preço</dt><dd>Gratuita</dd>
+      </dl>
+    </div>
+  </section>
 
-        <p class="lede">
-          Escaneie a página do processo e acompanhe o vencimento dos seus alvarás de
-          construção em um só lugar.
-        </p>
+  <section class="section" data-shot="para-que-serve" aria-label="Para que serve">
+    <div class="wrap two-col">
+      <div>
+        <h2>O problema</h2>
+        <p>Engenheiros civis no Brasil acompanham alvarás de construção pelos portais WGeo das prefeituras. O alvará vale por dois anos contados da data em que foi deferido, mas descobrir essa data significa abrir cada processo e procurar na aba <strong>Histórico</strong>.</p>
+        <p>Com vários processos em andamento, conferir os vencimentos vira uma tarefa manual e repetitiva, feita um processo de cada vez.</p>
+      </div>
+      <div>
+        <h2>O que a extensão faz</h2>
+        <p>Na página do processo, um clique em <strong>Escanear esta página</strong> lê a data de deferimento e calcula o vencimento. Cada alvará escaneado entra em uma lista única, ordenada por quem vence primeiro.</p>
+        <p>A lista também pode ser exportada em CSV, através do download normal do navegador.</p>
+      </div>
+    </div>
+  </section>
 
+  <section class="section" data-shot="telas" aria-label="Telas">
+    <div class="wrap">
+      <ul class="shots">
+        <li><figure><img src="img/shot-01.webp" width="960" height="600" alt="Lista de alvarás da extensão, ordenada por data de vencimento." loading="lazy"><figcaption>A lista de alvarás, ordenada por quem vence primeiro.</figcaption></figure></li>
+        <li><figure><img src="img/shot-02.webp" width="960" height="600" alt="Botão Escanear esta página, usado sobre a página de um processo." loading="lazy"><figcaption>Um clique sobre a página do processo: nada é lido antes disso.</figcaption></figure></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" data-shot="privacidade-resumo" aria-labelledby="h-priv">
+    <div class="wrap two-col">
+      <div>
+        <h2 id="h-priv">Privacidade</h2>
+        <p>Sem conta, sem servidor, sem nada transmitido. Tudo o que a extensão lê fica gravado apenas no seu próprio navegador, no seu computador.</p>
+        <p>A extensão não pede permissão de host: ela só consegue ler uma página no instante em que você clica no botão. Não há acesso permanente a nenhum site, nem a outras abas, nem em segundo plano.</p>
+        <p>Nenhum analytics, nenhuma telemetria, nenhuma requisição de rede.</p>
+        <div class="btn-row"><a class="btn btn--primary" href="privacidade/"><svg class="icon"><use href="#i-lock"/></svg>Ler a política completa</a></div>
+      </div>
+      <div>
+        <h2>Instalação</h2>
+        <p>Gratuita, direto da loja do seu navegador.</p>
         <div class="btn-row">
-          <a class="btn" href="privacidade/index.html">Política de privacidade</a>
-        </div>
-
-        <div>
-          <div class="kv-row">
-            <span class="kv-row__key">Navegadores</span>
-            <span class="kv-row__value">
-              <span class="tag tag--white">Chrome</span>
-              <span class="tag tag--white">Brave</span>
-              <span class="tag tag--white">Edge</span>
-              <span class="tag tag--white">Opera</span>
-              <span class="tag tag--white">Firefox</span>
-            </span>
-          </div>
-          <div class="kv-row">
-            <span class="kv-row__key">Situação</span>
-            <span class="kv-row__value">
-              <span class="tag tag--green">Publicada</span>
-            </span>
-          </div>
-          <div class="kv-row">
-            <span class="kv-row__key">Preço</span>
-            <span class="kv-row__value">Gratuita</span>
-          </div>
+          <a class="btn btn--primary" href="https://chromewebstore.google.com/detail/nbfalncbmoaalmoiboakhgkfpoglceci">Chrome Web Store</a>
+          <span class="btn btn--line" aria-disabled="true">Firefox Add-ons: em revisão</span>
         </div>
       </div>
-    </section>
+    </div>
+    <div class="wrap"><p class="back"><a href="../"><svg class="icon"><use href="#i-arrow"/></svg>Voltar para as extensões</a></p></div>
+  </section>
+</main>
 
-    <!-- ── O problema e a solução ────────────────────────── -->
-    <section class="window">
-      <div class="window__bar">
-        <span class="window__title">para que serve</span>
-        <span class="window__controls" aria-hidden="true">
-          <span class="window__control"></span>
-          <span class="window__control"></span>
-          <span class="window__control"></span>
-        </span>
-      </div>
-      <div class="window__body">
-
-        <fieldset class="group">
-          <legend>O problema</legend>
-          <p class="prose">
-            Engenheiros civis no Brasil acompanham alvarás de construção pelos portais
-            WGeo das prefeituras. O alvará vale por dois anos contados da data em que foi
-            deferido — mas descobrir essa data significa abrir cada processo e procurar na
-            aba <strong>Histórico</strong>.
-          </p>
-          <p class="prose">
-            Com vários processos em andamento, conferir os vencimentos vira uma tarefa
-            manual e repetitiva, feita um processo de cada vez.
-          </p>
-        </fieldset>
-
-        <fieldset class="group">
-          <legend>O que a extensão faz</legend>
-          <p class="prose">
-            Na página do processo, um clique em <strong>Escanear esta página</strong> lê a
-            data de deferimento e calcula o vencimento. Cada alvará escaneado entra em uma
-            lista única, ordenada por quem vence primeiro.
-          </p>
-          <p class="prose">
-            A lista também pode ser exportada em CSV, através do download normal do
-            navegador.
-          </p>
-        </fieldset>
-
-      </div>
-    </section>
-
-    <!-- ── Telas ─────────────────────────────────────────── -->
-    <section class="window">
-      <div class="window__bar">
-        <span class="window__title">telas</span>
-        <span class="window__controls" aria-hidden="true">
-          <span class="window__control"></span>
-          <span class="window__control"></span>
-          <span class="window__control"></span>
-        </span>
-      </div>
-      <div class="window__body">
-
-        <div class="shot">
-          <div class="shot__frame">
-            <img class="shot__img" src="img/shot-01.png" width="1280" height="800"
-                 alt="Lista de alvarás da extensão, ordenada por data de vencimento." />
-          </div>
-          <p class="shot__caption">A lista de alvarás, ordenada por quem vence primeiro.</p>
-        </div>
-
-        <div class="shot">
-          <div class="shot__frame">
-            <img class="shot__img" src="img/shot-02.png" width="1280" height="800"
-                 alt="Botão Escanear esta página, usado sobre a página de um processo." />
-          </div>
-          <p class="shot__caption">Um clique sobre a página do processo — nada é lido antes disso.</p>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ── Privacidade ───────────────────────────────────── -->
-    <section class="window">
-      <div class="window__bar">
-        <span class="window__title">privacidade</span>
-        <span class="window__controls" aria-hidden="true">
-          <span class="window__control"></span>
-          <span class="window__control"></span>
-          <span class="window__control"></span>
-        </span>
-      </div>
-      <div class="window__body">
-        <p class="prose">
-          Sem conta, sem servidor, sem nada transmitido. Tudo o que a extensão lê fica
-          gravado apenas no seu próprio navegador, no seu computador.
-        </p>
-        <p class="prose">
-          A extensão não pede permissão de host: ela só consegue ler uma página no
-          instante em que você clica no botão. Não há acesso permanente a nenhum site,
-          nem a outras abas, nem em segundo plano.
-        </p>
-        <p class="prose">
-          Nenhum analytics, nenhuma telemetria, nenhuma requisição de rede.
-        </p>
-        <div class="btn-row">
-          <a class="btn btn--primary" href="privacidade/index.html">Ler a política completa</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ── Instalação ────────────────────────────────────── -->
-    <section class="window">
-      <div class="window__bar">
-        <span class="window__title">instalação</span>
-        <span class="window__controls" aria-hidden="true">
-          <span class="window__control"></span>
-          <span class="window__control"></span>
-          <span class="window__control"></span>
-        </span>
-      </div>
-      <div class="window__body">
-        <p class="notice notice--warn">
-          A extensão ainda não está publicada nas lojas. Assim que aprovado, links serao disponibilzados.
-        </p>
-
-        <div class="btn-row">
-          <!-- TODO: substituir href="#" pela URL da Chrome Web Store -->
-          <a class="btn btn--pending" href="https://chromewebstore.google.com/detail/alvarás-—-controle-de-ven/nbfalncbmoaalmoiboakhgkfpoglceci?authuser=2&hl=en&pli=1" aria-disabled="true">
-            Chrome Web Store — Publicado
-          </a>
-          <!-- TODO: substituir href="#" pela URL do addons.mozilla.org -->
-          <a class="btn btn--pending" href="#" aria-disabled="true">
-            Firefox Add-ons — link pendente
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <p class="small muted">
-      &larr; <a href="../index.html">voltar para as extensões</a>
-    </p>
-
-  </main>
-
-  <script>
-    window.CHROME_CONFIG = { user: 'alyhenr', host: 'alyhenr.dev', activePage: 'plugins', basePath: '../../' };
-  </script>
-  <script src="../../js/chrome.js"></script>
-  <script src="../../js/filesystem.js"></script>
-  <script src="../../js/terminal.js"></script>
-  <script>
-    Terminal.init({ user: 'alyhenr', host: 'alyhenr.dev', cwd: '/plugins/alvaras', basePath: '../../' });
-  </script>
-
+<footer class="site-foot">
+  <div class="wrap">
+    <div>
+      <a class="wordmark" href="../../index.html">Alysson</a>
+      <p class="who">Engenheiro de software. Construo sistemas com agentes de IA.</p>
+      <p class="fine">© 2026 Alysson. Site estático, sem rastreadores e sem cookies.</p>
+    </div>
+    <nav aria-label="Rodapé">
+      <a href="../../index.html">Início</a>
+      <a href="../../projetos.html">Projetos</a>
+      <a href="../../plugins/">Extensões</a>
+      <a href="https://github.com/alyhenr">GitHub</a>
+      <a href="../../index.html#contato">Pedir orçamento</a>
+      <a href="../../plugins/alvaras/privacidade/">Alvarás: privacidade</a>
+    </nav>
+  </div>
+</footer>
 </body>
 </html>

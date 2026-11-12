@@ -28,8 +28,9 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
-      # Only the site's own files go public: the pages, css/, js/, plugins/, blog/ (see the
-      # script). Our docs, roadmap, QA and tooling stay in the repo. The QA's `published` step
+      # Only the site's own files go public: the pages, css/, js/, fonts/, img/, plugins/ and
+      # the vendored prices the calculator loads (see the script). Our docs, roadmap, QA and
+      # tooling stay in the repo. The QA's `published` step
       # stages with the same script and checks the folder.
       - name: Stage the site
         run: node .github/stage-site.mjs _site

@@ -1,117 +1,80 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Browser extensions built by alyhenr, and the privacy policy for each one." />
-
-  <title>alyhenr — browser extensions</title>
-
-  <link rel="stylesheet" href="../css/tokens.css" />
-  <link rel="stylesheet" href="../css/components.css" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Extensões · Alysson</title>
+<meta name="description" content="Extensões de navegador feitas pelo Alysson, cada uma com sua página e sua política de privacidade.">
+<meta name="theme-color" content="#0E1517">
+<link rel="icon" href="../img/favicon.svg" type="image/svg+xml">
+<link rel="preload" as="font" type="font/woff2" href="../fonts/anybody-latin.woff2" crossorigin>
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/site.css">
 </head>
 <body>
+<svg width="0" height="0" class="sprite" aria-hidden="true">
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></symbol>
+</svg>
 
-  <main class="page">
+<header class="site-head">
+  <div class="wrap">
+    <a class="wordmark" href="../index.html">Alysson</a>
+    <nav class="site-nav" aria-label="Site">
+      <a href="../index.html">Início</a>
+      <a href="../projetos.html">Projetos</a>
+      <a href="../plugins/" aria-current="page">Extensões</a>
+    </nav>
+    <a class="btn btn--amber" href="../index.html#contato">Pedir orçamento</a>
+  </div>
+</header>
 
-    <section class="window">
-      <div class="window__bar">
-        <span class="window__title">extensions</span>
-        <span class="window__controls" aria-hidden="true">
-          <span class="window__control"></span>
-          <span class="window__control"></span>
-          <span class="window__control"></span>
-        </span>
-      </div>
-      <div class="window__body">
-        <p class="subtitle">Browser extensions</p>
-        <h1 class="title">What I've published</h1>
-        <p class="lede">
-          Small extensions I build and maintain. Each one has its own page and its own
-          privacy policy.
-        </p>
+<main>
+  <!-- /plugins/ is submitted to the Chrome Web Store and Firefox Add-ons: never move it.
+       Static HTML on purpose: reviewers and crawlers may not run JavaScript. -->
+  <section class="page-hero" aria-labelledby="h-top">
+    <div class="wrap">
+      <h1 id="h-top">Extensões</h1>
+      <p class="lede">Extensões de navegador que eu faço e mantenho. Cada uma tem sua página e sua política de privacidade.</p>
+    </div>
+  </section>
 
-        <!-- Rendered from js/plugins.js — do not hardcode cards here.
-             To add an extension, append an entry to PLUGINS in that file. -->
-        <div class="card-grid" id="plugins-grid"></div>
+  <section class="section section--first" aria-label="Lista de extensões">
+    <div class="wrap">
+      <ul class="packages extensions">
+        <li class="pkg ext" data-extension="alvaras">
+          <div class="pkg-name"><h2>Alvarás: controle de vencimento</h2><p>Escaneie a página do processo e acompanhe o vencimento dos seus alvarás de construção em um só lugar.</p></div>
+          <dl class="facts facts--tight">
+            <dt>situação</dt><dd class="ok">Publicada na Chrome Web Store</dd>
+            <dt>navegadores</dt><dd>Chrome, Brave, Edge e Opera; Firefox em revisão</dd>
+            <dt>preço</dt><dd>Gratuita</dd>
+          </dl>
+          <div class="pkg-buy">
+            <a class="btn btn--primary" href="alvaras/">Ver a extensão</a>
+            <a class="linkish-a" href="alvaras/privacidade/">Política de privacidade</a>
+          </div>
+        </li>
+      </ul>
+      <p class="notice"><svg class="icon"><use href="#i-info"/></svg><span>Cada extensão guarda sua política de privacidade num endereço fixo, em <code>/plugins/&lt;nome&gt;/privacidade/</code>. Esses endereços vão para a Chrome Web Store e o Firefox Add-ons e não mudam depois de publicados.</span></p>
+    </div>
+  </section>
+</main>
 
-        <noscript>
-          <p class="notice">
-            JavaScript is off, so here is the plain list.
-          </p>
-          <ul class="prose">
-            <li>
-              <a href="alvaras/index.html">Alvarás — controle de vencimento</a>
-              &mdash; <a href="alvaras/privacidade/index.html">privacy policy</a>
-            </li>
-          </ul>
-        </noscript>
-      </div>
-    </section>
-
-    <section class="window">
-      <div class="window__bar">
-        <span class="window__title">about these URLs</span>
-        <span class="window__controls" aria-hidden="true">
-          <span class="window__control"></span>
-          <span class="window__control"></span>
-          <span class="window__control"></span>
-        </span>
-      </div>
-      <div class="window__body">
-        <p class="prose">
-          Every extension here keeps its privacy policy at a fixed address under
-          <code>/plugins/&lt;name&gt;/privacidade/</code>. Those addresses are submitted
-          to the Chrome Web Store and Firefox Add-ons, and are not moved or removed once
-          published.
-        </p>
-      </div>
-    </section>
-
-  </main>
-
-  <script>
-    window.CHROME_CONFIG = { user: 'alyhenr', host: 'alyhenr.dev', activePage: 'plugins', basePath: '../' };
-  </script>
-  <script src="../js/chrome.js"></script>
-  <script src="../js/plugins.js"></script>
-  <script src="../js/filesystem.js"></script>
-  <script src="../js/terminal.js"></script>
-  <script>
-    Terminal.init({ user: 'alyhenr', host: 'alyhenr.dev', cwd: '/plugins', basePath: '../' });
-
-    /**
-     * Render the extension listing from window.PLUGINS into #plugins-grid.
-     * Card markup, one per extension — the data file is the source of truth.
-     */
-    (function renderPlugins() {
-      const grid = document.getElementById('plugins-grid');
-      if (!grid || !window.PLUGINS) return;
-
-      const esc = (s) => String(s)
-        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
-
-      for (const p of window.PLUGINS.all) {
-        const status = window.PLUGINS.STATUS_LABELS[p.status] || { label: p.status, cls: '' };
-
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.innerHTML =
-          '<span class="card__eyebrow">' + p.browsers.map(esc).join(' &middot; ') + '</span>' +
-          '<span class="card__title">' + esc(p.name) + '</span>' +
-          '<span class="card__desc">' + esc(p.tagline) + '</span>' +
-          '<span class="card__meta">' +
-            '<span class="tag ' + status.cls + '">' + esc(status.label) + '</span>' +
-          '</span>' +
-          '<span class="btn-row">' +
-            '<a class="btn btn--primary" href="' + esc(p.href) + '">Details</a>' +
-            '<a class="btn" href="' + esc(p.privacy) + '">Privacy</a>' +
-          '</span>';
-        grid.appendChild(card);
-      }
-    })();
-  </script>
-
+<footer class="site-foot">
+  <div class="wrap">
+    <div>
+      <a class="wordmark" href="../index.html">Alysson</a>
+      <p class="who">Engenheiro de software. Construo sistemas com agentes de IA.</p>
+      <p class="fine">© 2026 Alysson. Site estático, sem rastreadores e sem cookies.</p>
+    </div>
+    <nav aria-label="Rodapé">
+      <a href="../index.html">Início</a>
+      <a href="../projetos.html">Projetos</a>
+      <a href="../plugins/">Extensões</a>
+      <a href="https://github.com/alyhenr">GitHub</a>
+      <a href="../index.html#contato">Pedir orçamento</a>
+      <a href="../plugins/alvaras/privacidade/">Alvarás: privacidade</a>
+    </nav>
+  </div>
+</footer>
 </body>
 </html>

@@ -11,13 +11,18 @@
  * Steps:
  *   install      npm ci (playwright-core only: QA tooling; the site itself has no dependencies)
  *   syntax       node --check on every script in js/
- *   links        every local href/src in every page, and every page path in the JS registries
- *                (js/chrome.js nav, js/filesystem.js, js/plugins.js), points at a file that exists
- *   frozen-urls  the URLs submitted to the browser stores still exist, the policy reads without JS,
- *                and 404.html only uses root-absolute paths
+ *   links        every local href/src in every page, and every module import and
+ *                new URL(…, import.meta.url) in js/, points at a file that exists
+ *   tokens       no colour outside css/tokens.css (stylesheets and style attributes)
+ *   frozen-urls  the URLs submitted to the browser stores still exist, every page's nav links the
+ *                extensions list, the store pages carry no script, and 404.html only uses
+ *                root-absolute paths
+ *   estimate     the calculator's quotes against the agency's quote rules (vendor/web/prices),
+ *                and Pacotes prontos against prices.json
  *   published    stages the site into .qa/site with the deploy's own script (.github/stage-site.mjs),
  *                checks deploy.yml uploads that folder, and that it holds every page, asset and
- *                frozen URL the site links to and none of our files (docs, roadmap, QA, tooling).
+ *                frozen URL the site links to and none of our files (docs, roadmap, QA, tooling),
+ *                and that no page shows a phone number, an e-mail, "sênior" or an app kept off it.
  *                The HTTP checks and the flows then run against that folder: what goes live.
  * There is no lint, typecheck, build or unit test in this codebase: those steps don't exist here.
  * Nothing runs against a live service: the contact form's Formspree endpoint is blocked in the flows.
@@ -25,13 +30,15 @@
 import { spawnSync } from 'node:child_process';
 import { readdirSync, readFileSync, statSync, existsSync } from 'node:fs';
 import { dirname, join, relative, resolve, sep } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import vm from 'node:vm';
 import { webQa } from './web/kit.mjs';
-import { stage } from '../.github/stage-site.mjs';
+import { stage, SITE_FILES } from '../.github/stage-site.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const SKIP_DIRS = new Set(['.git', '.github', '.jarvis', '.qa', 'node_modules', 'e2e', 'docs']);
+/** The site's pages under the repo root (design/ holds mockups, never published). */
+const sitePages = (root = ROOT) => pages(root).filter((p) => !rel(p, root).startsWith('design/'));
 /** Where the `published` step stages the site, and what the flows are served from. */
 const SITE = join(ROOT, '.qa/site');
 
@@ -82,21 +89,16 @@ function brokenLinks(root = ROOT) {
       if (isLocal(u) && !resolves(u, dirname(page), root)) broken.push(`${rel(page, root)} → ${u}`);
     }
   }
-  // The JS registries hold page paths too: the nav and the terminal's filesystem (relative to the
-  // site root, since chrome.js and terminal.js prefix basePath) and the extension registry
-  // (relative to plugins/, where its index renders it).
-  const registries = [
-    ['js/chrome.js', /\bhref:\s*'([^']+)'/g, root],
-    ['js/filesystem.js', /\bhref:\s*'([^']+)'/g, root],
-    ['js/plugins.js', /\b(?:href|privacy):\s*'([^']+)'/g, join(root, 'plugins')],
-  ];
-  for (const [file, re, base] of registries) {
-    if (!existsSync(join(root, file))) {
-      broken.push(`${file} is missing`);
-      continue;
-    }
-    const src = readFileSync(join(root, file), 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
-    for (const m of src.matchAll(re)) if (isLocal(m[1]) && !resolves(m[1], base, root)) broken.push(`${file} → ${m[1]}`);
+  // The scripts' own references: module imports and new URL('…', import.meta.url), relative to
+  // the script (the vendored prices the calculator loads live outside js/).
+  for (const file of walk(join(root, 'js')).filter((p) => /\.m?js$/.test(p))) {
+    const src = readFileSync(file, 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
+    const refs = [
+      ...src.matchAll(/^\s*import\s[^'"]*?from\s*['"]([^'"]+)['"]/gm),
+      ...src.matchAll(/\bimport\(\s*['"]([^'"]+)['"]\s*\)/g),
+      ...src.matchAll(/new URL\(\s*['"]([^'"]+)['"]\s*,\s*import\.meta\.url/g),
+    ].map((m) => m[1]);
+    for (const u of refs) if (isLocal(u) && !resolves(u, dirname(file), root)) broken.push(`${rel(file, root)} → ${u}`);
   }
   return broken;
 }
@@ -142,6 +144,7 @@ function published() {
   stage(SITE, ROOT);
   const files = walkAll(SITE).map((f) => rel(f, SITE));
   const ours = files.filter((f) => {
+    if (SITE_FILES.includes(f)) return false; // the vendored files the pages load
     const parts = f.split('/');
     return parts.some((p) => NOT_PUBLISHED.has(p) || p.startsWith('.')) || /\.(md|mjs)$/.test(f);
   });
@@ -151,14 +154,60 @@ function published() {
   if (!files.includes('404.html')) out.push('the staged site has no 404.html');
   const broken = brokenLinks(SITE);
   if (broken.length) out.push(`${broken.length} link(s) in the staged site point at files it doesn't hold:\n${broken.join('\n')}`);
+  out.push(...offSite(SITE, files));
+  return out.length ? out.join('\n') : undefined;
+}
+
+/**
+ * The live site shows no way to reach him outside the form: no phone number, no e-mail, no
+ * WhatsApp link; never "sênior"; no app the brief keeps off it. The one exception is the Alvarás
+ * policy's Contato line: the policy is a verbatim copy of the extension's PRIVACY.md (the stores
+ * read it), so its e-mail stays until PRIVACY.md changes in the extension's repo.
+ */
+const POLICY = 'plugins/alvaras/privacidade/index.html';
+const POLICY_CONTACT = 'alyhenr.io@gmail.com';
+function offSite(site, files) {
+  const out = [];
+  for (const f of files.filter((x) => /\.(html|js|mjs|json|css)$/.test(x))) {
+    let src = readFileSync(join(site, f), 'utf8');
+    if (f === POLICY) src = src.replaceAll(`mailto:${POLICY_CONTACT}`, '').replaceAll(POLICY_CONTACT, '');
+    const hit = src.match(CONTACT);
+    if (hit) out.push(`${f}: shows a contact outside the form ("${hit[0]}")`);
+    if (/s[êe]nior/i.test(src)) out.push(`${f}: says "sênior" (he is "engenheiro de software")`);
+    if (NOT_ON_SITE.test(src)) out.push(`${f}: names an app the brief keeps off the site (${src.match(NOT_ON_SITE)[0]})`);
+  }
+  return out;
+}
+
+/** Colours live in css/tokens.css only: no other stylesheet or style attribute hardcodes one. */
+const COLOUR = /#[0-9a-f]{3,8}\b|\b(?:rgba?|hsla?|oklch|lab|lch)\(/i;
+function tokens() {
+  const out = [];
+  for (const f of walk(join(ROOT, 'css')).filter((p) => p.endsWith('.css') && !p.endsWith('tokens.css'))) {
+    readFileSync(f, 'utf8').split('\n').forEach((line, i) => { if (COLOUR.test(line)) out.push(`${rel(f)}:${i + 1}: a colour outside tokens.css: ${line.trim()}`); });
+  }
+  for (const page of sitePages()) {
+    for (const m of readFileSync(page, 'utf8').matchAll(/\bstyle\s*=\s*["']([^"']*)["']/gi)) if (COLOUR.test(m[1])) out.push(`${rel(page)}: a colour in a style attribute (${m[1]})`);
+  }
   return out.length ? out.join('\n') : undefined;
 }
 
 function frozenUrls() {
   const out = [];
   for (const f of FROZEN) if (!existsSync(join(ROOT, f))) out.push(`${f} is gone: it was submitted to the browser stores`);
-  const nav = readFileSync(join(ROOT, 'js/chrome.js'), 'utf8');
-  if (!nav.includes("href: 'plugins/index.html'")) out.push("js/chrome.js's nav no longer links plugins/index.html (a frozen URL)");
+  // Every page's header nav links the extensions list (a frozen URL), in static HTML.
+  for (const page of sitePages()) {
+    const html = readFileSync(page, 'utf8');
+    const nav = html.match(/<nav class="site-nav"[^>]*>([\s\S]*?)<\/nav>/)?.[1];
+    if (!nav) { out.push(`${rel(page)} has no site nav`); continue; }
+    const hrefs = [...nav.matchAll(/href="([^"]+)"/g)].map((m) => m[1]);
+    const toPlugins = hrefs.some((u) => (u.startsWith('/') ? join(ROOT, u) : resolve(dirname(page), u)).replace(/\/(index\.html)?$/, '') === join(ROOT, 'plugins'));
+    if (!toPlugins) out.push(`${rel(page)}'s nav no longer links the extensions list (/plugins/, a frozen URL)`);
+  }
+  // The store pages read without JavaScript: they carry no script at all.
+  for (const f of FROZEN) {
+    if (existsSync(join(ROOT, f)) && /<script\b/i.test(readFileSync(join(ROOT, f), 'utf8'))) out.push(`${f} has a <script>: the store pages must not depend on one`);
+  }
   const policy = join(ROOT, 'plugins/alvaras/privacidade/index.html');
   if (existsSync(policy)) {
     const html = readFileSync(policy, 'utf8').replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
@@ -261,6 +310,80 @@ function directions() {
   return out.length ? out.join('\n') : undefined;
 }
 
+/**
+ * The calculator's quotes against the agency's quote rules (vendor/web/prices 1.1.0's README and
+ * CHANGELOG), with the figures worked out by hand: a tier costs its price, a plain add-on adds its
+ * price, agendamento or blog lift a smaller site to Site com recursos (which includes one of them),
+ * the English version adds 25% of the site, urgency adds 30% last and halves the timeline.
+ */
+async function estimate() {
+  const E = await import(pathToFileURL(join(ROOT, 'js/estimate.js')).href + `?t=${Date.now()}`);
+  const prices = JSON.parse(readFileSync(join(ROOT, 'vendor/web/prices/prices.json'), 'utf8'));
+  const out = [];
+  const eq = (got, want, what) => { if (JSON.stringify(got) !== JSON.stringify(want)) out.push(`${what}: got ${JSON.stringify(got)}, want ${JSON.stringify(want)}`); };
+  const q = (choice) => E.quoteFor(prices, choice);
+
+  // The four tiers, alone.
+  eq([q({ tier: 'pagina-unica' }).total, q({ tier: 'pagina-unica' }).timeline], [500, 'cerca de 5 dias úteis'], 'Página única alone');
+  eq([q({ tier: 'site-institucional' }).total, q({ tier: 'site-institucional' }).timeline], [1200, 'cerca de 10 dias úteis'], 'Site institucional alone');
+  eq([q({ tier: 'site-com-recursos' }).total, q({ tier: 'site-com-recursos' }).timeline], [2500, 'cerca de 3 semanas'], 'Site com recursos alone');
+  const sob = q({ tier: 'sistema-sob-medida' });
+  eq([sob.total, sob.quoted_by_scope, sob.timeline], [5000, true, '5 semanas ou mais'], 'Sistema sob medida starts at R$ 5.000, quoted by scope');
+  eq(q({ tier: 'pagina-unica' }).label, 'preço de lançamento', 'every quote carries the launch label');
+
+  // Each plain add-on adds its price to Página única.
+  const plain = { 'galeria-gerenciavel': 250, 'formulario-email': 200, 'pagamento-pix-cartao': 1000, 'area-login': 1200, 'video-animado': 350, 'configuracao-dominio': 80, textos: 250 };
+  for (const [id, price] of Object.entries(plain)) {
+    const r = q({ tier: 'pagina-unica', addons: [id] });
+    eq([r.total, r.tier.id], [500 + price, 'pagina-unica'], `Página única + ${id}`);
+  }
+  // 1.1.0: the form is a plain add-on on any tier, never a move.
+  eq(q({ tier: 'site-institucional', addons: ['formulario-email'] }).total, 1400, 'Site institucional + formulário');
+  eq(q({ tier: 'site-institucional', addons: ['formulario-email'] }).tier.id, 'site-institucional', 'the form does not move the site');
+  // Extra pages, R$ 150 each.
+  eq(q({ tier: 'site-institucional', extraPages: 2 }).total, 1500, 'Site institucional + 2 extra pages');
+  eq(q({ tier: 'pagina-unica', extraPages: 99 }).lines[1].amount, 150 * E.MAX_EXTRA_PAGES, 'extra pages are capped');
+  eq(q({ tier: 'pagina-unica', extraPages: 0 }).lines.length, 1, 'no extra pages, no line');
+  // Agendamento and blog move a smaller site to Site com recursos, which includes the priciest one.
+  const ag = q({ tier: 'pagina-unica', addons: ['agendamento-online'] });
+  eq([ag.total, ag.tier.id, ag.moved_from], [2500, 'site-com-recursos', 'pagina-unica'], 'Página única + agendamento');
+  eq(q({ tier: 'site-institucional', addons: ['blog-conteudo-editavel'] }).total, 2500, 'Site institucional + blog');
+  eq(q({ tier: 'pagina-unica', addons: ['agendamento-online', 'blog-conteudo-editavel'] }).total, 3000, 'agendamento included, blog charged');
+  eq(q({ tier: 'site-com-recursos', addons: ['agendamento-online'] }).total, 2500, 'Site com recursos already includes agendamento');
+  eq(q({ tier: 'sistema-sob-medida', addons: ['agendamento-online'] }).total, 5800, 'a bigger tier is never moved down: agendamento is charged');
+  // The English version: +25% of the site with its add-ons.
+  eq(q({ tier: 'pagina-unica', addons: ['versao-ingles'] }).total, 625, 'Página única in English');
+  eq(q({ tier: 'site-institucional', addons: ['galeria-gerenciavel', 'versao-ingles'] }).total, 1813, 'Site institucional + galeria in English (1450 × 1.25, rounded)');
+  // Urgency: +30% last, half the timeline.
+  const urg = q({ tier: 'site-institucional', urgent: true });
+  eq([urg.total, urg.timeline_days, urg.timeline], [1560, 5, 'cerca de 5 dias úteis'], 'Site institucional, urgent');
+  eq(q({ tier: 'site-institucional', extraPages: 2, addons: ['galeria-gerenciavel', 'versao-ingles'], urgent: true }).total, 2844, 'everything at once: 1750 → 2188 → 2844');
+  eq(q({ tier: 'pagina-unica', addons: ['nao-existe'] }).total, 500, 'an unknown add-on from the page is ignored');
+
+  // The calculator offers every tier and add-on of the catalogue.
+  eq(E.plainAddons(prices).length + 1, prices.addons.length, 'the checkboxes and the page stepper cover every add-on');
+
+  // What the form carries.
+  const line = E.calcSummary(prices, ag);
+  for (const s of ['Site com recursos', 'Agendamento online (incluído)', 'Total R$ 2.500', 'preço de lançamento', 'É uma estimativa.']) {
+    if (!line.includes(s)) out.push(`the calculator's form line misses "${s}": ${line}`);
+  }
+  if (!E.calcSummary(prices, sob).includes('A partir de R$ 5.000')) out.push('the form line for Sistema sob medida does not say "A partir de"');
+  eq(E.packageSummary(prices, 'site-institucional'), 'Pacote Site institucional: R$ 1.200 (preço de lançamento), cerca de 10 dias úteis.', 'a package goes to the form with its price');
+  eq(E.packageSummary(prices, 'sistema-sob-medida').startsWith('Pacote Sistema sob medida: a partir de R$ 5.000'), true, 'Sistema sob medida goes to the form as "a partir de"');
+  for (const ok of ['ana@exemplo.com.br', '(11) 98765-4321', '+55 11 98765-4321', '1133334444']) eq(E.validContact(ok), true, `accepts ${ok}`);
+  for (const bad of ['', 'ana', 'ana@', '12345', '(11) 9876']) eq(E.validContact(bad), false, `refuses "${bad}"`);
+
+  // Pacotes prontos is static HTML (it reads without JS): it must say what the catalogue says.
+  const home = text(readFileSync(join(ROOT, 'index.html'), 'utf8'));
+  for (const t of prices.tiers) {
+    for (const s of [t.name, E.tierPrice(t).replace('a partir de', '').trim(), t.timeline, ...t.includes]) {
+      if (!home.includes(s)) out.push(`index.html's Pacotes prontos misses "${s}" (tier ${t.id} in prices.json)`);
+    }
+  }
+  return out.length ? out.join('\n') : undefined;
+}
+
 /** Plain HTTP checks against the local Pages stand-in, before the browser flows. */
 async function checks(qa, base) {
   await qa.flow('http: the store URLs answer 200 as directories', 'http', async () => {
@@ -273,7 +396,7 @@ async function checks(qa, base) {
   });
   await qa.flow('http: our docs, QA and tooling are not served', 'http', async () => {
     const bad = [];
-    for (const p of ['/PRODUCT.md', '/ROADMAP.md', '/AGENTS.md', '/README.md', '/docs/MAP.md', '/e2e/flows/home.flow.mjs', '/package.json', '/jarvis.json']) {
+    for (const p of ['/PRODUCT.md', '/ROADMAP.md', '/AGENTS.md', '/README.md', '/DESIGN.md', '/docs/MAP.md', '/design/final/index.html', '/e2e/flows/home.flow.mjs', '/package.json', '/jarvis.json', '/vendor/web/prices/README.md']) {
       const r = await fetch(base + p, { redirect: 'manual' });
       if (r.status !== 404) bad.push(`${p} → ${r.status}`);
     }
@@ -283,7 +406,7 @@ async function checks(qa, base) {
     const r = await fetch(base + '/no/such/page');
     const body = await r.text();
     if (r.status !== 404) return `/no/such/page → ${r.status}, expected 404`;
-    if (!body.includes('Page not found')) return '/no/such/page did not serve 404.html';
+    if (!body.includes('Página não encontrada')) return '/no/such/page did not serve 404.html';
   });
 }
 
@@ -291,9 +414,11 @@ const steps = [
   { name: 'install', run: ['npm', 'ci', '--no-audit', '--no-fund'] },
   { name: 'syntax', run: async () => syntax(), onPaths: true },
   { name: 'links', run: async () => links(), onPaths: true },
+  { name: 'tokens', run: async () => tokens(), onPaths: true },
   { name: 'frozen-urls', run: async () => frozenUrls(), onPaths: true },
   { name: 'published', run: async () => published(), onPaths: true },
   { name: 'directions', run: async () => directions(), onPaths: true },
+  { name: 'estimate', run: estimate, onPaths: true },
 ];
 
 process.exit(

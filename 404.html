@@ -1,78 +1,75 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>alyhenr — page not found</title>
-
-  <!--
-    Paths here are root-absolute on purpose.
-
-    GitHub Pages serves this page for a missing path at ANY depth (e.g.
-    /plugins/nope/) while leaving that path in the URL bar, so relative
-    paths ('css/…', '../css/…') would resolve against whatever folder the
-    visitor mistyped. Root-absolute is the only form that works everywhere.
-
-    This is a user page (repo: alyhenr.github.io), served at the domain
-    root, so no path prefix is needed. A move to a project page would
-    require prefixing every path below, plus CHROME_CONFIG.basePath.
-  -->
-  <link rel="stylesheet" href="/css/tokens.css" />
-  <link rel="stylesheet" href="/css/components.css" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Página não encontrada · Alysson</title>
+<meta name="description" content="Esta página não existe. Veja o início, os projetos e as extensões do Alysson.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0E1517">
+<link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
+<link rel="preload" as="font" type="font/woff2" href="/fonts/anybody-latin.woff2" crossorigin>
+<link rel="stylesheet" href="/css/tokens.css">
+<link rel="stylesheet" href="/css/site.css">
 </head>
 <body>
+<header class="site-head">
+  <div class="wrap">
+    <a class="wordmark" href="/">Alysson</a>
+    <nav class="site-nav" aria-label="Site">
+      <a href="/">Início</a>
+      <a href="/projetos.html">Projetos</a>
+      <a href="/plugins/">Extensões</a>
+    </nav>
+    <a class="btn btn--amber" href="/index.html#contato">Pedir orçamento</a>
+  </div>
+</header>
 
-  <main class="page">
-
-    <section class="window">
-      <div class="window__bar">
-        <span class="window__title">error</span>
-        <span class="window__controls" aria-hidden="true">
-          <span class="window__control"></span>
-          <span class="window__control"></span>
-          <span class="window__control"></span>
-        </span>
+<main class="main--stage">
+  <!-- Root-absolute paths on purpose: GitHub Pages serves this page for a missing path at any
+       depth (/plugins/nope/) and keeps that path in the address bar, so relative paths would
+       resolve against the mistyped folder. This is a user page (alyhenr.github.io), at the root. -->
+  <section class="page-hero" aria-labelledby="h-top">
+    <div class="wrap">
+      <h1 id="h-top" class="smaller">Página não encontrada</h1>
+      <p class="lede">O endereço pode ter mudado ou ter um erro de digitação.</p>
+      <p class="requested">Você pediu: <code id="not-found-path">este endereço</code></p>
+      <div class="actions">
+        <a class="btn btn--amber" href="/">Ir para o início</a>
+        <a class="btn btn--line" href="/plugins/">Extensões</a>
+        <a class="btn btn--line" href="/#contato">Pedir orçamento</a>
       </div>
-      <div class="window__body">
+    </div>
+  </section>
+</main>
 
-        <p class="subtitle">Error 404</p>
-        <h1 class="title">Page not found</h1>
-
-        <p class="lede">
-          The page you asked for doesn't exist — it may have moved, or the address may
-          have a typo in it.
-        </p>
-
-        <p class="notice">
-          Requested: <code id="not-found-path">—</code>
-        </p>
-
-        <div class="btn-row">
-          <a class="btn btn--primary" href="/">Go to the homepage</a>
-          <a class="btn" href="/plugins/index.html">Browser extensions</a>
-          <a class="btn" href="/contact.html">Contact</a>
-        </div>
-
-      </div>
-    </section>
-
-  </main>
-
-  <script>
-    window.CHROME_CONFIG = { user: 'alyhenr', host: 'alyhenr.dev', activePage: '', basePath: '/' };
-
-    // Show the attempted path, so a mistyped URL is obvious
-    (function showPath() {
-      const el = document.getElementById('not-found-path');
-      if (el) el.textContent = window.location.pathname;
-    })();
-  </script>
-  <script src="/js/chrome.js"></script>
-  <script src="/js/filesystem.js"></script>
-  <script src="/js/terminal.js"></script>
-  <script>
-    Terminal.init({ user: 'alyhenr', host: 'alyhenr.dev', cwd: '/', basePath: '/' });
-  </script>
-
+<footer class="site-foot">
+  <div class="wrap">
+    <div>
+      <a class="wordmark" href="/">Alysson</a>
+      <p class="who">Engenheiro de software. Construo sistemas com agentes de IA.</p>
+      <p class="fine">© 2026 Alysson. Site estático, sem rastreadores e sem cookies.</p>
+    </div>
+    <nav aria-label="Rodapé">
+      <a href="/">Início</a>
+      <a href="/projetos.html">Projetos</a>
+      <a href="/plugins/">Extensões</a>
+      <a href="https://github.com/alyhenr">GitHub</a>
+      <a href="/index.html#contato">Pedir orçamento</a>
+      <a href="/plugins/alvaras/privacidade/">Alvarás: privacidade</a>
+    </nav>
+  </div>
+</footer>
+<script>
+  // Shows the address asked for, and sends the old template's pages to where they live now.
+  (function () {
+    var path = window.location.pathname;
+    var el = document.getElementById('not-found-path');
+    if (el) el.textContent = path;
+    var moved = { '/projects.html': '/projetos.html', '/projects': '/projetos.html', '/contact.html': '/#contato', '/contact': '/#contato', '/blog.html': '/projetos.html#lab', '/blog': '/projetos.html#lab' };
+    var to = moved[path] || (path.indexOf('/blog/') === 0 ? '/projetos.html#lab' : null);
+    if (to) window.location.replace(to);
+  })();
+</script>
 </body>
 </html>
