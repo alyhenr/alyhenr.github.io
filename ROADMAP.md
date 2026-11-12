@@ -56,6 +56,23 @@
   - Each Studio piece has a scene direction with key frames and a marked slot in the mock.
   - The calculator, packages, form and LGPD note work in every direction, with no phone number or e-mail exposed.
   - The preview and send pages serve them.
+- **Build the site: Traço** (agreed) — The owner picked Traço from round 2 (12/11): the new portfolio becomes his storefront for small-business sites and the home of his projects, with Studio's line scene as the proof of craft.
+  Goal: the real static site in the Traço direction, replacing the old template, live-ready on GitHub Pages, with the stage working on its plates until Studio's scene is mounted.
+  In:
+  - Finalize first: the designer (finalize mode) turns 01-traco into DESIGN.md and final mockups, with the owner's changes below.
+  - Owner's changes: the Projetos page uses Esquema's live architecture diagrams (from 03-esquema) for Jarvis and the Lab; the home stays Traço's. The lines about him keep "sistemas que não podem parar" and "até 1 dia útil" but never "sênior": he is "engenheiro de software", with an AI line (wording below, the owner confirms in the demo).
+  - Home: the sticky stage with the plates swapped per beat and the step progress, "O site é seu. Tudo dele é seu.", Pacotes prontos with "preço de lançamento", the calculator (labelled as an estimate) feeding the form, who he is, contact by form only with the short LGPD note; no phone number or e-mail anywhere.
+  - Prices from the web agency's catalogue prices 1.1.0 (delivery d-82f2f6ac into vendor/web/prices; ignore 1.0.0, c7dfffce5858, the old rule): the form is a plain add-on.
+  - Projetos page: Jarvis (Esquema-style live diagram, no code or private details) and the Alvarás plugin, his GitHub, a small Lab. No Pipa, Racha, Garantia or other apps.
+  - The stage's mount point and interface exactly as design/scenes/traco-wireframe.md says (progress, reducedMotion, palette; ready and beat events), so Studio's package (requested 12/11, run 6705) drops in; if it has arrived, mount it.
+  - The old template pages (projects.html, blog placeholders, js/filesystem.js) removed or replaced; /plugins/alvaras/ and /plugins/alvaras/privacidade/ stay live at the same paths; deploy still publishes only the site.
+  Out: sending the form (it validates and waits for the Gateway: \"Connect the contact form\"), a domain, the showcase-cards feed (Projetos is hand-written until Jarvis's item lands), client case studies.
+  Done when:
+  - Every page in the Traço look on a 390 px phone and desktop, light on a budget Android over 4G (Lighthouse mobile performance ≥ 90 with the plates).
+  - The calculator's quotes match the agency's quote rules for the four tiers and the add-ons (tests).
+  - No phone number or e-mail in the built site; the Alvarás URLs and the staged-folder checks still pass (QA).
+  - The stage works with plates, with reduced motion and without JS, and exposes the scene interface for Studio's package.
+  - A demo (stills and a short scroll video) for the owner's phone.
 
 ## Next
 - **Connect the contact form** (idea) — the form's action is still the Formspree placeholder (contact.html); connecting it sends visitors' name, email and message to a third party, which needs a short privacy note on the page (LGPD).
