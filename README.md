@@ -22,8 +22,9 @@ plugins/              browser extensions  ← URLs are frozen, see below
 css/tokens.css        every colour, font and size decision (light and dark)
 css/site.css          the components
 fonts/                Anybody and Hanken Grotesk, self-hosted
-img/plates/           the stage's plates
-js/stage.js           the sticky stage, and the mount point for its 3D scene
+img/plates/           the stage's plates (Studio's, from the scene)
+js/stage.js           the sticky stage, and the mount for its 3D scene
+js/scene/             the 3D scene's bundle (Studio's traco-wireframe with three; tools/bundle-scene.mjs)
 js/site.js            the calculator and the contact form
 js/estimate.js        what the calculator hands the form (pure, tested)
 js/flow.js            the live architecture diagrams

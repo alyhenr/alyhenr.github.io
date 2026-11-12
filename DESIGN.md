@@ -26,7 +26,7 @@ Sizes: `--radius-s` 4px, `--radius-m` 8px, `--radius-pill`; `--space-1…9` = 4 
 - Self-host both in `fonts/` (add `fonts` to `SITE_DIRS`): woff2, latin subset, `font-display: swap`; Anybody one variable file (wght 700–900, wdth 100–150, ~40 KB), Hanken Grotesk 400 and 600 (~20 KB each). Preload only Anybody. No Google Fonts request on the live site (the mock uses it).
 
 ## Components
-- **The stage** (signature, home only): `.spine` holds the sticky `<figure class="stage" data-studio="traco-wireframe">` (top `--header-h`, height `100svh − header`) and six `.beat` sections over it (`data-beat` 0–5: hero, Conversa, Proposta, Sinal, Entrega, O site é seu). Inside: `.stage-plate` (4 `<picture>` plates), `.stage-scene` (Studio's mount host, empty), `.stage-progress` (4 bars + "Passo N de 4"; "Como funciona" on the hero; `hidden` until JS runs), a scrim (left on desktop, bottom on phone). The mock's "Studio · traco-wireframe" tag is **not built**, and the round-2 "ficha da peça" is gone: on the site the stage is just the stage.
+- **The stage** (signature, home only): `.spine` holds the sticky `<figure class="stage" data-studio="traco-wireframe">` (top `--header-h`, height `100svh − header`) and six `.beat` sections over it (`data-beat` 0–5: hero, Conversa, Proposta, Sinal, Entrega, O site é seu). Inside: `.stage-plate` (5 `<picture>` plates), `.stage-scene` (Studio's mount host: the scene's canvas), `.stage-progress` (4 bars + "Passo N de 4"; "Como funciona" on the hero; `hidden` until JS runs), a scrim (left on desktop, bottom on phone). The mock's "Studio · traco-wireframe" tag is **not built**, and the round-2 "ficha da peça" is gone: on the site the stage is just the stage.
 - **Header** (every page): sticky, `--stage` with a `--stage-rule` bottom line; wordmark "Alysson", nav **Início · Projetos · Extensões** (current: chalk + 2px amber underline), "Pedir orçamento" amber button (→ `index.html#contato`), hidden under 640px. Works without JS.
 - **Footer** (every page): `--stage`; wordmark, "Engenheiro de software. Construo sistemas com agentes de IA.", "© 2026 Alysson. Site estático, sem rastreadores e sem cookies."; links Início, Projetos, Extensões, GitHub, Pedir orçamento, Alvarás: privacidade.
 - **Buttons**: amber (on the stage), primary (light sections), line; 48px tall, radius-s; hover darkens/lightens; `aria-disabled` at 45%.
@@ -45,10 +45,10 @@ Sizes: `--radius-s` 4px, `--radius-m` 8px, `--radius-pill`; `--space-1…9` = 4 
 - **404**: root-absolute paths, band "Página não encontrada", "O endereço pode ter mudado ou ter um erro de digitação.", the requested path, buttons Início / Extensões / Pedir orçamento.
 
 ## How the page drives the stage
-Reference: `design/final/stage.js`. Contract (from design/scenes/traco-wireframe.md, unchanged): inputs `progress` 0–1, `reducedMotion`, `palette` {background, chalk, dim, grid, amber from the tokens}; events `ready`, `beat` (1–5).
+Reference: `design/final/stage.js`. Contract (Studio's package README, vendor/studio/traco-wireframe): `mount(el, { progress 0–1, reducedMotion, palette {background, vignette, chalk, dim, grid, amber from the tokens}, onReady({ firstFrameMs }), onBeat(1–5), onError }) → { update, destroy }`; the site's `js/stage.js` drives it.
 - `progress` is piecewise per beat section (reference line: mid-viewport): hero 0–.15, Conversa .15–.30, Proposta .30–.50, Sinal .50–.72, Entrega .72–.90, finale .90–1; rAF-throttled on scroll/resize.
-- Plates (`plates/{phone-0N, desktop-0N-1280, -1920}` WebP + JPEG, ≤ 55 KB each as WebP): plate 1 below .30, 2 below .50, 3 below .72, then 4; 400 ms crossfade. Plate 1 eager + `fetchpriority=high`, 2–4 `fetchpriority=low`. The counter follows the section in view.
-- The scene loads after first paint (`requestIdleCallback`, dynamic import) only when WebGL exists, no reduced motion, no Save-Data, `deviceMemory > 2`; a first frame > 50 ms → back to plates. On `ready`: `.stage.is-live` fades the plates out. `beat` is informational (`data-scene-beat`). Reduced motion turning on: the scene stops, plates return. No JS: plate 1 stays, all text readable.
+- Plates (Studio's, rendered from the scene at each beat's still; on the site `img/plates/{phone-0N, desktop-0N-1280, -1920}` WebP + JPEG): plate 1 below .30, 2 below .50, 3 below .72, 4 below .90, then 5; 400 ms crossfade. Cropped around the scene's own centre (`object-position` 70% 50% wide, 50% 31% on phones) so plate and scene line up. Plate 1 eager + `fetchpriority=high`, 2–5 `fetchpriority=low`. Without the scene the counter follows the section in view.
+- The scene loads after `load` and the first contentful paint, when idle (dynamic import of `js/scene/traco-wireframe.js`, ≤ 140 KB gzip), only with WebGL 2, no reduced motion, no Save-Data, `deviceMemory > 2`; `onReady` with `firstFrameMs` > 50 → destroy, back to plates. Otherwise `.stage.is-live` fades the plates out and the counter follows `onBeat` (beat 1 covers the hero and Conversa, beat 5 holds step 4). `onError` or reduced motion turning on: the scene goes, plates return. No JS: plate 1 stays, all text readable.
 
 ## Prices
 Source: `vendor/web/prices` 1.1.0. The calculator imports `quote()`/`formatBRL()` and fetches `prices.json` (stage both into the site, e.g. `js/prices/`); the per-option helper lines are copy in the page script. Package figures are written in the HTML (crawlers, no JS) and a test compares them with prices.json. Form text: "Calculadora: <tier> (a partir de <tier escolhido>). <linhas>. Total R$ X, <prazo>, preço de lançamento. É uma estimativa." / "Pacote <nome>: R$ X (preço de lançamento), <prazo>."
@@ -81,7 +81,7 @@ flowchart TD
 | Piece | Where it mounts | Size | Scene direction |
 |---|---|---|---|
 | traco-wireframe | Início, `.stage-scene` inside `.stage` in `.spine` | full width × (100svh − header), sticky over 6 beats | [design/scenes/traco-wireframe.md](design/scenes/traco-wireframe.md) |
-Made by Studio, never by the builder: the builder ships the stage with its plates and the interface above, and mounts Studio's package when it arrives.
+Made by Studio, never by the builder: traco-wireframe 1.0.0 is vendored in `vendor/studio/traco-wireframe/` and mounted on the stage; a change to it goes back to Studio as a new version.
 
 ## Don'ts
 - Never the word "sênior", anywhere. He is "engenheiro de software".
@@ -90,7 +90,7 @@ Made by Studio, never by the builder: the builder ships the stage with its plate
 - No colour or size outside tokens.css; amber/primary only for actions, live state, ticks, the launch tag; one soft shadow (the phone `.peek`), nothing else.
 - Never reword the policy; never move the frozen URLs or change the nav hrefs (labels change to Início, Projetos, Extensões).
 - No eyebrow labels over headings (the step counters are the only exception: they are the sequence), no cards grid, no gradient text.
-- Don't fake the scene in CSS: the plates are the stage until Studio's piece is mounted.
+- Don't fake the scene in CSS: the plates are Studio's renders of the scene, and its fallback.
 
 ## Changed versus 01-traco
 Shared header/footer on every page (nav Início, Projetos, Extensões; header solid, sticky, no JS); stage counter reads "Passo N de 4"; Studio tag and ficha dropped; packages and calculator rebuilt on prices.json 1.1.0 + quote.mjs (tier radios, extra pages, add-ons, urgency, moved-tier note, launch tag, terms); phone total bar in the calculator; "sênior" removed, the owner's AI line added (Quem faz, footer); Projetos uses Esquema's live diagrams (Jarvis + a new Lab diagram), facts lists instead of eyebrows, "extensão" wording; extension pages and policy mocked in the new look; fonts trimmed to Anybody 700–900 + Hanken 400/600, self-hosted; plates as WebP/JPEG at 3 sizes; reduced motion keeps the 400 ms plate crossfade; every hardcoded colour moved into tokens.

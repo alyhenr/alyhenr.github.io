@@ -10,8 +10,8 @@ Alysson's site at alyhenr.github.io, in pt-BR: his storefront for sites for Braz
 
 ## What it does
 - **Início** (`/`):
-  - "Seu site, traço a traço." on a sticky dark stage. Its plates change at each of the four steps (Conversa, Proposta, Sinal de 50%, Entrega), a "Passo N de 4" counter follows them, and it ends on "O site é seu. Tudo dele é seu." (domain, code, hosting and access are the client's).
-  - The stage is where Studio's line scene (traco-wireframe) mounts once it is delivered. Until then, and as its fallback, it shows the plates.
+  - "Seu site, traço a traço." on a sticky dark stage. Studio's line scene (traco-wireframe) plays on it as the visitor scrolls: loose chalk lines gather, step by step (Conversa, Proposta, Sinal de 50%, Entrega), into the wireframe of a small-business site on a phone, and scrolling back un-builds it. A "Passo N de 4" counter follows the scene, and it ends on "O site é seu. Tudo dele é seu." (domain, code, hosting and access are the client's).
+  - The scene loads after the page shows. Until then, and with reduced motion, without WebGL or on a weak phone, the stage shows Studio's plates of the same scene, one per step.
   - **Pacotes prontos**: the web agency's four tiers (Página única R$ 500, Site institucional R$ 1.200, Site com recursos R$ 2.500, Sistema sob medida from R$ 5.000), each with what it includes, its timeline and "preço de lançamento", plus the terms (15-day warranty, no monthly fee, +30% for urgency, no online stores).
   - **Quanto custa o seu?**: a live calculator that computes on the agency's own quote rules. You pick a tier, extra pages, add-ons and urgency, and see the total, the lines and the timeline, labelled as an estimate.
   - **Quem faz**: "Engenheiro de software. Construo sistemas com agentes de IA.", "sistemas que não podem parar", a reply within 1 business day, and his GitHub.

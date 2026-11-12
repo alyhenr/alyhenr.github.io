@@ -73,7 +73,7 @@
   - No phone number or e-mail in the built site; the Alvarás URLs and the staged-folder checks still pass (QA).
   - The stage works with plates, with reduced motion and without JS, and exposes the scene interface for Studio's package.
   - A demo (stills and a short scroll video) for the owner's phone.
-- **Mount the Traço scene** (building) — Studio delivered traco-wireframe 1.0.0 (request 30ca11cc31cc) while the site was being built; the home's stage still shows only its plates.
+- **Mount the Traço scene** (ready) — Studio delivered traco-wireframe 1.0.0 (request 30ca11cc31cc) while the site was being built; the home's stage still shows only its plates.
   Goal: the home's stage plays Studio's live line scene, with plates that match it, and falls back cleanly where it should.
   In:
   - Take the delivery (`jarvis deliveries take 30ca11cc31cc`, into vendor/studio/traco-wireframe); add three@0.187.0; mount it with `mount(el, inputs) → { update, destroy }` as its README says: progress from the spine's scroll, reducedMotion, the palette; onReady fades the plate out, onBeat syncs the step counter, onError keeps the plates.
@@ -89,11 +89,12 @@
 
 ## Next
 - **Connect the contact form** (idea) — the home's form (name, e-mail or phone, message, estimate) validates and stops; connecting it through the Gateway sends a visitor's data to us (its LGPD note is already on the form). Until then its done message says the request was not sent.
-- **Mount Studio's traco-wireframe** (idea) — when Studio's package (requested 12/11, run 6705) arrives: vendor it, set the stage's `data-scene-src` to its module, add its files to `SITE_FILES`, and check Lighthouse mobile stays ≥ 90 with the scene.
+  Owner's decisions (12/11, via Jarvis) for its privacy page: the Gateway allows https://alyhenr.github.io as the portfolio's origin; the page fills the Gateway's docs/PRIVACY.md blanks with retention "while the lead's agency job is open, deleted at its close; a message that never became a job, or a lead that went nowhere, deleted after 90 days", and the contact e-mail for data requests alyhenr.io@gmail.com, shown on the privacy page only and nowhere else on the site (the `published` check needs that exception).
 
 ## Later
 
 ## Fixes and chores
+- traco-wireframe 1.0.1 (asked of Studio 12/11): no console error on mount (three's computeBoundingSphere NaN); when taken, rebundle, remake the plates, and drop `SCENE_NAN` from `.jarvis/qa.mjs`. Measure `firstFrameMs` on a real mid-range and budget Android: the 50 ms gate may send many phones to the plates.
 - Firefox Add-ons: the Alvarás page shows "Firefox Add-ons: em revisão" (disabled) and no store link; fill the button when the listing is approved.
 - The Alvarás policy's Contato line shows an e-mail (verbatim from alvaras-pg's PRIVACY.md), the one contact left on the site; changing it means editing PRIVACY.md in the extension's repo first, then this copy, with the date in both.
 
