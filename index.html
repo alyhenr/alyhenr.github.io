@@ -42,15 +42,17 @@
 
 <main>
   <div class="spine" data-spine>
-    <!-- Studio's piece traco-wireframe (design/scenes/traco-wireframe.md) mounts in .stage-scene:
-         data-scene-src names its module once the package is vendored (js/stage.js has the contract).
-         Until it is ready, and as its fallback, the plates below are the stage. -->
-    <figure class="stage" data-studio="traco-wireframe" data-scene-src="" aria-hidden="true">
+    <!-- Studio's piece traco-wireframe (vendor/studio/traco-wireframe) mounts in .stage-scene from
+         data-scene-src, its bundle with three (tools/bundle-scene.mjs), after the first paint
+         (js/stage.js). Until it is ready, and as its fallback, the plates below are the stage:
+         Studio's own, rendered from the scene at each beat (tools/plates.sh). -->
+    <figure class="stage" data-studio="traco-wireframe" data-scene-src="js/scene/traco-wireframe.js" aria-hidden="true">
       <div class="stage-plate">
         <picture><source media="(max-width: 760px)" srcset="img/plates/phone-01.webp" type="image/webp"><source media="(max-width: 760px)" srcset="img/plates/phone-01.jpg"><source srcset="img/plates/desktop-01-1280.webp 1280w, img/plates/desktop-01-1920.webp 1920w" sizes="100vw" type="image/webp"><img class="is-on" src="img/plates/desktop-01-1280.jpg" alt="" data-plate="1" fetchpriority="high"></picture>
         <picture><source media="(max-width: 760px)" srcset="img/plates/phone-02.webp" type="image/webp"><source media="(max-width: 760px)" srcset="img/plates/phone-02.jpg"><source srcset="img/plates/desktop-02-1280.webp 1280w, img/plates/desktop-02-1920.webp 1920w" sizes="100vw" type="image/webp"><img src="img/plates/desktop-02-1280.jpg" alt="" data-plate="2" fetchpriority="low" decoding="async"></picture>
         <picture><source media="(max-width: 760px)" srcset="img/plates/phone-03.webp" type="image/webp"><source media="(max-width: 760px)" srcset="img/plates/phone-03.jpg"><source srcset="img/plates/desktop-03-1280.webp 1280w, img/plates/desktop-03-1920.webp 1920w" sizes="100vw" type="image/webp"><img src="img/plates/desktop-03-1280.jpg" alt="" data-plate="3" fetchpriority="low" decoding="async"></picture>
         <picture><source media="(max-width: 760px)" srcset="img/plates/phone-04.webp" type="image/webp"><source media="(max-width: 760px)" srcset="img/plates/phone-04.jpg"><source srcset="img/plates/desktop-04-1280.webp 1280w, img/plates/desktop-04-1920.webp 1920w" sizes="100vw" type="image/webp"><img src="img/plates/desktop-04-1280.jpg" alt="" data-plate="4" fetchpriority="low" decoding="async"></picture>
+        <picture><source media="(max-width: 760px)" srcset="img/plates/phone-05.webp" type="image/webp"><source media="(max-width: 760px)" srcset="img/plates/phone-05.jpg"><source srcset="img/plates/desktop-05-1280.webp 1280w, img/plates/desktop-05-1920.webp 1920w" sizes="100vw" type="image/webp"><img src="img/plates/desktop-05-1280.jpg" alt="" data-plate="5" fetchpriority="low" decoding="async"></picture>
       </div>
       <div class="stage-scene" data-scene-host></div>
       <div class="stage-progress" data-progress hidden><span class="bars"><span></span><span></span><span></span><span></span></span><span data-progress-label>Como funciona</span></div>

@@ -1,7 +1,7 @@
 import { scrollToBeat, plateOn } from './_lib.mjs';
 
-// The home: the sticky stage swaps its plates per beat while the step counter follows the four
-// steps, ending on "O site é seu. Tudo dele é seu."; then the packages with their launch price.
+// The home: the sticky stage swaps its five plates (one per beat of Studio's scene) while the step
+// counter follows the four steps, ending on "O site é seu. Tudo dele é seu."; then the packages with their launch price.
 export const flow = {
   name: 'the home walks through the four steps on the stage and shows the ready packages',
   async run({ page, go, expect, shot, step }) {
@@ -17,7 +17,7 @@ export const flow = {
     await shot('hero');
 
     // beat → [counter, plate]
-    const expected = { 1: ['Passo 1 de 4', 1], 2: ['Passo 2 de 4', 2], 3: ['Passo 3 de 4', 3], 4: ['Passo 4 de 4', 4], 5: ['Passo 4 de 4', 4] };
+    const expected = { 1: ['Passo 1 de 4', 1], 2: ['Passo 2 de 4', 2], 3: ['Passo 3 de 4', 3], 4: ['Passo 4 de 4', 4], 5: ['Passo 4 de 4', 5] };
     for (const [beat, [label, plate]] of Object.entries(expected)) {
       step(`beat ${beat}`);
       await scrollToBeat(page, Number(beat));

@@ -80,6 +80,10 @@ p { margin: 0; }
   overflow: hidden; background: radial-gradient(ellipse at 62% 45%, var(--stage-vignette), var(--stage) 70%);
 }
 .stage-plate img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity var(--dur-fade) ease-out; }
+/* the scene centres its drawing at 70% of a wide stage's width and 31% of a tall one's height:
+   cropping the plates around the same point keeps plate and scene in line at the crossfade */
+.stage-plate img { object-position: 70% 50%; }
+@media (max-width: 760px) { .stage-plate img { object-position: 50% 31%; } }
 .stage-plate img.is-on { opacity: 1; }
 .stage-scene { position: absolute; inset: 0; }
 .stage.is-live .stage-plate img { opacity: 0; }
