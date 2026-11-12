@@ -19,6 +19,21 @@
   - The staged folder has every page and asset the site links to, and no PRODUCT.md, ROADMAP.md, AGENTS.md, docs/, e2e/, .jarvis/, .qa/ or package.json.
   - /plugins/alvaras/ and /plugins/alvaras/privacidade/ are in it at the same paths (the published plugin's listing links them).
   - The QA covers both lines.
+- **Design directions** (agreed) — Before any site code, the owner picks a look from live demos: the portfolio becomes his storefront for paid sites for Brazilian small businesses and the home of our products, and the site itself is the proof of craft.
+  Goal: the designer draws 3 distinct directions for the new portfolio as live phone-first HTML mockups, so the owner can compare looks and abilities on his iPhone before anything is built. Mockups only, no site code.
+  Who it's for and what it does (every direction):
+  - pt-BR first, for small-business owners arriving from WhatsApp or Instagram: what he makes, how it works in 4 steps (conversa, proposta, sinal de 50%, entrega), prices shown ("a partir de R$…"), and every call to action a pre-filled WhatsApp message (the web agency's discovery step).
+  - "Quanto custa seu site?": a live calculator (pages and features: agendamento, galeria, WhatsApp, domínio…) whose quote card recomputes as you tick, with the timeline; working in the mock, on the web agency's services guide figures if it has them, otherwise placeholder prices clearly marked for the owner to set.
+  - A hero slot for a 20-second "como funciona" motion loop (Studio's Remotion promo kit makes it later): in the mock, a storyboard of its key frames or a stand-in, with a still for reduced motion.
+  - A space for our products (Pipa first: a page with store links and its privacy policy) and a short secondary English "engineer" page for products and recruiters.
+  - No client case studies yet: the slot exists and stays empty until a job is delivered.
+  Each direction: a different look named from visual-vocabulary and a different set of techniques from the shelf (web-craft's cinematic landing page, live calculator hero, animated component kits; at most one Studio piece directed as a scene), and says which it used. All light on a budget Android phone over 4G.
+  Rules: the published Alvarás plugin's URLs (/plugins/alvaras/ and /plugins/alvaras/privacidade/) stay live in any redesign; the site stays static (GitHub Pages at alyhenr.github.io).
+  Out: building the site, the real video, a domain, the contact form, client work.
+  Done when:
+  - design/directions/ holds 3 directions in the showcase layout (live page, shots, pitch), each naming its look and techniques.
+  - Each has the working calculator, the WhatsApp calls to action, the 4 steps, the hero video's storyboard and the products space, in pt-BR.
+  - The preview and send pages serve them to the owner's phone.
 
 ## Next
 - **Publish only the site** (idea) — the deploy uploads the whole repo root, so PRODUCT.md, ROADMAP.md, AGENTS.md, docs/, e2e/, .jarvis/ and package.json are public on the live site; stage only the site's files (pages, css/, js/, plugins/, blog/, 404.html) in deploy.yml.
