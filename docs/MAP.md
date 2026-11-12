@@ -26,6 +26,9 @@
 - `.github/workflows/deploy.yml`: GitHub Pages, on push to `main` and by hand; stages the site into `_site/` and uploads that.
 - `.github/stage-site.mjs`: what the site is (root `*.html` pages and `SITE_DIRS`); copies it, dotfiles left out. The QA imports it too.
 
+## Design (ours, never published)
+- `design/directions/NN-<slug>/`: the look options for the redesign (`01-planta`, `02-feira`, `03-cena`), in the showcase layout Core serves to the owner's phone: `index.html` (the live page, `data-shot` sections), `style.css` (tokens light/dark), `pitch.md` (pt-BR pitch, then look, techniques and notes), `shots/` (made by the plugin's `shots.mjs --sections design/directions`). Placeholder prices sit in a `PRICES` object and the WhatsApp number in `WHATSAPP_NUMBER` at the top of each page's script. The `links` check covers these pages too, so a link must resolve locally or be absolute.
+
 ## QA (ours)
 - `.jarvis/qa.mjs`: the QA (steps `install`, `syntax`, `links`, `frozen-urls`, `published`; HTTP checks; flows, served from `.qa/site`).
 - `.jarvis/serve.mjs`: local GitHub Pages stand-in (`[port] [root]`; root defaults to the repo).
