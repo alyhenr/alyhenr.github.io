@@ -28,10 +28,16 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
+      # Only the site's own files go public: the pages, css/, js/, plugins/, blog/ (see the
+      # script). Our docs, roadmap, QA and tooling stay in the repo. The QA's `published` step
+      # stages with the same script and checks the folder.
+      - name: Stage the site
+        run: node .github/stage-site.mjs _site
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.'
+          path: '_site'
 
       - name: Deploy to GitHub Pages
         id: deployment

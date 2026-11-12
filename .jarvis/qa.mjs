@@ -15,6 +15,10 @@
  *                (js/chrome.js nav, js/filesystem.js, js/plugins.js), points at a file that exists
  *   frozen-urls  the URLs submitted to the browser stores still exist, the policy reads without JS,
  *                and 404.html only uses root-absolute paths
+ *   published    stages the site into .qa/site with the deploy's own script (.github/stage-site.mjs),
+ *                checks deploy.yml uploads that folder, and that it holds every page, asset and
+ *                frozen URL the site links to and none of our files (docs, roadmap, QA, tooling).
+ *                The HTTP checks and the flows then run against that folder: what goes live.
  * There is no lint, typecheck, build or unit test in this codebase: those steps don't exist here.
  * Nothing runs against a live service: the contact form's Formspree endpoint is blocked in the flows.
  */
@@ -23,9 +27,12 @@ import { readdirSync, readFileSync, statSync, existsSync } from 'node:fs';
 import { dirname, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { webQa } from './web/kit.mjs';
+import { stage } from '../.github/stage-site.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const SKIP_DIRS = new Set(['.git', '.github', '.jarvis', '.qa', 'node_modules', 'e2e', 'docs']);
+/** Where the `published` step stages the site, and what the flows are served from. */
+const SITE = join(ROOT, '.qa/site');
 
 /** The store-submitted URLs: moving or deleting these fails every future store review. */
 const FROZEN = ['plugins/index.html', 'plugins/alvaras/index.html', 'plugins/alvaras/privacidade/index.html'];
@@ -39,16 +46,16 @@ function walk(dir, out = []) {
   }
   return out;
 }
-const rel = (p) => relative(ROOT, p).split(sep).join('/');
-const pages = () => walk(ROOT).filter((p) => p.endsWith('.html'));
+const rel = (p, root = ROOT) => relative(root, p).split(sep).join('/');
+const pages = (root = ROOT) => walk(root).filter((p) => p.endsWith('.html'));
 const scripts = () => walk(join(ROOT, 'js')).filter((p) => p.endsWith('.js'));
 
-/** True when a local URL (relative to `fromDir`, or root-absolute) maps to a served file. */
-function resolves(url, fromDir) {
+/** True when a local URL (relative to `fromDir`, or root-absolute) maps to a file served from `root`. */
+function resolves(url, fromDir, root = ROOT) {
   const clean = url.split('#')[0].split('?')[0];
   if (!clean) return true;
-  let abs = clean.startsWith('/') ? join(ROOT, decodeURIComponent(clean)) : resolve(fromDir, decodeURIComponent(clean));
-  if (abs !== ROOT && !abs.startsWith(ROOT + sep)) return false;
+  let abs = clean.startsWith('/') ? join(root, decodeURIComponent(clean)) : resolve(fromDir, decodeURIComponent(clean));
+  if (abs !== root && !abs.startsWith(root + sep)) return false;
   if (existsSync(abs) && statSync(abs).isDirectory()) abs = join(abs, 'index.html');
   return existsSync(abs) && statSync(abs).isFile();
 }
@@ -66,26 +73,84 @@ function syntax() {
   return bad.length ? `syntax errors:\n${bad.join('\n')}` : undefined;
 }
 
-function links() {
+/** Every local link in the pages under `root` and in its JS registries; the broken ones. */
+function brokenLinks(root = ROOT) {
   const broken = [];
-  for (const page of pages()) {
+  for (const page of pages(root)) {
     for (const u of attrs(readFileSync(page, 'utf8'))) {
-      if (isLocal(u) && !resolves(u, dirname(page))) broken.push(`${rel(page)} → ${u}`);
+      if (isLocal(u) && !resolves(u, dirname(page), root)) broken.push(`${rel(page, root)} → ${u}`);
     }
   }
   // The JS registries hold page paths too: the nav and the terminal's filesystem (relative to the
   // site root, since chrome.js and terminal.js prefix basePath) and the extension registry
   // (relative to plugins/, where its index renders it).
   const registries = [
-    ['js/chrome.js', /\bhref:\s*'([^']+)'/g, ROOT],
-    ['js/filesystem.js', /\bhref:\s*'([^']+)'/g, ROOT],
-    ['js/plugins.js', /\b(?:href|privacy):\s*'([^']+)'/g, join(ROOT, 'plugins')],
+    ['js/chrome.js', /\bhref:\s*'([^']+)'/g, root],
+    ['js/filesystem.js', /\bhref:\s*'([^']+)'/g, root],
+    ['js/plugins.js', /\b(?:href|privacy):\s*'([^']+)'/g, join(root, 'plugins')],
   ];
   for (const [file, re, base] of registries) {
-    const src = readFileSync(join(ROOT, file), 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
-    for (const m of src.matchAll(re)) if (isLocal(m[1]) && !resolves(m[1], base)) broken.push(`${file} → ${m[1]}`);
+    if (!existsSync(join(root, file))) {
+      broken.push(`${file} is missing`);
+      continue;
+    }
+    const src = readFileSync(join(root, file), 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
+    for (const m of src.matchAll(re)) if (isLocal(m[1]) && !resolves(m[1], base, root)) broken.push(`${file} → ${m[1]}`);
   }
+  return broken;
+}
+
+function links() {
+  const broken = brokenLinks();
   return broken.length ? `${broken.length} local link(s) point at nothing:\n${broken.join('\n')}` : undefined;
+}
+
+/** Ours, never the site's: none of it may reach the published folder. */
+const NOT_PUBLISHED = new Set([
+  'PRODUCT.md', 'ROADMAP.md', 'AGENTS.md', 'ARCHITECTURE.md', 'DESIGN.md', 'README.md', 'CLAUDE.md',
+  'docs', 'e2e', 'design', '.jarvis', '.qa', '.github', '.git', 'node_modules',
+  'package.json', 'package-lock.json', 'jarvis.json',
+]);
+
+/** Every file under `dir`, dotfiles included (the staged folder must have none). */
+function walkAll(dir, out = []) {
+  for (const e of readdirSync(dir).sort()) {
+    const p = join(dir, e);
+    if (statSync(p).isDirectory()) walkAll(p, out);
+    else out.push(p);
+  }
+  return out;
+}
+
+/**
+ * The folder the deploy uploads: staged by the deploy's own script, then checked for what the
+ * site needs (pages, assets, frozen URLs) and for what must stay in the repo.
+ */
+function published() {
+  const out = [];
+  const workflow = readFileSync(join(ROOT, '.github/workflows/deploy.yml'), 'utf8');
+  const staged = workflow.match(/run:\s*node \.github\/stage-site\.mjs\s+(\S+)/)?.[1];
+  const uploaded = workflow.match(/upload-pages-artifact@[^\n]*\n\s*with:\s*\n\s*path:\s*['"]?([^'"\s]+)/)?.[1];
+  if (!staged) out.push('deploy.yml no longer stages the site with node .github/stage-site.mjs <dir>');
+  if (!uploaded) out.push('deploy.yml no longer uploads a path with upload-pages-artifact');
+  if (staged && uploaded && staged.replace(/\/$/, '') !== uploaded.replace(/\/$/, '')) {
+    out.push(`deploy.yml stages into ${staged} but uploads ${uploaded}: the live site would not be the staged folder`);
+  }
+  if (uploaded && ['.', './'].includes(uploaded)) out.push('deploy.yml uploads the repo root: our docs, roadmap and QA would go public');
+
+  stage(SITE, ROOT);
+  const files = walkAll(SITE).map((f) => rel(f, SITE));
+  const ours = files.filter((f) => {
+    const parts = f.split('/');
+    return parts.some((p) => NOT_PUBLISHED.has(p) || p.startsWith('.')) || /\.(md|mjs)$/.test(f);
+  });
+  if (ours.length) out.push(`the staged site holds files of ours that would go public:\n${ours.join('\n')}`);
+  for (const f of FROZEN) if (!files.includes(f)) out.push(`${f} is not in the staged site: it was submitted to the browser stores`);
+  if (!files.includes('index.html')) out.push('the staged site has no index.html');
+  if (!files.includes('404.html')) out.push('the staged site has no 404.html');
+  const broken = brokenLinks(SITE);
+  if (broken.length) out.push(`${broken.length} link(s) in the staged site point at files it doesn't hold:\n${broken.join('\n')}`);
+  return out.length ? out.join('\n') : undefined;
 }
 
 function frozenUrls() {
@@ -114,6 +179,14 @@ async function checks(qa, base) {
     }
     return bad.length ? bad.join('\n') : undefined;
   });
+  await qa.flow('http: our docs, QA and tooling are not served', 'http', async () => {
+    const bad = [];
+    for (const p of ['/PRODUCT.md', '/ROADMAP.md', '/AGENTS.md', '/README.md', '/docs/MAP.md', '/e2e/flows/home.flow.mjs', '/package.json', '/jarvis.json']) {
+      const r = await fetch(base + p, { redirect: 'manual' });
+      if (r.status !== 404) bad.push(`${p} → ${r.status}`);
+    }
+    return bad.length ? `served, but they must stay in the repo:\n${bad.join('\n')}` : undefined;
+  });
   await qa.flow('http: a missing page gets the custom 404', 'http', async () => {
     const r = await fetch(base + '/no/such/page');
     const body = await r.text();
@@ -127,14 +200,15 @@ const steps = [
   { name: 'syntax', run: async () => syntax(), onPaths: true },
   { name: 'links', run: async () => links(), onPaths: true },
   { name: 'frozen-urls', run: async () => frozenUrls(), onPaths: true },
+  { name: 'published', run: async () => published(), onPaths: true },
 ];
 
 process.exit(
   await webQa({
     root: ROOT,
     steps,
-    need: ['install'],
-    build: { command: ['node', join(ROOT, '.jarvis/serve.mjs'), '{port}'] },
+    need: ['install', 'published'],
+    build: { command: ['node', join(ROOT, '.jarvis/serve.mjs'), '{port}', SITE] },
     checks,
   }),
 );

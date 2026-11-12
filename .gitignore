@@ -8,3 +8,4 @@ node_modules/
 
 # Jarvis's runtime files
 .qa/
+_site/

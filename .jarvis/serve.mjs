@@ -1,9 +1,11 @@
 #!/usr/bin/env node
 /**
- * A local stand-in for GitHub Pages, for the QA: serves the repo root as-is, the way the
- * deploy workflow publishes it. Zero dependencies.
+ * A local stand-in for GitHub Pages. Zero dependencies.
  *
- *   node .jarvis/serve.mjs [port]     (PORT env also works; default 8000)
+ *   node .jarvis/serve.mjs [port] [root]     (PORT env also works; default 8000)
+ *
+ * `root` defaults to the repo root (handy while editing); the QA passes the staged folder
+ * (.qa/site, made by .github/stage-site.mjs), so its flows see exactly what the deploy publishes.
  *
  * What it mimics from Pages:
  *   /dir/          → /dir/index.html
@@ -14,10 +16,10 @@
  */
 import { createServer } from 'node:http';
 import { existsSync, readFileSync, statSync } from 'node:fs';
-import { dirname, extname, join, normalize, sep } from 'node:path';
+import { dirname, extname, join, normalize, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
+const ROOT = process.argv[3] ? resolve(process.argv[3]) : join(dirname(fileURLToPath(import.meta.url)), '..');
 const PORT = Number(process.argv[2] || process.env.PORT || 8000);
 
 const TYPES = {
