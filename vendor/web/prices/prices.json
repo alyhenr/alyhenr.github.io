@@ -1,0 +1,75 @@
+{
+  "currency": "BRL",
+  "launch": {
+    "active": true,
+    "label": "preço de lançamento"
+  },
+  "tiers": [
+    {
+      "id": "pagina-unica",
+      "name": "Página única",
+      "description": "Uma página que apresenta o seu negócio, com botões de WhatsApp, mapa, o básico do Google e rápida no celular. Só a parte visual, sem servidor.",
+      "pages": 1,
+      "includes": ["1 página", "Botão de WhatsApp", "Mapa de como chegar", "O básico do Google", "Rápida no celular"],
+      "from": 500,
+      "timeline_days": 5,
+      "timeline": "cerca de 5 dias úteis"
+    },
+    {
+      "id": "site-institucional",
+      "name": "Site institucional",
+      "description": "Até 5 páginas, com galeria, as etapas do seu serviço e SEO básico.",
+      "pages": 5,
+      "includes": ["Até 5 páginas", "Tudo da Página única", "Galeria de fotos", "As etapas do seu serviço", "SEO básico"],
+      "from": 1200,
+      "timeline_days": 10,
+      "timeline": "cerca de 10 dias úteis"
+    },
+    {
+      "id": "site-com-recursos",
+      "name": "Site com recursos",
+      "description": "Tudo do institucional, mais o que precisa de servidor: agendamento online ou conteúdo que você mesmo edita.",
+      "pages": 5,
+      "includes": ["Tudo do Site institucional", "Um recurso com servidor incluído: agendamento online ou conteúdo que você mesmo edita"],
+      "from": 2500,
+      "timeline_days": 15,
+      "timeline": "cerca de 3 semanas"
+    },
+    {
+      "id": "sistema-sob-medida",
+      "name": "Sistema sob medida",
+      "description": "Login, área do cliente, painel de administração, pagamentos por Pix ou cartão e integrações.",
+      "includes": ["Login e área do cliente", "Painel de administração", "Pagamentos por Pix ou cartão", "Integrações", "Preço e prazo definidos pelo escopo"],
+      "from": 5000,
+      "timeline_days": 25,
+      "timeline": "5 semanas ou mais",
+      "quoted_by_scope": true
+    }
+  ],
+  "addons": [
+    { "id": "pagina-extra", "name": "Página extra", "price": 150, "per_unit": true },
+    { "id": "galeria-gerenciavel", "name": "Galeria gerenciável", "price": 250 },
+    { "id": "formulario-email", "name": "Formulário com e-mail", "price": 200 },
+    { "id": "agendamento-online", "name": "Agendamento online", "price": 800, "moves_to": "site-com-recursos" },
+    { "id": "blog-conteudo-editavel", "name": "Blog ou conteúdo editável", "price": 500, "moves_to": "site-com-recursos" },
+    { "id": "pagamento-pix-cartao", "name": "Pagamento por Pix ou cartão", "price": 1000 },
+    { "id": "area-login", "name": "Área de login", "price": 1200 },
+    { "id": "versao-ingles", "name": "Versão em inglês", "percent": 25 },
+    { "id": "video-animado", "name": "Vídeo animado de 20 a 30 segundos", "price": 350 },
+    { "id": "configuracao-dominio", "name": "Configuração de domínio", "price": 80, "note": "O domínio em si fica no seu nome e é pago por você (cerca de R$ 40 por ano)." },
+    { "id": "textos", "name": "Textos escritos por nós", "price": 250 }
+  ],
+  "rules": {
+    "warranty_days": 15,
+    "warranty": "15 dias de garantia incluídos: se algo não funcionar como combinado, a correção é sem custo.",
+    "monthly_fee": false,
+    "ownership": "Sem mensalidade: o site, as contas, a hospedagem e o domínio são seus.",
+    "after_close_min": 150,
+    "after_close": "Depois que o trabalho termina, cada mudança é um novo trabalho pequeno, a partir de R$ 150, orçado sem compromisso.",
+    "urgency_percent": 30,
+    "urgency": "Com urgência (na metade do prazo): mais 30%.",
+    "online_store": false,
+    "online_store_alternative": "Ainda não fazemos lojas virtuais: a gente configura uma Nuvemshop ou Shopify no seu nome.",
+    "billing": "Owner bills as a person (CPF, a receipt) for the first 1-2 clients, then opens a CNPJ."
+  }
+}

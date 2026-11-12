@@ -1,0 +1,8 @@
+{
+  "name": "prices",
+  "version": "1.1.0",
+  "description": "The web agency's price catalogue (prices.json) and its quote math (quote.mjs). Zero dependencies; quote.mjs loads in Node and in a browser.",
+  "type": "module",
+  "main": "quote.mjs",
+  "files": ["prices.json", "quote.mjs", "README.md", "CHANGELOG.md"]
+}
