@@ -142,12 +142,12 @@ const SEND_TIMEOUT_MS = 20000;
  * never fetches it). Its token is single-use: reset() after every answer asks for a fresh one.
  */
 function turnstile(el) {
+  el.hidden = false; // its room is kept from the start: the widget arriving later shifts nothing
   let id = null;
   let token = '';
   let failed = false;
   let loading = null;
   const load = () => (loading ||= new Promise((resolve, reject) => {
-    el.hidden = false;
     window.tracoTurnstileReady = resolve;
     const s = document.createElement('script');
     s.src = TURNSTILE_API;
