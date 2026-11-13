@@ -14,7 +14,7 @@
   - Tests: reduced motion, no WebGL and a weak-phone signal each show the plates and never start the scene.
   - The page stays light: the scene's script loads after the first paint and is ≤ 140 KB gzip; Lighthouse mobile performance stays ≥ 90.
   - A demo (stills and a scroll video on phone and desktop) with the scene live.
-- **Scene 1.0.1: the iPhone plays it** (building) — The owner saw the Traço scene on his Mac but only the plates on his iPhone 14 Plus: the weak-phone check is too strict, and Studio's 1.0.1 console-error fix waits on a request that carries the vendored copy.
+- **Scene 1.0.1: the iPhone plays it** (ready) — The owner saw the Traço scene on his Mac but only the plates on his iPhone 14 Plus: the weak-phone check is too strict, and Studio's 1.0.1 console-error fix waits on a request that carries the vendored copy.
   Goal: a recent phone (the owner's iPhone 14 Plus) plays the live scene; only really weak phones fall back to the plates; Studio gets the 1.0.1 request with the copy it needs.
   In:
   - Loosen the weak-phone check: the first frame includes shader compile and is no fair test. Judge on the frames after warm-up (e.g. the median of a few frames after the first) against a frame budget that still catches a weak phone; keep deviceMemory ≤ 2 and saveData. Pick the numbers, say why in the summary.
@@ -47,7 +47,7 @@
 ## Later
 
 ## Fixes and chores
-- traco-wireframe 1.0.1 (asked of Studio 12/11): no console error on mount (three's computeBoundingSphere NaN); when taken, rebundle, remake the plates, and drop `SCENE_NAN` from `.jarvis/qa.mjs`. Measure `firstFrameMs` on a real mid-range and budget Android: the 50 ms gate may send many phones to the plates.
+- traco-wireframe 1.0.1 (asked again of Studio 13/11, with the 1.0.0 folder attached): no console error on mount (three's computeBoundingSphere NaN), update() redrawing documented as the interface the frame test relies on. When it comes back: `jarvis deliveries take <id>`, rebundle, remake the plates, and drop `SCENE_NAN` from `.jarvis/qa.mjs`. Check the 33 ms warm-frame gate on a real budget Android when one is at hand.
 - Firefox Add-ons: the Alvarás page shows "Firefox Add-ons: em revisão" (disabled) and no store link; fill the button when the listing is approved.
 - The Alvarás policy's Contato line shows an e-mail (verbatim from alvaras-pg's PRIVACY.md), the one contact left on the site; changing it means editing PRIVACY.md in the extension's repo first, then this copy, with the date in both.
 
