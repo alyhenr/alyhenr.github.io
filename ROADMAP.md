@@ -14,7 +14,7 @@
   - Tests: reduced motion, no WebGL and a weak-phone signal each show the plates and never start the scene.
   - The page stays light: the scene's script loads after the first paint and is ≤ 140 KB gzip; Lighthouse mobile performance stays ≥ 90.
   - A demo (stills and a scroll video on phone and desktop) with the scene live.
-- **Scene 1.0.1: the iPhone plays it** (agreed) — The owner saw the Traço scene on his Mac but only the plates on his iPhone 14 Plus: the weak-phone check is too strict, and Studio's 1.0.1 console-error fix waits on a request that carries the vendored copy.
+- **Scene 1.0.1: the iPhone plays it** (building) — The owner saw the Traço scene on his Mac but only the plates on his iPhone 14 Plus: the weak-phone check is too strict, and Studio's 1.0.1 console-error fix waits on a request that carries the vendored copy.
   Goal: a recent phone (the owner's iPhone 14 Plus) plays the live scene; only really weak phones fall back to the plates; Studio gets the 1.0.1 request with the copy it needs.
   In:
   - Loosen the weak-phone check: the first frame includes shader compile and is no fair test. Judge on the frames after warm-up (e.g. the median of a few frames after the first) against a frame budget that still catches a weak phone; keep deviceMemory ≤ 2 and saveData. Pick the numbers, say why in the summary.
