@@ -25,10 +25,12 @@
  *                frozen URL the site links to and none of our files (docs, roadmap, QA, tooling),
  *                and that no page shows a phone number, an e-mail, "sênior" or an app kept off it.
  *                The HTTP checks and the flows then run against that folder: what goes live.
+ *   gateway      the contact form's request to the Gateway and its reading of each answer (js/contact.js)
  *   scene        js/scene/traco-wireframe.js is what tools/bundle-scene.mjs makes from Studio's
  *                package and three (pinned), and within the scene's 140 KB gzip budget
  * There is no lint, typecheck, build or unit test in this codebase: those steps don't exist here.
- * Nothing runs against a live service: the contact form's Formspree endpoint is blocked in the flows.
+ * Nothing runs against a live service: the contact flows abort every request off the local server,
+ * and contact-send answers for the Gateway and Turnstile itself (mocks, in the flow).
  */
 import { spawnSync } from 'node:child_process';
 import { readdirSync, readFileSync, statSync, existsSync } from 'node:fs';
@@ -164,17 +166,26 @@ function published() {
 
 /**
  * The live site shows no way to reach him outside the form: no phone number, no e-mail, no
- * WhatsApp link; never "sênior"; no app the brief keeps off it. The one exception is the Alvarás
- * policy's Contato line: the policy is a verbatim copy of the extension's PRIVACY.md (the stores
- * read it), so its e-mail stays until PRIVACY.md changes in the extension's repo.
+ * WhatsApp link; never "sênior"; no app the brief keeps off it. The two exceptions are policies,
+ * with the one e-mail for data requests: the Alvarás policy's Contato line (a verbatim copy of the
+ * extension's PRIVACY.md, which the stores read) and the site's own privacy page (the form's data,
+ * through the Gateway; the owner's decision, 12/11). Every other page stays e-mail free.
  */
-const POLICY = 'plugins/alvaras/privacidade/index.html';
 const POLICY_CONTACT = 'alyhenr.io@gmail.com';
+const POLICY_PAGES = ['plugins/alvaras/privacidade/index.html', 'privacidade.html'];
+/** What the site's privacy page must say (the brief's blanks, filled). */
+const PRIVACY_PAGE = { file: 'privacidade.html', says: ['90 dias', 'Turnstile', 'política de privacidade da Cloudflare', `mailto:${POLICY_CONTACT}`, 'Última atualização'] };
 function offSite(site, files) {
   const out = [];
+  if (!files.includes(PRIVACY_PAGE.file)) out.push(`${PRIVACY_PAGE.file} is not in the staged site: the form's privacy policy`);
+  else {
+    const html = readFileSync(join(site, PRIVACY_PAGE.file), 'utf8');
+    for (const s of PRIVACY_PAGE.says) if (!html.includes(s)) out.push(`${PRIVACY_PAGE.file} no longer says "${s}"`);
+    if (/<script\b/i.test(html)) out.push(`${PRIVACY_PAGE.file} has a <script>: the policy must read without one`);
+  }
   for (const f of files.filter((x) => /\.(html|js|mjs|json|css)$/.test(x))) {
     let src = readFileSync(join(site, f), 'utf8');
-    if (f === POLICY) src = src.replaceAll(`mailto:${POLICY_CONTACT}`, '').replaceAll(POLICY_CONTACT, '');
+    if (POLICY_PAGES.includes(f)) src = src.replaceAll(`mailto:${POLICY_CONTACT}`, '').replaceAll(POLICY_CONTACT, '');
     // The scene's bundle is minified three: its numeric constants (4294967295…) read as phones.
     // It shows no text, so only the word and app checks apply to it.
     const hit = f === SCENE_BUNDLE ? null : src.match(CONTACT);
@@ -387,6 +398,66 @@ async function estimate() {
       if (!home.includes(s)) out.push(`index.html's Pacotes prontos misses "${s}" (tier ${t.id} in prices.json)`);
     }
   }
+  // The short line the Gateway's estimate field gets (120 characters at most).
+  eq(E.calcShort(ag), 'Calculadora: Site com recursos, total R$ 2.500, cerca de 3 semanas', 'the calculator\'s short line');
+  eq(E.calcShort(sob).includes('a partir de R$ 5.000'), true, 'Sistema sob medida\'s short line says "a partir de"');
+  eq(E.packageShort(prices, 'site-institucional'), 'Pacote Site institucional: R$ 1.200, cerca de 10 dias úteis', 'a package\'s short line');
+  eq(E.packageShort(prices, 'nao-existe'), '', 'an unknown package has no short line');
+  for (const t of prices.tiers) {
+    if (E.packageShort(prices, t.id).length > 120) out.push(`${t.id}'s short line is over 120 characters`);
+    const r = E.quoteFor(prices, { tier: t.id, extraPages: E.MAX_EXTRA_PAGES, addons: E.plainAddons(prices).map((a) => a.id), urgent: true });
+    if (E.calcShort(r).length > 120) out.push(`${t.id}'s calculator short line is over 120 characters`);
+  }
+  return out.length ? out.join('\n') : undefined;
+}
+
+/**
+ * The contact form's talk with the Gateway (js/contact.js, pure): what it sends, and how it reads
+ * each answer of the Gateway's contract (README, "Sending a message"). The browser side is the
+ * `contact-send` flow, with the Gateway mocked.
+ */
+async function gateway() {
+  const C = await import(pathToFileURL(join(ROOT, 'js/contact.js')).href + `?t=${Date.now()}`);
+  const out = [];
+  const eq = (got, want, what) => { if (JSON.stringify(got) !== JSON.stringify(want)) out.push(`${what}: got ${JSON.stringify(got)}, want ${JSON.stringify(want)}`); };
+
+  // Where it posts: nowhere while the endpoint is empty.
+  eq(C.submitUrl('', 'pk_x'), '', 'an empty endpoint has no submit URL');
+  eq(C.submitUrl('  ', 'pk_x'), '', 'a blank endpoint has no submit URL');
+  eq(C.submitUrl('https://gw.example.dev/', 'pk_portfolio_1'), 'https://gw.example.dev/v1/submit/pk_portfolio_1', 'the submit URL');
+
+  // The contact field becomes the Gateway's email or phone.
+  eq(C.splitContact(' ana@exemplo.com.br '), { email: 'ana@exemplo.com.br' }, 'an e-mail goes as email');
+  eq(C.splitContact('(31)  98765-4321'), { phone: '(31) 98765-4321' }, 'a phone goes as phone, spaces squeezed');
+
+  // The body.
+  const sent = C.submission({ nome: ' Marina Duarte ', contato: 'marina@exemplo.com', mensagem: ' Quero agenda. ', estimativa: 'Pacote Agenda: R$ 1.990.', resumo: 'Pacote Agenda: R$ 1.990' }, 'tok');
+  eq(sent, { turnstile_token: 'tok', locale: 'pt-BR', fields: { name: 'Marina Duarte', email: 'marina@exemplo.com', message: 'Quero agenda.\n\nEstimativa: Pacote Agenda: R$ 1.990.', estimate: 'Pacote Agenda: R$ 1.990' } }, 'a full request');
+  eq(C.submission({ nome: 'Ana', contato: '11987654321', mensagem: 'Oi', estimativa: '' }, 't').fields, { name: 'Ana', phone: '11987654321', message: 'Oi' }, 'no estimate, no estimate field');
+  eq(C.submission({ nome: 'Ana', contato: '11987654321', mensagem: '', estimativa: 'Pacote X.', resumo: 'Pacote X' }, 't').fields.message, 'Estimativa: Pacote X.', 'an estimate alone is the message (the Gateway requires one)');
+  const long = C.submission({ nome: 'n'.repeat(200), contato: 'a@b.co', mensagem: 'm'.repeat(5000), estimativa: 'e'.repeat(300), resumo: 'r'.repeat(300) }, 't').fields;
+  eq([long.name.length, long.message.length, long.estimate.length], [120, 4000, 120], 'every field is cut to the Gateway\'s length');
+  eq(long.estimate.endsWith('…'), true, 'a cut estimate ends with "…"');
+  eq(C.submission({ nome: 'Ana', contato: 'a@b.co', mensagem: 'Oi', estimativa: 'Calculadora: longa.' }, 't').fields.estimate, 'Calculadora: longa.', 'without a short line the estimate itself goes');
+
+  // The answers.
+  eq(C.readAnswer(201, { ok: true, id: 'm_1', message: 'Recebido! Respondo em breve.' }), { kind: 'sent', message: 'Recebido! Respondo em breve.', fields: {}, retryAfter: null }, '201 is sent, with the Gateway\'s message');
+  eq(C.readAnswer(201, {}).kind, 'sent', '201 without a body is still sent');
+  eq(C.readAnswer(201, {}).message.length > 0, true, '201 without a message has ours');
+  const bad = C.readAnswer(422, { ok: false, error: 'invalid_fields', message: 'Confira os campos.', fields: { name: 'Nome muito longo.', email: ['E-mail inválido.'], message: 'Escreva a mensagem.', estimate: 'Estimativa longa.', other: 'x' } });
+  eq(bad, { kind: 'fields', message: 'Confira os campos.', fields: { nome: 'Nome muito longo.', contato: 'E-mail inválido.', mensagem: 'Escreva a mensagem.', estimativa: 'Estimativa longa.' }, retryAfter: null }, '422 maps each field\'s message to the form');
+  eq(C.readAnswer(422, { ok: false, error: 'invalid_fields', message: 'M', errors: [{ field: 'phone', message: 'Telefone inválido.' }] }).fields, { contato: 'Telefone inválido.' }, '422 as a list of {field, message}');
+  eq(C.readAnswer(400, { ok: false, error: 'turnstile_failed', message: 'Verificação falhou.' }), { kind: 'turnstile', message: 'Verificação falhou.', fields: {}, retryAfter: null }, 'turnstile_failed');
+  eq(C.readAnswer(429, { ok: false, error: 'rate_limited', message: 'Calma.' }, '30'), { kind: 'retry', message: 'Calma.', fields: {}, retryAfter: 30 }, '429 with Retry-After');
+  eq(C.readAnswer(429, { ok: false, error: 'rate_limited', message: 'Calma.' }, null).retryAfter, null, '429 without Retry-After');
+  eq(C.readAnswer(429, {}, '9999').retryAfter, C.MAX_WAIT_S, 'Retry-After is capped');
+  eq(C.readAnswer(429, {}, new Date(Date.now() + 20000).toUTCString()).retryAfter > 15, true, 'Retry-After as an HTTP date');
+  eq(C.readAnswer(503, { ok: false, error: 'unavailable', message: 'Fora do ar.' }).kind, 'retry', '503 is a retry');
+  eq(C.readAnswer(503, { ok: false, error: 'unavailable', message: 'Fora do ar.' }).message, 'Fora do ar.', '503 shows the Gateway\'s message');
+  eq(C.readAnswer(502, null).message, C.MESSAGES.unavailable, 'a 5xx without a JSON body has ours');
+  eq(C.readAnswer(404, { ok: false, error: 'unknown_form', message: 'Formulário desconhecido.' }).kind, 'error', 'another error');
+  eq(C.readAnswer(404, { ok: false, error: 'unknown_form', message: 'Formulário desconhecido.' }).message, 'Formulário desconhecido.', 'another error shows the Gateway\'s message');
+  for (const [k, m] of Object.entries(C.MESSAGES)) if (!m || /[@]|\bundefined\b/.test(m)) out.push(`MESSAGES.${k} is empty or odd: ${m}`);
   return out.length ? out.join('\n') : undefined;
 }
 
@@ -432,6 +503,7 @@ const steps = [
   { name: 'published', run: async () => published(), onPaths: true },
   { name: 'directions', run: async () => directions(), onPaths: true },
   { name: 'estimate', run: estimate, onPaths: true },
+  { name: 'gateway', run: gateway, onPaths: true },
   { name: 'scene', run: () => sceneCheck(), onPaths: true },
 ];
 

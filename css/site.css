@@ -256,6 +256,9 @@ p { margin: 0; }
 .form-status.is-error { color: var(--danger); }
 .form-status.is-done { color: var(--success); }
 .contact-form .btn { justify-self: start; }
+.turnstile { min-height: 65px; }
+.turnstile[hidden] { display: none; }
+.contact-form .btn:disabled { opacity: .6; cursor: progress; }
 
 /* dark page band: Projetos, Extensões, the extension pages, 404 */
 .page-hero { background: var(--stage); color: var(--chalk); padding: var(--space-9) 0 var(--space-8); }

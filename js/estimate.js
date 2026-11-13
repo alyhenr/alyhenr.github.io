@@ -45,6 +45,17 @@ export function packageSummary(prices, id) {
   return `Pacote ${t.name}: ${tierPrice(t)}${launch}, ${t.timeline}.${t.quoted_by_scope ? ' Preço e prazo definidos pelo escopo.' : ''}`;
 }
 
+/** The short line for the Gateway's estimate field (120 characters at most): tier, total, timeline. */
+export function calcShort(q) {
+  return `Calculadora: ${q.tier.name}, ${q.quoted_by_scope ? 'a partir de' : 'total'} ${q.total_text}, ${q.timeline}`;
+}
+
+/** The short line for a ready package. */
+export function packageShort(prices, id) {
+  const t = prices.tiers.find((x) => x.id === id);
+  return t ? `Pacote ${t.name}: ${tierPrice(t)}, ${t.timeline}` : '';
+}
+
 /** An e-mail, or a phone number with DDD (10 or 11 digits, +55 allowed). */
 export function validContact(v) {
   v = String(v || '').trim();

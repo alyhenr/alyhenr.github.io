@@ -1,9 +1,10 @@
 import { CONTACT } from './_lib.mjs';
 
-// Contact is the form only: no phone number or e-mail on the page. The form validates and stops
-// (sending it is "Connect the contact form"); nothing may leave the page.
+// Contact is the form only: no phone number or e-mail on the page. With the repo's config (the
+// Gateway's endpoint still empty, js/contact-config.js) the form validates and stops: no Turnstile,
+// nothing leaves the page. Sending, with the Gateway mocked, is the contact-send flow.
 export const flow = {
-  name: 'the contact form validates, says it did not send, and the page shows no phone or e-mail',
+  name: 'with no endpoint the contact form validates, says it did not send, and the page shows no phone or e-mail',
   async run({ page, go, expect, shot, step }) {
     const sent = [];
     await page.route((url) => !['127.0.0.1', 'localhost'].includes(url.hostname), (route) => { sent.push(route.request().url()); return route.abort(); });
@@ -39,6 +40,8 @@ export const flow = {
     await form.getByText(/^Obrigado, Marina\. O envio pelo site ainda está sendo ligado/).waitFor();
     expect((await form.locator('[aria-invalid="true"]').count()) === 0, 'a field is still marked wrong');
     await shot('contato');
+    expect(await form.locator('[data-turnstile]').isHidden(), 'the Turnstile box shows with no endpoint');
+    expect(await page.evaluate(() => !window.turnstile), 'Turnstile loaded with no endpoint');
     expect(sent.length === 0, `the page sent requests out: ${sent.join(', ')}`);
     expect(new URL(page.url()).pathname === '/', `the submit left the page for ${page.url()}`);
   },

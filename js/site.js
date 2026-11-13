@@ -3,10 +3,13 @@
  * (vendor/web/prices 1.1.0: prices.json, fetched, and quote.mjs, through estimate.js).
  * Names and amounts come from prices.json; only the helper line under each option is copy here.
  *
- * The form validates and stops: sending it waits for the Gateway ("Connect the contact form").
- * No phone number or e-mail anywhere.
+ * The form validates, then sends to the Gateway (js/contact.js, its contract) behind Cloudflare
+ * Turnstile, both set in js/contact-config.js. While the endpoint there is empty it stops and says
+ * the request was not sent, and Turnstile is never loaded. No phone number or e-mail anywhere.
  */
-import { quoteFor, calcSummary, packageSummary, validContact, formatBRL, tierPrice, plainAddons, extraPageAddon, MAX_EXTRA_PAGES } from './estimate.js';
+import { quoteFor, calcSummary, calcShort, packageSummary, packageShort, validContact, formatBRL, tierPrice, plainAddons, extraPageAddon, MAX_EXTRA_PAGES } from './estimate.js';
+import { submitUrl, submission, readAnswer, MESSAGES } from './contact.js';
+import { GATEWAY_URL, FORM_KEY, TURNSTILE_SITE_KEY } from './contact-config.js';
 
 const PRICES_URL = new URL('../vendor/web/prices/prices.json', import.meta.url);
 
@@ -52,10 +55,13 @@ function row({ type, name, value, checked, title, hint, price }) {
   return label;
 }
 
-function setEstimate(text) {
+/** The estimate the form carries: its full text, and its short line for the Gateway. */
+function setEstimate(text, short = '') {
   const form = $('[data-contact]');
   if (!form) return;
-  form.querySelector('[name="estimativa"]').value = text;
+  const field = form.querySelector('[name="estimativa"]');
+  field.value = text;
+  field.dataset.short = text ? short : '';
   form.querySelector('[data-clear-estimate]').hidden = !text;
   form.querySelector('[data-estimate-field]').classList.toggle('has-estimate', !!text);
 }
@@ -121,42 +127,166 @@ function wireCalc(prices) {
     extra = Math.max(0, Math.min(MAX_EXTRA_PAGES, extra + Number(b.dataset.step)));
     render();
   }));
-  $$('[data-use-estimate]').forEach((b) => b.addEventListener('click', () => { setEstimate(calcSummary(prices, current)); goToForm(); }));
-  $$('[data-pick]').forEach((b) => b.addEventListener('click', (e) => { e.preventDefault(); setEstimate(packageSummary(prices, b.dataset.pick)); goToForm(); }));
+  $$('[data-use-estimate]').forEach((b) => b.addEventListener('click', () => { setEstimate(calcSummary(prices, current), calcShort(current)); goToForm(); }));
+  $$('[data-pick]').forEach((b) => b.addEventListener('click', (e) => { e.preventDefault(); setEstimate(packageSummary(prices, b.dataset.pick), packageShort(prices, b.dataset.pick)); goToForm(); }));
   form.classList.add('is-ready');
   render();
+}
+
+/** Cloudflare's script, rendered explicitly into the form's [data-turnstile] box. */
+const TURNSTILE_API = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=tracoTurnstileReady';
+const SEND_TIMEOUT_MS = 20000;
+
+/**
+ * The Turnstile widget, loaded once when the form comes near or is touched (the home's first load
+ * never fetches it). Its token is single-use: reset() after every answer asks for a fresh one.
+ */
+function turnstile(el) {
+  let id = null;
+  let token = '';
+  let failed = false;
+  let loading = null;
+  const load = () => (loading ||= new Promise((resolve, reject) => {
+    el.hidden = false;
+    window.tracoTurnstileReady = resolve;
+    const s = document.createElement('script');
+    s.src = TURNSTILE_API;
+    s.async = true;
+    s.onerror = reject;
+    document.head.appendChild(s);
+  }).then(() => {
+    id = window.turnstile.render(el, {
+      sitekey: TURNSTILE_SITE_KEY,
+      action: 'contato',
+      language: 'pt-br',
+      size: 'flexible',
+      theme: 'auto',
+      'refresh-expired': 'auto',
+      callback: (t) => { token = t || ''; failed = false; },
+      'expired-callback': () => { token = ''; },
+      'error-callback': () => { token = ''; failed = true; return true; },
+    });
+  }).catch(() => { failed = true; }));
+  return {
+    load,
+    token: () => token,
+    failed: () => failed,
+    reset() {
+      token = '';
+      if (id !== null) window.turnstile.reset(id);
+    },
+  };
 }
 
 function wireForm() {
   const form = $('[data-contact]');
   if (!form) return;
   const status = form.querySelector('[data-form-status]');
+  const button = form.querySelector('button[type="submit"]');
+  const label = button.textContent;
+  const url = submitUrl(GATEWAY_URL, FORM_KEY);
+  const check = url ? turnstile(form.querySelector('[data-turnstile]')) : null;
+  let busy = false;
+  let waitUntil = 0;
+
   form.querySelector('[data-clear-estimate]').addEventListener('click', () => setEstimate(''));
   const v = (n) => String(form.querySelector(`[name="${n}"]`).value || '').trim();
   const err = (name, msg) => {
     const p = form.querySelector(`[data-error-for="${name}"]`);
     const input = form.querySelector(`[name="${name}"]`);
-    p.textContent = msg || '';
+    if (p) p.textContent = msg || '';
     if (msg) input.setAttribute('aria-invalid', 'true');
     else input.removeAttribute('aria-invalid');
     return !msg;
   };
+  const say = (text, kind = '') => {
+    status.textContent = text;
+    status.className = `form-status${kind ? ` is-${kind}` : ''}`;
+  };
+  const focusWrong = () => form.querySelector('[aria-invalid="true"]:not([readonly])')?.focus();
+
+  if (check) {
+    const near = new IntersectionObserver((entries) => {
+      if (entries.some((e) => e.isIntersecting)) { near.disconnect(); check.load(); }
+    }, { rootMargin: '600px 0px' });
+    near.observe(form);
+    form.addEventListener('focusin', () => check.load(), { once: true });
+  }
+
+  async function send() {
+    const token = check.token();
+    if (!token) {
+      check.load();
+      say(check.failed()
+        ? 'A verificação anti-robô não carregou. Recarregue a página e tente de novo.'
+        : 'Só um instante: a verificação anti-robô ainda está terminando. Tente de novo em alguns segundos.', check.failed() ? 'error' : '');
+      return;
+    }
+    busy = true;
+    button.disabled = true;
+    button.textContent = 'Enviando…';
+    form.setAttribute('aria-busy', 'true');
+    say('Enviando seu pedido…');
+    const values = { nome: v('nome'), contato: v('contato'), mensagem: v('mensagem'), estimativa: v('estimativa'), resumo: form.querySelector('[name="estimativa"]').dataset.short || '' };
+    let answer;
+    try {
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(submission(values, token)),
+        credentials: 'omit',
+        signal: typeof AbortSignal.timeout === 'function' ? AbortSignal.timeout(SEND_TIMEOUT_MS) : undefined,
+      });
+      const body = await res.json().catch(() => null);
+      answer = readAnswer(res.status, body, res.headers.get('Retry-After'));
+    } catch {
+      answer = { kind: 'network', message: MESSAGES.network, fields: {}, retryAfter: null };
+    }
+    check.reset();
+    busy = false;
+    form.removeAttribute('aria-busy');
+    button.textContent = label;
+    button.disabled = false;
+
+    if (answer.kind === 'sent') {
+      form.reset();
+      setEstimate('');
+      ['nome', 'contato', 'mensagem', 'estimativa'].forEach((n) => err(n, ''));
+      say(answer.message, 'done');
+      return;
+    }
+    say(answer.message, 'error');
+    if (answer.kind === 'fields') {
+      for (const [name, msg] of Object.entries(answer.fields)) err(name, msg);
+      focusWrong();
+    }
+    if (answer.retryAfter) {
+      waitUntil = Date.now() + answer.retryAfter * 1000;
+      button.disabled = true;
+      setTimeout(() => { button.disabled = false; }, answer.retryAfter * 1000);
+    }
+  }
+
   form.addEventListener('submit', (e) => {
     e.preventDefault();
+    if (busy || Date.now() < waitUntil) return;
     const ok = [
       err('nome', v('nome') ? '' : 'Escreva seu nome.'),
       err('contato', validContact(v('contato')) ? '' : 'Escreva um e-mail ou um telefone com DDD.'),
       err('mensagem', v('mensagem') || v('estimativa') ? '' : 'Conte em uma frase o que o site precisa fazer.'),
     ].every(Boolean);
+    err('estimativa', '');
     if (!ok) {
-      status.textContent = 'Falta pouco: veja os campos marcados.';
-      status.className = 'form-status is-error';
-      form.querySelector('[aria-invalid="true"]').focus();
+      say('Falta pouco: veja os campos marcados.', 'error');
+      focusWrong();
       return;
     }
-    // Not sent yet: the form goes live with "Connect the contact form".
-    status.textContent = `Obrigado, ${v('nome').split(' ')[0]}. O envio pelo site ainda está sendo ligado e o pedido não saiu daqui: volte em breve, ele fica pronto em poucos dias.`;
-    status.className = 'form-status is-done';
+    if (!url) {
+      // No endpoint yet (js/contact-config.js): nothing leaves the page.
+      say(`Obrigado, ${v('nome').split(' ')[0]}. O envio pelo site ainda está sendo ligado e o pedido não saiu daqui: volte em breve, ele fica pronto em poucos dias.`, 'done');
+      return;
+    }
+    send();
   });
   $$('input, textarea', form).forEach((i) => i.addEventListener('input', () => { if (i.getAttribute('aria-invalid')) err(i.name, ''); }));
 }

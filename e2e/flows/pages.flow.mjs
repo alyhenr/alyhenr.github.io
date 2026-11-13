@@ -6,6 +6,7 @@ const PAGES = [
   ['/plugins/', 'Extensões'],
   ['/plugins/alvaras/', 'Alvarás'],
   ['/plugins/alvaras/privacidade/', /Política de Privacidade/],
+  ['/privacidade.html', 'Política de Privacidade'],
 ];
 
 export const flow = {

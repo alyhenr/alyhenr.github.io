@@ -243,26 +243,28 @@
       <form class="contact-form" data-contact novalidate aria-label="Pedido de orçamento">
         <div class="field">
           <label for="c-nome">Nome</label>
-          <input id="c-nome" name="nome" autocomplete="name" required>
+          <input id="c-nome" name="nome" autocomplete="name" maxlength="120" required>
           <p class="field-error" data-error-for="nome"></p>
         </div>
         <div class="field">
           <label for="c-contato">E-mail ou telefone</label>
-          <input id="c-contato" name="contato" autocomplete="email" inputmode="email" required aria-describedby="c-contato-hint">
+          <input id="c-contato" name="contato" autocomplete="email" inputmode="email" maxlength="254" required aria-describedby="c-contato-hint">
           <p class="hint" id="c-contato-hint">O que você preferir: eu respondo por ali.</p>
           <p class="field-error" data-error-for="contato"></p>
         </div>
         <div class="field">
           <label for="c-msg">Mensagem</label>
-          <textarea id="c-msg" name="mensagem" rows="4" placeholder="Seu negócio, o que o site precisa fazer, se você já tem um domínio."></textarea>
+          <textarea id="c-msg" name="mensagem" rows="4" maxlength="3500" placeholder="Seu negócio, o que o site precisa fazer, se você já tem um domínio."></textarea>
           <p class="field-error" data-error-for="mensagem"></p>
         </div>
         <div class="field estimate-field" data-estimate-field>
           <label for="c-est">Estimativa</label>
           <textarea id="c-est" name="estimativa" rows="5" readonly placeholder="Sem estimativa ainda. Use a calculadora ou escolha um pacote, e ela aparece aqui."></textarea>
           <button type="button" class="linkish" data-clear-estimate hidden>Tirar a estimativa</button>
+          <p class="field-error" data-error-for="estimativa"></p>
         </div>
-        <p class="lgpd">Seus dados (nome, contato, mensagem e estimativa) servem só para eu responder e preparar sua proposta, como pede a LGPD (Lei 13.709/2018). Não entram em lista de e-mails e não são usados para mais nada. Quer ver, corrigir ou apagar? É só pedir na resposta.</p>
+        <div class="turnstile" data-turnstile hidden></div>
+        <p class="lgpd">Seus dados (nome, contato, mensagem e estimativa) servem só para eu responder e preparar sua proposta, como pede a LGPD (Lei 13.709/2018). Não entram em lista de e-mails e não são usados para mais nada. O envio passa pela verificação anti-robô da Cloudflare (Turnstile). Quer ver, corrigir ou apagar? É só pedir na resposta. Tudo na <a href="privacidade.html">política de privacidade</a>.</p>
         <button class="btn btn--primary" type="submit">Enviar pedido</button>
         <p class="form-status" data-form-status role="status" aria-live="polite"></p>
       </form>
