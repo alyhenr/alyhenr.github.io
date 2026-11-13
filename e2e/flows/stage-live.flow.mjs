@@ -2,9 +2,9 @@ import { scrollToBeat, autoMount, SCENE_SRC } from './_lib.mjs';
 
 // Studio's real scene on the home: it loads after the page, fades the plates out, plays the five
 // beats both ways as the visitor scrolls, and the step counter follows its onBeat.
-// The QA's headless browsers start cold (a fresh GPU process, no shader cache), so the page's own
-// mount may take more than the 50 ms first frame and fall back, as a weak phone would: the flow
-// then mounts the same bundle with a looser first-frame budget, to see the scene itself play.
+// The QA's headless browsers draw WebGL in software on a busy machine, so the page's own mount may
+// find the warm frames over their 33 ms budget and fall back, as a weak phone would: the flow then
+// mounts the same bundle with a looser frame budget, to see the scene itself play.
 const EXPECTED = [ // section → [scene beat, counter]
   [0, 1, 'Como funciona'], [1, 1, 'Passo 1 de 4'], [2, 2, 'Passo 2 de 4'], [3, 3, 'Passo 3 de 4'], [4, 4, 'Passo 4 de 4'], [5, 5, 'Passo 4 de 4'],
 ];
@@ -28,8 +28,8 @@ export const flow = {
     expect(scriptStart >= loadEnd, `the scene's script started at ${Math.round(scriptStart)} ms, before the page's load (${Math.round(loadEnd)} ms)`);
     if (!auto) {
       const why = await page.evaluate(() => window.TracoStage.state);
-      expect(why.reason === 'slow-first-frame', `the scene did not go live: ${why.reason}`);
-      const live = await page.evaluate((src) => window.TracoStage.mountScene(() => import(src), { slowFrameMs: 1000 }), '/js/scene/traco-wireframe.js');
+      expect(why.reason === 'slow-frames', `the scene did not go live: ${why.reason}`);
+      const live = await page.evaluate((src) => window.TracoStage.mountScene(() => import(src), { frameBudgetMs: 1000 }), '/js/scene/traco-wireframe.js');
       expect(live === true, `the scene did not go live by hand either: ${await page.evaluate(() => window.TracoStage.state.reason)}`);
     }
     await page.waitForFunction(() => document.querySelector('.stage').classList.contains('is-live'));

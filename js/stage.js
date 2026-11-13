@@ -18,9 +18,14 @@
  *   mount(host, { progress, reducedMotion, palette, onReady({ firstFrameMs }), onBeat(n), onError(reason) })
  *     → { update(partial), destroy() }
  *   palette: { background, vignette, chalk, dim, grid, amber } (from css/tokens.css)
- * onReady fades the plates out (.stage.is-live), unless firstFrameMs is over 50 ms (a weak
- * device: destroy, keep the plates). onBeat (1–5) drives the counter. onError, a failed load or
- * reduced motion turning on puts the plates back. window.TracoStage exposes mountScene(), the
+ * onReady starts the frame test, behind the plates: the first frame holds the shader compile and
+ * the context's creation (54–166 ms on a cold Mac, fast after), so firstFrameMs is recorded, not
+ * judged. The stage asks the scene for a frame on each of the next 7 frames and times each one,
+ * from the frame's start to the end of the scene's draw in it; it skips the first and takes the
+ * median of the other 6 (one hiccup doesn't count). Within FRAME_BUDGET_MS (33 ms, two 60 Hz
+ * frames: past it the scene plays under 20 fps and drags the scroll) the plates fade out
+ * (.stage.is-live); over it (a weak device): destroy, keep the plates. onBeat (1–5) drives the
+ * counter. onError, a failed load or reduced motion turning on puts the plates back. window.TracoStage exposes mountScene(), the
  * state (`reason` says why the scene isn't live), refusal() and `auto` (the page's own mount, a
  * promise of whether it went live) for the QA.
  */
@@ -37,9 +42,11 @@
   var beats = spine.querySelectorAll('[data-beat]');
   var RANGES = [[0, .15], [.15, .30], [.30, .50], [.50, .72], [.72, .90], [.90, 1]];
   var PLATE_AT = [.30, .50, .72, .90]; // plate n+1 from this progress on
-  var SLOW_FIRST_FRAME_MS = 50;
+  var FRAME_BUDGET_MS = 33; // the warm frames' median, at most (see the header)
+  var WARM_UP_FRAMES = 1; // frames after onReady not judged
+  var SAMPLE_FRAMES = 6; // frames judged, by their median
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
-  var state = { progress: 0, section: 0, plate: 1, step: -1, scene: null, mounted: null, live: false, beat: 0, firstFrameMs: null, reason: '', loads: 0, token: null };
+  var state = { progress: 0, section: 0, plate: 1, step: -1, scene: null, mounted: null, live: false, beat: 0, firstFrameMs: null, frameMs: null, reason: '', loads: 0, token: null };
 
   counter.hidden = false;
 
@@ -137,10 +144,39 @@
     showStep();
   }
 
+  function median(xs) {
+    var s = xs.slice().sort(function (a, b) { return a - b; });
+    var m = s.length >> 1;
+    return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2;
+  }
+
+  /**
+   * Times the scene's frames. Each tick asks the scene for the next frame (update() redraws, even
+   * with nothing changed: its draw is then a frame callback queued before the next tick), and the
+   * next tick reads how long its frame has run, from the frame's start (the callbacks' timestamp)
+   * to now, past the scene's draw. Calls done(the median, ms) after WARM_UP_FRAMES skipped and
+   * SAMPLE_FRAMES judged, or done(null) once alive() turns false. (Not the gaps between frames:
+   * a headless Chromium spaces them 2–135 ms apart on an empty page.)
+   */
+  function timeFrames(alive, done) {
+    var costs = [];
+    function ask() {
+      state.mounted.update({ progress: state.progress });
+      requestAnimationFrame(tick);
+    }
+    function tick(start) {
+      if (!alive()) return done(null);
+      costs.push(performance.now() - start);
+      if (costs.length < WARM_UP_FRAMES + SAMPLE_FRAMES) return ask();
+      done(Math.round(median(costs.slice(WARM_UP_FRAMES)) * 10) / 10);
+    }
+    ask();
+  }
+
   /**
    * load: () => Promise<module with mount()>. opts.check replaces the capability check (true: go)
-   * and opts.slowFrameMs the first-frame budget (the QA's browsers render WebGL in software, on a
-   * busy machine). Resolves true once the scene is live, false when the plates stay (state.reason
+   * and opts.frameBudgetMs the warm frames' budget (the QA's browsers render WebGL in software, on
+   * a busy machine). Resolves true once the scene is live, false when the plates stay (state.reason
    * says why).
    */
   function mountScene(load, opts) {
@@ -148,7 +184,7 @@
     var why = !host ? 'no-host' : opts.check ? (opts.check() ? '' : 'refused') : refusal();
     state.reason = why;
     if (why) return Promise.resolve(false);
-    var limit = opts.slowFrameMs || SLOW_FIRST_FRAME_MS;
+    var limit = opts.frameBudgetMs || FRAME_BUDGET_MS;
     return new Promise(function (resolve) {
       var settled = false;
       function settle(live) {
@@ -179,16 +215,20 @@
             palette: palette(),
             onReady: function (info) {
               if (!current() || !state.mounted) return;
-              var ms = info && typeof info.firstFrameMs === 'number' ? info.firstFrameMs : 0;
-              state.firstFrameMs = ms;
-              if (ms > limit) return fallBack('slow-first-frame');
-              state.scene = state.mounted;
-              state.live = true;
-              stage.classList.add('is-live');
-              state.reason = '';
-              state.scene.update({ progress: state.progress });
-              showStep();
-              settle(true);
+              state.firstFrameMs = info && typeof info.firstFrameMs === 'number' ? info.firstFrameMs : null; // shader compile: not judged
+              state.frameMs = null;
+              timeFrames(function () { return current() && !!state.mounted; }, function (ms) {
+                if (ms === null) return settle(false); // replaced, failed or refused meanwhile
+                state.frameMs = ms;
+                if (ms > limit) return fallBack('slow-frames');
+                state.scene = state.mounted;
+                state.live = true;
+                stage.classList.add('is-live');
+                state.reason = '';
+                state.scene.update({ progress: state.progress });
+                showStep();
+                settle(true);
+              });
             },
             onBeat: function (n) {
               if (!current()) return;

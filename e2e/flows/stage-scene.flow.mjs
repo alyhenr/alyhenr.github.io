@@ -13,12 +13,26 @@ export function mount(host, inputs) {
   };
 }`;
 
-// A scene whose setup and first frame took 120 ms: a weak device.
+// A scene whose setup and first frame took 300 ms (the shaders compiling on a cold GPU process),
+// then draws fast: a good phone's first visit.
+const SLOW_START_SCENE = `
+export function mount(host, inputs) {
+  const log = (window.__slowStart = { destroyed: false });
+  const t0 = performance.now();
+  while (performance.now() - t0 < 300);
+  requestAnimationFrame(() => inputs.onReady({ firstFrameMs: 300 }));
+  return { update() {}, destroy() { log.destroyed = true; } };
+}`;
+
+// A scene whose every frame takes 80 ms, the first one included: a weak phone.
 const SLOW_SCENE = `
 export function mount(host, inputs) {
   const log = (window.__slow = { destroyed: false });
-  requestAnimationFrame(() => inputs.onReady({ firstFrameMs: 120 }));
-  return { update() {}, destroy() { log.destroyed = true; } };
+  let raf = 0;
+  const draw = () => { raf = 0; const t0 = performance.now(); while (performance.now() - t0 < 80); };
+  const schedule = () => { if (!raf && !log.destroyed) raf = requestAnimationFrame(draw); };
+  requestAnimationFrame(() => { draw(); requestAnimationFrame(() => { draw(); inputs.onReady({ firstFrameMs: 120 }); }); });
+  return { update() { schedule(); }, destroy() { log.destroyed = true; cancelAnimationFrame(raf); } };
 }`;
 
 // A scene that can't run (no WebGL 2 context, say).
@@ -32,7 +46,7 @@ export function mount(host, inputs) {
 export const flow = {
   name: "the stage drives a scene through Studio's interface and falls back to its plates",
   async run({ page, go, expect, step }) {
-    for (const [path, body] of [['scene', SCENE], ['slow-scene', SLOW_SCENE], ['failing-scene', FAILING_SCENE]]) {
+    for (const [path, body] of [['scene', SCENE], ['slow-start-scene', SLOW_START_SCENE], ['slow-scene', SLOW_SCENE], ['failing-scene', FAILING_SCENE]]) {
       await page.route(`**/__qa/${path}.mjs`, (route) => route.fulfill({ contentType: 'text/javascript', body }));
     }
     await go('/');
@@ -70,12 +84,24 @@ export const flow = {
     await page.waitForFunction(() => getComputedStyle(document.querySelector('[data-plate="1"]')).opacity === '1');
     await page.emulateMedia({ reducedMotion: 'no-preference' });
 
-    step('a first frame over 50 ms keeps the plates');
+    step('a slow first frame followed by fast frames plays the scene');
+    const slowStart = await page.evaluate(() => window.TracoStage.mountScene(() => import('/__qa/slow-start-scene.mjs'), { check: () => true }));
+    const started = await page.evaluate(() => window.TracoStage.state);
+    expect(slowStart === true, `a scene with a 300 ms first frame and fast frames after it kept the plates (${started.reason}, frames ${started.frameMs} ms)`);
+    expect(started.firstFrameMs === 300, `the stage recorded a first frame of ${started.firstFrameMs} ms`);
+    expect(typeof started.frameMs === 'number' && started.frameMs <= 33, `the warm frames took ${started.frameMs} ms`);
+    expect(await isLive(), 'the stage is not live with a scene that warmed up');
+
+    step('consistently slow frames keep the plates');
     const slow = await page.evaluate(() => window.TracoStage.mountScene(() => import('/__qa/slow-scene.mjs'), { check: () => true }));
-    expect(slow === false, 'a scene with a 120 ms first frame went live');
+    const dropped = await page.evaluate(() => window.TracoStage.state);
+    expect(slow === false, `a scene drawing 80 ms frames went live (frames ${dropped.frameMs} ms)`);
+    expect(await page.evaluate(() => window.__slowStart.destroyed), 'the scene it replaced was not destroyed');
     expect(await page.evaluate(() => window.__slow.destroyed), 'the slow scene was not destroyed');
-    expect((await page.evaluate(() => window.TracoStage.state.reason)) === 'slow-first-frame', 'the slow scene was not dropped for its first frame');
+    expect(dropped.reason === 'slow-frames', `the slow scene was dropped for "${dropped.reason}", not its frames`);
+    expect(dropped.frameMs >= 80, `the slow scene's frames measured ${dropped.frameMs} ms`);
     expect(!(await isLive()), 'the stage stayed live with a slow scene');
+    await page.waitForFunction(() => getComputedStyle(document.querySelector('[data-plate="1"]')).opacity === '1');
 
     step('onError keeps the plates');
     const failing = await page.evaluate(() => window.TracoStage.mountScene(() => import('/__qa/failing-scene.mjs'), { check: () => true }));

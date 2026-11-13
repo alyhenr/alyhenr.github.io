@@ -1,7 +1,8 @@
 import { watchScene, autoMount, expectPlatesOnly, walkPlates } from './_lib.mjs';
 
 // A weak phone (navigator.deviceMemory ≤ 2) or a visitor saving data: the plates, and the scene's
-// script never fetched. (The third signal, a first frame over 50 ms, is in stage-scene.)
+// script never fetched. (The third signal, frames over budget
+// once the scene has warmed up, is in stage-scene.)
 export const flow = {
   name: 'on a weak phone or with Save-Data the stage shows its plates and never starts the scene',
   sizes: ['phone'],
