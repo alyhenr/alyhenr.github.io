@@ -26,7 +26,7 @@
   - The request to Studio is in the outbox with the folder attached and the error described.
   - Full QA stays green; Lighthouse mobile performance stays ≥ 90.
   - The summary tells the owner to check the scene on his iPhone through the preview link.
-- **Connect the contact form** (agreed) — The home's form validates and stops; through the Gateway a visitor's request reaches the owner (and becomes an agency lead).
+- **Connect the contact form** (building) — The home's form validates and stops; through the Gateway a visitor's request reaches the owner (and becomes an agency lead).
   Goal: the home's form sends to the Gateway, ready for deploy day, where only the endpoint URL and the real Turnstile site key change. Replaces the "Connect the contact form" idea in Next.
   In:
   - The Gateway's contract (its README, "Sending a message"): POST JSON to `<gateway>/v1/submit/pk_portfolio_LAEYLkgWxfNmgOQbevE3` with `{ turnstile_token, locale: "pt-BR", fields: { name, email, phone, message, estimate } }`; name and message required, e-mail or phone (at least one), lengths 120 / 254 / 32 / 4000 / 120. Answers: 201 `{ ok, id, message }`; errors `{ ok:false, error, message }` (422 `invalid_fields` adds per-field messages; after `turnstile_failed` call `turnstile.reset()`; 429 has Retry-After). Show the Gateway's pt-BR message as it comes.
