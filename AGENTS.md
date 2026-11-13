@@ -5,7 +5,7 @@ Alysson's site on GitHub Pages, in pt-BR, in the Traço look (DESIGN.md): static
 ## Commands
 - `node .jarvis/qa.mjs`: the full QA (install, syntax, links, tokens, frozen-urls, published, directions, estimate, HTTP checks, Playwright flows in Chromium and WebKit, desktop and phone). Writes `.qa/qa-report.json`.
 - `node .jarvis/qa.mjs syntax links tokens frozen-urls published`: the quick static checks (the project's lint); `published` stages the site into `.qa/site` the way the deploy does and checks it (and that it shows no phone, e-mail or "sênior").
-- `node .jarvis/qa.mjs estimate`: the calculator's unit tests against the agency's quote rules. `directions`: the round-2 design mocks' rules.
+- `node .jarvis/qa.mjs estimate`: the calculator's unit tests against the agency's quote rules. `gateway`: the contact form's request and answers (`js/contact.js`). `directions`: the round-2 design mocks' rules.
 - `node .jarvis/qa.mjs flows` or `node .jarvis/qa.mjs <flow>` (e.g. `contact`): browser flows only.
 - `node .jarvis/serve.mjs 8000`: the site locally the way Pages serves it (the README's `python3 -m http.server` also works, but has no 404 page).
 - First run on a machine: `npx playwright-core@1.53.2 install chromium webkit`.
@@ -15,13 +15,14 @@ Alysson's site on GitHub Pages, in pt-BR, in the Traço look (DESIGN.md): static
 - **Frozen URLs**: `/plugins/`, `/plugins/alvaras/` and `/plugins/alvaras/privacidade/` are submitted to the Chrome Web Store and Firefox Add-ons. Never move or delete them, and every page's header nav keeps its link to `/plugins/`. The `frozen-urls` check guards this.
 - **Privacy policies are verbatim**: `plugins/<slug>/privacidade/index.html` copies `PRIVACY.md` from the extension's repo word for word. Restyle freely; never reword. A change goes in both files together, with the "Última atualização" date updated in both. Each extension has its own policy (a shared generic one is a rejection reason).
 - **Policies and extension pages work without JavaScript**: the three `plugins/` pages carry no `<script>` at all (reviewers and crawlers may not run JS). `frozen-urls` and the `privacy-policy-without-js` flow check it.
-- **Contact is the form only**: no phone number, e-mail or WhatsApp link on any page, and never the word "sênior" (he is "engenheiro de software"). The one exception is the verbatim policy's own Contato line. `published` checks it.
+- **Contact is the form only**: no phone number, e-mail or WhatsApp link on any page, and never the word "sênior" (he is "engenheiro de software"). The exceptions are the data-request e-mail on the two policies: the Alvarás policy's verbatim Contato line and `privacidade.html`. `published` checks it.
 - **Prices come from the agency**: `vendor/web/prices/` is never edited here. The calculator's math is its `quote()`, and Pacotes prontos in `index.html` must match `prices.json` (`estimate` checks it). A new catalogue version is taken from the delivery hub and replaces the folder.
 - **Studio pieces are Studio's** (DESIGN.md, "Studio pieces"): never build, imitate or edit the traco-wireframe scene (`vendor/studio/traco-wireframe/`, as delivered); a change goes back to Studio as a new version. A new version replaces the folder, then `node tools/bundle-scene.mjs` rebuilds `js/scene/traco-wireframe.js` (never edited by hand) and `sh tools/plates.sh` remakes `img/plates/` from its plates.
 - **Colours and sizes only from `css/tokens.css`**; nothing else hardcodes a colour (`tokens` checks stylesheets and style attributes).
 - **`404.html` uses root-absolute paths only**; every other page uses relative paths for its depth.
 - **No dependencies in the site**: `package.json` is tooling only (playwright-core for the QA; three and esbuild, pinned, for the scene's committed bundle). Don't add a framework or build step without a roadmap item.
-- **Never let a test send the contact form anywhere**: the `contact` flow aborts every request off the local server.
+- **Never let a test send the contact form anywhere**: the contact flows abort every request off the local server; `contact-send` answers for the Gateway and Turnstile itself (route mocks).
+- **The form's endpoint and Turnstile key live in `js/contact-config.js` only.** Committed with `GATEWAY_URL` empty (the form says "not sent") and Cloudflare's test key until the owner says deploy day; never commit a secret there (the site key is public).
 - The site is in pt-BR.
 
 ## Adding things

@@ -13,7 +13,22 @@
   "personal_data": [
     "index.html",
     "js/site.js",
+    "js/contact.js",
+    "js/contact-config.js",
+    "privacidade.html",
     "*privacidade*"
   ],
-  "gate": "qa"
+  "gate": "qa",
+  "integrations": [
+    {
+      "provider": "cloudflare",
+      "resource": "turnstile-portfolio-contact",
+      "environment": "production",
+      "links": {
+        "docs": "https://developers.cloudflare.com/turnstile/",
+        "dashboard": "https://dash.cloudflare.com/?to=/:account/turnstile"
+      },
+      "credentials": []
+    }
+  ]
 }

@@ -10,10 +10,10 @@ GitHub Pages, as a user page (repo `alyhenr/alyhenr.github.io`, served at the do
 - Our docs, design mockups, roadmap, QA and tooling stay in the (public) repo and are never served.
 - Pages serves `404.html` for any missing path, at any depth, and keeps that path in the address bar.
 
-There is no backend, no database, no API keys and no environment variables. The contact form doesn't send yet: it validates and waits for the "Connect the contact form" item.
+There is no backend of its own, no database, no API keys and no environment variables. The contact form posts to the Gateway (a separate service that receives our sites' forms) behind Cloudflare Turnstile; both are set in `js/contact-config.js`, and while its endpoint is empty the form validates and says the request was not sent.
 
 ## Parts
-- **Pages**: one HTML file per page: `index.html` (Início), `projetos.html`, `plugins/index.html`, `plugins/<slug>/index.html`, `plugins/<slug>/privacidade/index.html` and `404.html`.
+- **Pages**: one HTML file per page: `index.html` (Início), `projetos.html`, `privacidade.html` (the form's privacy policy, no script), `plugins/index.html`, `plugins/<slug>/index.html`, `plugins/<slug>/privacidade/index.html` and `404.html`.
   - Each page writes out the shared header (nav: Início, Projetos, Extensões) and footer. There is no script-injected chrome, so every page reads without JavaScript.
   - The store pages (the three `plugins/` pages) carry no script at all.
 - **Styles**:
@@ -35,7 +35,12 @@ There is no backend, no database, no API keys and no environment variables. The 
 - **The calculator and form** (`js/site.js`, a module, home only):
   - It fetches `vendor/web/prices/prices.json` and builds the tier and add-on rows from it.
   - It quotes through `js/estimate.js` (pure; the QA imports it in Node), which calls the agency's `quote()` from `vendor/web/prices/quote.mjs`. The math is the agency's, never ours.
-  - "Levar para o contato" and each package's "Quero este" write the estimate line into the form, which validates (`validContact`: an e-mail or a phone with DDD) and stops.
+  - "Levar para o contato" and each package's "Quero este" write the estimate line (and its short line, `calcShort`/`packageShort`) into the form, which validates (`validContact`: an e-mail or a phone with DDD).
+- **Sending the form** (`js/site.js` with `js/contact.js` and `js/contact-config.js`):
+  - `js/contact-config.js` is the one config place: `GATEWAY_URL` (empty until deploy day), `FORM_KEY` and `TURNSTILE_SITE_KEY` (Cloudflare's always-pass test key until then). Deploy day changes the endpoint and the key, nothing else.
+  - With an endpoint, the form keeps a 65 px box for the Turnstile widget from the start, and loads Cloudflare's script (explicit render, pt-BR, `flexible`) when the form is within 600 px of the screen or touched. The home's first load never fetches it.
+  - `js/contact.js` (pure; the QA's `gateway` step tests it in Node) holds the Gateway's contract: `submitUrl`, `submission` (the contact field becomes `email` or `phone`; the estimate's full text goes at the end of `message`, which the Gateway requires, and its short line in the 120-character `estimate`; every field cut to the Gateway's lengths) and `readAnswer` (201, 422 `invalid_fields` with per-field messages as an object or a list, `turnstile_failed`, 429 with Retry-After, 5xx, others). The Gateway's pt-BR `message` is shown as it comes; ours only fill in for an answer without one, and for a cut connection.
+  - While sending, the button is disabled and reads "Enviando…", and a second submit does nothing. After every answer the widget is reset (its token is single-use). A 429 keeps the button disabled for Retry-After (at most 120 s); the Gateway must list Retry-After in `Access-Control-Expose-Headers` for the page to read it. Success clears the form.
   - Pacotes prontos is static HTML (crawlers, no JS), and the QA compares it with `prices.json`.
 - **Diagrams** (`js/flow.js`, Projetos): live SVG architecture diagrams (`[data-flow]`, packets along `path[data-wire]`, a log). They idle off screen, and reduced motion shows a still.
 - **Vendored packages** (`vendor/`): `vendor/web/prices/` is the web agency's catalogue (prices 1.1.0); `vendor/studio/traco-wireframe/` is Studio's scene (1.0.0), published only through its bundle and the plates made from it. Neither is edited here: ask the agency or Studio for a change and take the next version.
@@ -48,7 +53,8 @@ There is no backend, no database, no API keys and no environment variables. The 
 ## Data
 - None is stored.
 - The content lives in the HTML; the prices live in `vendor/web/prices/prices.json`.
-- The privacy policy page is a verbatim copy of `PRIVACY.md` in the extension's own repo (alvaras-pg).
+- The site stores nothing. The contact form's data goes to the Gateway; `privacidade.html` says what, why, who sees it, the retention (while the lead's agency job is open; 90 days for one that went nowhere), Turnstile, and the e-mail for data requests.
+- The Alvarás privacy policy page is a verbatim copy of `PRIVACY.md` in the extension's own repo (alvaras-pg).
 
 ## QA
 `node .jarvis/qa.mjs` runs Jarvis's web kit (`.jarvis/web/kit.mjs`). Its steps:
@@ -59,12 +65,22 @@ There is no backend, no database, no API keys and no environment variables. The 
 - `tokens`: no colour outside `css/tokens.css`.
 - The frozen-URL checks: the store pages exist, have no script, and every page's nav links `/plugins/`.
 - `estimate`: the calculator's quotes against the agency's rules for the four tiers and every add-on, and Pacotes prontos against `prices.json`.
+- `gateway`: the form's request to the Gateway and its reading of each answer (`js/contact.js`).
 - `directions`: the round-2 design mocks' rules. `design/` is never published.
 - `published`:
   - It stages the site into `.qa/site` with the deploy's own script and checks that deploy.yml uploads what it staged.
   - It checks the staged folder holds every linked page, asset and frozen URL, and none of our files.
-  - It checks that no staged page shows a phone, an e-mail, "sênior" or an app kept off the site. The verbatim policy's own contact line is the one exception.
+  - It checks that no staged page shows a phone, an e-mail, "sênior" or an app kept off the site. The two policies (Alvarás's verbatim Contato line and `privacidade.html`) may show the one data-request e-mail, and `privacidade.html` must name the 90 days, Turnstile and that e-mail.
 - Then the HTTP checks (our files 404) and the Playwright flows in `e2e/flows/`, run against `.jarvis/serve.mjs` serving `.qa/site`.
   - `serve.mjs` is a zero-dependency stand-in for GitHub Pages: directory index, `.html` fallback, `404.html` with status 404.
   - The flows run in Chromium and WebKit, at desktop and phone sizes.
   - The production site has no separate dev server, so there is no dev pass.
+  - The `contact` flow runs the repo's config (no endpoint: nothing leaves the page); `contact-send` swaps `js/contact-config.js` for one with an endpoint and answers for the Gateway and Turnstile itself (a stub of its explicit-render API), so no test reaches either.
+
+<!-- integrations:start (generated from jarvis.json `integrations` by `jarvis integrations docs`: change the bindings, not this block) -->
+## Integrations
+
+| Provider | For | Account | Resource | Environment | Links |
+|---|---|---|---|---|---|
+| Cloudflare | dns | — | turnstile-portfolio-contact | production | [docs](https://developers.cloudflare.com/turnstile/) · [dashboard](https://dash.cloudflare.com/?to=/:account/turnstile) · [dashboard](https://dash.cloudflare.com) |
+<!-- integrations:end -->

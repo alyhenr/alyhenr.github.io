@@ -26,7 +26,7 @@
   - The request to Studio is in the outbox with the folder attached and the error described.
   - Full QA stays green; Lighthouse mobile performance stays ≥ 90.
   - The summary tells the owner to check the scene on his iPhone through the preview link.
-- **Connect the contact form** (building) — The home's form validates and stops; through the Gateway a visitor's request reaches the owner (and becomes an agency lead).
+- **Connect the contact form** (ready) — The home's form validates and stops; through the Gateway a visitor's request reaches the owner (and becomes an agency lead).
   Goal: the home's form sends to the Gateway, ready for deploy day, where only the endpoint URL and the real Turnstile site key change. Replaces the "Connect the contact form" idea in Next.
   In:
   - The Gateway's contract (its README, "Sending a message"): POST JSON to `<gateway>/v1/submit/pk_portfolio_LAEYLkgWxfNmgOQbevE3` with `{ turnstile_token, locale: "pt-BR", fields: { name, email, phone, message, estimate } }`; name and message required, e-mail or phone (at least one), lengths 120 / 254 / 32 / 4000 / 120. Answers: 201 `{ ok, id, message }`; errors `{ ok:false, error, message }` (422 `invalid_fields` adds per-field messages; after `turnstile_failed` call `turnstile.reset()`; 429 has Retry-After). Show the Gateway's pt-BR message as it comes.
@@ -41,12 +41,14 @@
   - A demo of the form's states on phone.
 
 ## Next
-- **Connect the contact form** (idea) — the home's form (name, e-mail or phone, message, estimate) validates and stops; connecting it through the Gateway sends a visitor's data to us (its LGPD note is already on the form). Until then its done message says the request was not sent.
-  Owner's decisions (12/11, via Jarvis) for its privacy page: the Gateway allows https://alyhenr.github.io as the portfolio's origin; the page fills the Gateway's docs/PRIVACY.md blanks with retention "while the lead's agency job is open, deleted at its close; a message that never became a job, or a lead that went nowhere, deleted after 90 days", and the contact e-mail for data requests alyhenr.io@gmail.com, shown on the privacy page only and nowhere else on the site (the `published` check needs that exception).
 
 ## Later
 
 ## Fixes and chores
+- Deploy day for the form: set `GATEWAY_URL` and the real `TURNSTILE_SITE_KEY` in `js/contact-config.js` (nothing else changes), with alyhenr.github.io as the widget's hostname in Cloudflare and the Gateway's allowed origin. The Gateway must list `Retry-After` in `Access-Control-Expose-Headers` (else a 429 shows its message but the button doesn't wait).
+- `privacidade.html` was written from the brief and the owner's decisions, without the Gateway's docs/PRIVACY.md text (not in this repo; asked of Jarvis 13/11): bring its wording in line when that text arrives, and confirm 422's per-field shape (the form reads `fields` as an object or a list of `{field, message}`).
+- The privacy page is linked from the form's LGPD note only; a "Privacidade" link in every footer is six edits (the Alvarás pages too).
+- Pre-existing: on a WebKit phone, `/#contato` (every page's "Pedir orçamento") can land about a screen above the form, because the calculator above it grows after the jump.
 - traco-wireframe 1.0.1 (asked again of Studio 13/11, with the 1.0.0 folder attached): no console error on mount (three's computeBoundingSphere NaN), update() redrawing documented as the interface the frame test relies on. When it comes back: `jarvis deliveries take <id>`, rebundle, remake the plates, and drop `SCENE_NAN` from `.jarvis/qa.mjs`. Check the 33 ms warm-frame gate on a real budget Android when one is at hand.
 - Firefox Add-ons: the Alvarás page shows "Firefox Add-ons: em revisão" (disabled) and no store link; fill the button when the listing is approved.
 - The Alvarás policy's Contato line shows an e-mail (verbatim from alvaras-pg's PRIVACY.md), the one contact left on the site; changing it means editing PRIVACY.md in the extension's repo first, then this copy, with the date in both.

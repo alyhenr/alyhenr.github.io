@@ -16,7 +16,7 @@ Alysson's site at alyhenr.github.io, in pt-BR: his storefront for sites for Braz
   - **Quanto custa o seu?**: a live calculator that computes on the agency's own quote rules. You pick a tier, extra pages, add-ons and urgency, and see the total, the lines and the timeline, labelled as an estimate.
   - **Quem faz**: "Engenheiro de software. Construo sistemas com agentes de IA.", "sistemas que não podem parar", a reply within 1 business day, and his GitHub.
   - A link to Projetos.
-  - **Contact by form only**: name, e-mail or phone, message, and the estimate (filled by the calculator or a package's "Quero este"), with a short LGPD note. No phone number or e-mail is shown anywhere.
+  - **Contact by form only**: name, e-mail or phone, message, and the estimate (filled by the calculator or a package's "Quero este"), with a short LGPD note linking the privacy page. It sends to the Gateway, behind Cloudflare's Turnstile anti-bot check, and shows the Gateway's own pt-BR answer: sent (the form clears), the fields to fix, the check to redo, too many sends (the button waits), or the service or the connection down (try again; the text stays). Until the Gateway's deploy day its endpoint is empty and the form says the request was not sent. No phone number or e-mail is shown anywhere.
 - **Projetos** (`/projetos.html`):
   - Jarvis (an engineering company of AI agents on one Mac mini), told through a live architecture diagram.
   - The Alvarás extension, linking to its page and its policy.
@@ -29,6 +29,7 @@ Alysson's site at alyhenr.github.io, in pt-BR: his storefront for sites for Braz
 - **Its privacy policy** (`/plugins/alvaras/privacidade/`):
   - A verbatim copy of `PRIVACY.md` from the extension's repo (alvaras-pg). Static HTML, with no script.
   - Its URL was submitted to the stores and is frozen.
+- **Privacidade** (`/privacidade.html`): the contact form's privacy policy: what the form receives and why, Turnstile under Cloudflare's policy, who sees it, the retention (while the agency job is open; 90 days for a request that went nowhere), the LGPD rights, and the e-mail for data requests (the only page besides the Alvarás policy that shows one). Static, no script.
 - **A custom 404** at any depth. The old template's addresses (`/projects.html`, `/contact.html`, `/blog…`) send visitors to the new pages.
 - **Light and dark**: the light sections follow the phone's mode; the stage is always dark.
 
@@ -36,6 +37,6 @@ Alysson's site at alyhenr.github.io, in pt-BR: his storefront for sites for Braz
 pt-BR throughout.
 
 ## Personal data
-- The site collects nothing today: no analytics, cookies or storage, and the contact form validates but does not send.
-- The form will send a visitor's name, contact, message and estimate once "Connect the contact form" lands. The LGPD note is already on the form.
-- The Alvarás policy's Contato section shows an e-mail address, because the policy is verbatim from the extension's repo.
+- The site itself stores nothing: no analytics, cookies or storage.
+- The contact form sends a visitor's name, e-mail or phone, message and estimate to the Gateway once its endpoint is set (deploy day); Cloudflare's Turnstile widget loads at the form. `privacidade.html` is its policy; the LGPD note links it.
+- Two pages show the data-request e-mail: `privacidade.html` and the Alvarás policy's Contato section (verbatim from the extension's repo).

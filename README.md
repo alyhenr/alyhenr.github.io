@@ -16,6 +16,7 @@ dependencies: the site's files are served exactly as committed.
 ```
 index.html            Início: the stage, the four steps, packages, calculator, contact
 projetos.html         Projetos: Jarvis, Alvarás, the Lab, GitHub
+privacidade.html      the contact form's privacy policy
 plugins/              browser extensions  ← URLs are frozen, see below
 404.html              custom not-found page
 
@@ -26,6 +27,8 @@ img/plates/           the stage's plates (Studio's, from the scene)
 js/stage.js           the sticky stage, and the mount for its 3D scene
 js/scene/             the 3D scene's bundle (Studio's traco-wireframe with three; tools/bundle-scene.mjs)
 js/site.js            the calculator and the contact form
+js/contact.js         the form's request to the Gateway and its answers (pure, tested)
+js/contact-config.js  the Gateway's endpoint and the Turnstile site key (the one config place)
 js/estimate.js        what the calculator hands the form (pure, tested)
 js/flow.js            the live architecture diagrams
 vendor/web/prices/    the price catalogue and its quote math (vendored)
