@@ -71,14 +71,19 @@ function waitSeconds(header, body) {
   return s == null ? null : Math.max(0, Math.min(MAX_WAIT_S, s));
 }
 
-/** 422's per-field messages, as an object or a list of { field, message } → { formInput: text }. */
+/**
+ * 422's per-field messages → { formInput: text }. The Gateway sends { field: { code, message } };
+ * plain text, a list of texts, or a list of { field, message } are read too.
+ */
 function fieldMessages(body) {
   const raw = body?.fields ?? body?.errors ?? {};
   const pairs = Array.isArray(raw) ? raw.map((e) => [e?.field, e?.message]) : Object.entries(raw);
   const out = {};
   for (const [k, m] of pairs) {
     const input = FORM_FIELD[k];
-    const text = Array.isArray(m) ? m.filter(Boolean).join(' ') : String(m || '');
+    const text = Array.isArray(m) ? m.filter(Boolean).join(' ')
+      : m && typeof m === 'object' ? String(m.message || '')
+      : String(m || '');
     if (input && text && !out[input]) out[input] = text;
   }
   return out;
