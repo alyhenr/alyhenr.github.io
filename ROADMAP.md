@@ -26,6 +26,19 @@
   - The request to Studio is in the outbox with the folder attached and the error described.
   - Full QA stays green; Lighthouse mobile performance stays ≥ 90.
   - The summary tells the owner to check the scene on his iPhone through the preview link.
+- **Connect the contact form** (agreed) — The home's form validates and stops; through the Gateway a visitor's request reaches the owner (and becomes an agency lead).
+  Goal: the home's form sends to the Gateway, ready for deploy day, where only the endpoint URL and the real Turnstile site key change. Replaces the "Connect the contact form" idea in Next.
+  In:
+  - The Gateway's contract (its README, "Sending a message"): POST JSON to `<gateway>/v1/submit/pk_portfolio_LAEYLkgWxfNmgOQbevE3` with `{ turnstile_token, locale: "pt-BR", fields: { name, email, phone, message, estimate } }`; name and message required, e-mail or phone (at least one), lengths 120 / 254 / 32 / 4000 / 120. Answers: 201 `{ ok, id, message }`; errors `{ ok:false, error, message }` (422 `invalid_fields` adds per-field messages; after `turnstile_failed` call `turnstile.reset()`; 429 has Retry-After). Show the Gateway's pt-BR message as it comes.
+  - Cloudflare Turnstile widget on the form, with Cloudflare's always-pass test site key for now; endpoint URL and site key in one config place. While the endpoint is empty the form keeps today's behaviour ("not sent"), so a ship before deploy day breaks nothing.
+  - Sending, success, field errors, rate limit, network/unavailable states, with pt-BR copy, a disabled button while sending, no double send.
+  - Privacy page: fill the Gateway's docs/PRIVACY.md blanks (Turnstile under Cloudflare's policy; retention "while the lead's agency job is open, deleted at its close; a message that never became a job, or a lead that went nowhere, deleted after 90 days"); the contact e-mail for data requests alyhenr.io@gmail.com on the privacy page only (the `published` check gets that one exception, every other page stays e-mail free).
+  Out: deploying the Gateway, the real keys, Core's pull, other pages.
+  Done when:
+  - Tests (the Gateway mocked): a valid send shows the success message and clears the form; 422 shows per-field messages; turnstile_failed resets the widget; 429, 503 and a network error show a retry message; an empty endpoint keeps the "not sent" behaviour.
+  - The privacy page names the 90 days, Turnstile and the contact e-mail, and the e-mail appears on no other page (test).
+  - Full QA green; Lighthouse mobile performance stays ≥ 90 with the widget.
+  - A demo of the form's states on phone.
 
 ## Next
 - **Connect the contact form** (idea) — the home's form (name, e-mail or phone, message, estimate) validates and stops; connecting it through the Gateway sends a visitor's data to us (its LGPD note is already on the form). Until then its done message says the request was not sent.
