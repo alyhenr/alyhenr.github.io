@@ -1,18 +1,6 @@
 # Roadmap — Portfolio
 
 ## Now
-- **Scene 1.0.1: the iPhone plays it** (ready) — The owner saw the Traço scene on his Mac but only the plates on his iPhone 14 Plus: the weak-phone check is too strict, and Studio's 1.0.1 console-error fix waits on a request that carries the vendored copy.
-  Goal: a recent phone (the owner's iPhone 14 Plus) plays the live scene; only really weak phones fall back to the plates; Studio gets the 1.0.1 request with the copy it needs.
-  In:
-  - Loosen the weak-phone check: the first frame includes shader compile and is no fair test. Judge on the frames after warm-up (e.g. the median of a few frames after the first) against a frame budget that still catches a weak phone; keep deviceMemory ≤ 2 and saveData. Pick the numbers, say why in the summary.
-  - Send Studio the 1.0.1 request from the build's outbox with `attach_folder: vendor/studio/traco-wireframe`: the harmless console error to clear (say exactly what it logs and when), and, if the first-frame measure lives in the scene (onReady's firstFrameMs), what the portfolio now needs from it.
-  - When 1.0.1 comes back, a later run takes it (`jarvis deliveries take <id>`) and remounts; nothing else waits on it.
-  Out: changing the scene's look, other pages, the form.
-  Done when:
-  - Tests: a slow first frame followed by fast frames plays the scene; consistently slow frames, deviceMemory ≤ 2, saveData, reduced motion and no WebGL each keep the plates.
-  - The request to Studio is in the outbox with the folder attached and the error described.
-  - Full QA stays green; Lighthouse mobile performance stays ≥ 90.
-  - The summary tells the owner to check the scene on his iPhone through the preview link.
 - **Connect the contact form** (ready) — The home's form validates and stops; through the Gateway a visitor's request reaches the owner (and becomes an agency lead).
   Goal: the home's form sends to the Gateway, ready for deploy day, where only the endpoint URL and the real Turnstile site key change. Replaces the "Connect the contact form" idea in Next.
   In:
@@ -41,6 +29,7 @@
 - The Alvarás policy's Contato line shows an e-mail (verbatim from alvaras-pg's PRIVACY.md), the one contact left on the site; changing it means editing PRIVACY.md in the extension's repo first, then this copy, with the date in both.
 
 ## History
+- 2026-11-15: Scene 1.0.1: the iPhone plays it
 - 2026-11-15: Mount the Traço scene
 - 2026-11-12: Build the site: Traço
 - 2026-11-12: Design directions, round 2
