@@ -1,19 +1,6 @@
 # Roadmap — Portfolio
 
 ## Now
-- **Mount the Traço scene** (ready) — Studio delivered traco-wireframe 1.0.0 (request 30ca11cc31cc) while the site was being built; the home's stage still shows only its plates.
-  Goal: the home's stage plays Studio's live line scene, with plates that match it, and falls back cleanly where it should.
-  In:
-  - Take the delivery (`jarvis deliveries take 30ca11cc31cc`, into vendor/studio/traco-wireframe); add three@0.187.0; mount it with `mount(el, inputs) → { update, destroy }` as its README says: progress from the spine's scroll, reducedMotion, the palette; onReady fades the plate out, onBeat syncs the step counter, onError keeps the plates.
-  - Replace the stage's plates with Studio's plates (desktop-01…05.jpg, phone-01…05.jpg, rendered from the scene), so plate and scene line up at the crossfade.
-  - Load after the first paint; plates only without WebGL, under reduced motion (crossfade per beat), and on weak phones (deviceMemory ≤ 2, saveData, or onReady's firstFrameMs > 50).
-  - Owner's decision (12/11): the Alvarás privacy policy keeps its e-mail as is (the stores want a contact); no change there.
-  Out: changing the scene itself (a departure goes back to Studio as 1.0.1), the form sending, other pages.
-  Done when:
-  - The home on phone and desktop plays the scene across the five beats, both scroll directions, and the step counter follows onBeat.
-  - Tests: reduced motion, no WebGL and a weak-phone signal each show the plates and never start the scene.
-  - The page stays light: the scene's script loads after the first paint and is ≤ 140 KB gzip; Lighthouse mobile performance stays ≥ 90.
-  - A demo (stills and a scroll video on phone and desktop) with the scene live.
 - **Scene 1.0.1: the iPhone plays it** (ready) — The owner saw the Traço scene on his Mac but only the plates on his iPhone 14 Plus: the weak-phone check is too strict, and Studio's 1.0.1 console-error fix waits on a request that carries the vendored copy.
   Goal: a recent phone (the owner's iPhone 14 Plus) plays the live scene; only really weak phones fall back to the plates; Studio gets the 1.0.1 request with the copy it needs.
   In:
@@ -54,6 +41,7 @@
 - The Alvarás policy's Contato line shows an e-mail (verbatim from alvaras-pg's PRIVACY.md), the one contact left on the site; changing it means editing PRIVACY.md in the extension's repo first, then this copy, with the date in both.
 
 ## History
+- 2026-11-15: Mount the Traço scene
 - 2026-11-12: Build the site: Traço
 - 2026-11-12: Design directions, round 2
 - 2026-11-12: Design directions
